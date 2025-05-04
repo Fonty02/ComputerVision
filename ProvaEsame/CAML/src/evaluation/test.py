@@ -51,6 +51,7 @@ if __name__ == '__main__':
   fe_metadata = get_fe_metadata(args)
   test_path = get_test_path(args, data_path)
   device = torch.device(f'cuda:{args.gpu}')
+  print(f'Using device: {device}')
 
   # Get the model and load its weights.
   
