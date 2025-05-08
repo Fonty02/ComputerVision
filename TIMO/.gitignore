@@ -1,0 +1,11 @@
+/caches
+/env
+
+### VS Code ###
+/.vscode/
+/__pycache__/
+
+### Others ###
+old_env.tar.gz
+requirements_old.txt
+Analyze.py
