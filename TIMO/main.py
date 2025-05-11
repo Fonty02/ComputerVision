@@ -96,15 +96,21 @@ def main():
     acc_free = run_tip_adapter(cfg, cache_keys, cache_values, val_features, val_labels, 
         test_features, test_labels, clip_weights_cupl)
     metric['Tip_Adapter'] = acc_free
+    with open(os.path.join('outputs', 'Tip_Adapter.txt'), 'w') as f:
+        f.write(f"{cfg['dataset']}_{cfg['shots']}_{cfg['seed']}: {acc_free}\n")
     
     # APE
     acc_free = APE(cfg, cache_keys, cache_values, val_features, val_labels,  
         test_features, test_labels, clip_weights_cupl)
     metric['APE'] = acc_free
+    with open(os.path.join('outputs', 'APE.txt'), 'w') as f:
+        f.write(f"{cfg['dataset']}_{cfg['shots']}_{cfg['seed']}: {acc_free}\n")
     
     # GDA-CLIP
     acc_free = GDA_CLIP(cfg, val_features, val_labels, test_features, test_labels, clip_weights_cupl)
     metric['GDA_CLIP'] = acc_free
+    with open(os.path.join('outputs', 'GDA_CLIP.txt'), 'w') as f:
+        f.write(f"{cfg['dataset']}_{cfg['shots']}_{cfg['seed']}: {acc_free}\n")
     
     # ------------------------------------------ Ours ------------------------------------------
     # TIMO   

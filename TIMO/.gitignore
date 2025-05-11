@@ -1,5 +1,7 @@
 /caches
 /env
+/$DATA
+/artgraph
 
 ### VS Code ###
 /.vscode/

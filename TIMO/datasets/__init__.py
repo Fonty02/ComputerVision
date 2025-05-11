@@ -20,6 +20,7 @@ dataset_list = {
                 "food101": Food101,
                 "oxford_flowers": OxfordFlowers,
                 "stanford_cars": StanfordCars,
+                "artgraph": DescribableTextures,
                 }
 
 
