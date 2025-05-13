@@ -3,6 +3,7 @@ import random
 import argparse
 import yaml
 from tqdm import tqdm
+import csv
 
 import torch
 import torch.nn.functional as F
@@ -42,8 +43,13 @@ def main():
     print("seed", cfg['seed'])
     print("dbg", cfg['dbg'])
     
-    if not os.path.exists('outputs'):
-        os.makedirs('outputs')
+    output_dir = 'outputs'
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    csv_file_path = os.path.join(output_dir, 'results.csv')
+    csv_header = ['SEED', 'SHOTS', 'DATASET', 'MODELLO', 'METRICA']
+
     cache_dir = os.path.join(f'./caches/{cfg["backbone"]}/{cfg["seed"]}/{cfg["dataset"]}')
     os.makedirs(cache_dir, exist_ok=True)
     cfg['cache_dir'] = cache_dir
@@ -96,21 +102,21 @@ def main():
     acc_free = run_tip_adapter(cfg, cache_keys, cache_values, val_features, val_labels, 
         test_features, test_labels, clip_weights_cupl)
     metric['Tip_Adapter'] = acc_free
-    with open(os.path.join('outputs', 'Tip_Adapter.txt'), 'w') as f:
-        f.write(f"{cfg['dataset']}_{cfg['shots']}_{cfg['seed']}: {acc_free}\n")
+    # with open(os.path.join('outputs', 'Tip_Adapter.txt'), 'w') as f:
+    #     f.write(f"{cfg['dataset']}_{cfg['shots']}_{cfg['seed']}: {acc_free}\n")
     
     # APE
     acc_free = APE(cfg, cache_keys, cache_values, val_features, val_labels,  
         test_features, test_labels, clip_weights_cupl)
     metric['APE'] = acc_free
-    with open(os.path.join('outputs', 'APE.txt'), 'w') as f:
-        f.write(f"{cfg['dataset']}_{cfg['shots']}_{cfg['seed']}: {acc_free}\n")
+    # with open(os.path.join('outputs', 'APE.txt'), 'w') as f:
+    #     f.write(f"{cfg['dataset']}_{cfg['shots']}_{cfg['seed']}: {acc_free}\n")
     
     # GDA-CLIP
     acc_free = GDA_CLIP(cfg, val_features, val_labels, test_features, test_labels, clip_weights_cupl)
     metric['GDA_CLIP'] = acc_free
-    with open(os.path.join('outputs', 'GDA_CLIP.txt'), 'w') as f:
-        f.write(f"{cfg['dataset']}_{cfg['shots']}_{cfg['seed']}: {acc_free}\n")
+    # with open(os.path.join('outputs', 'GDA_CLIP.txt'), 'w') as f:
+    #     f.write(f"{cfg['dataset']}_{cfg['shots']}_{cfg['seed']}: {acc_free}\n")
     
     # ------------------------------------------ Ours ------------------------------------------
     # TIMO   
@@ -127,7 +133,19 @@ def main():
         grid_search=True, n_quick_search=10, is_print=True)
     metric['TIMO_S'] = acc_free
 
-    save_log(cfg, metric)
+    # save_log(cfg, metric) # Rimuovi la vecchia chiamata a save_log se presente
+
+    # Salva i risultati nel file CSV
+    file_exists = os.path.isfile(csv_file_path)
+    with open(csv_file_path, 'a', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        if not file_exists:
+            writer.writerow(csv_header)  # Scrivi l'intestazione se il file è nuovo
+        
+        for model_name, metric_value in metric.items():
+            row = [cfg['seed'], cfg['shots'], cfg['dataset'], model_name, metric_value]
+            writer.writerow(row)
+    print(f"Risultati salvati in {csv_file_path}")
     
     
     

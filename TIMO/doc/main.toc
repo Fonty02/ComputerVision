@@ -1,0 +1,33 @@
+\contentsline {section}{\numberline {1}Divisione dei Dati nei Set di Train, Test e Validation}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Struttura della Classe DatasetBase}{3}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Implementazioni Dataset-Specifiche}{3}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Lettura da JSON Pre-Divisi}{4}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2}Divisione Proporzionale}{4}{subsubsection.1.2.2}%
+\contentsline {subsubsection}{\numberline {1.2.3}Few-Shot Learning}{4}{subsubsection.1.2.3}%
+\contentsline {subsection}{\numberline {1.3}Utilizzo in extract\_features\_all.py}{4}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Utilizzo in main.py}{5}{subsection.1.4}%
+\contentsline {section}{\numberline {2}Funzionamento di extract\_features\_all.py}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Processi Principali}{5}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Estrazione delle Features Visive}{5}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Estrazione delle Features Testuali}{6}{subsubsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.2}Normalizzazione e Memorizzazione}{6}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Funzionamento di main.py}{6}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Pipeline Principale}{7}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Caricamento dei Dati Preprocessati}{7}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Fusione delle Rappresentazioni}{7}{subsubsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3}Esecuzione dei Metodi di Adattamento}{7}{subsubsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.2}Valutazione delle Prestazioni}{8}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Logica degli Script per la Creazione dei Dataset}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Obiettivi e Strategia di \texttt {scriptB.py}}{8}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Parametri di Configurazione}{8}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Processo di Divisione dei Dati}{9}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}Analisi del CSV e Raggruppamento}{9}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2}Selezione delle Opere per il Test Set}{9}{subsubsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.3}Divisione Train/Validation}{10}{subsubsection.4.3.3}%
+\contentsline {subsubsection}{\numberline {4.3.4}Creazione della Mappatura Artist-to-ID}{11}{subsubsection.4.3.4}%
+\contentsline {subsection}{\numberline {4.4}Consolidamento in JSON}{11}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Analisi dei Risultati}{12}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Confronto tra Approcci di Adattamento}{12}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Analisi dell'Impatto dei Diversi Componenti}{12}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Osservazioni sui Dataset Artistici}{12}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Conclusioni}{13}{subsection.5.4}%

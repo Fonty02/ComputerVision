@@ -205,8 +205,8 @@ if __name__ == '__main__':
                     print(cfg)
                     if set == 'imagenet':
                         dataset = ImageNet(cfg['root_path'], cfg['shots'], preprocess)
-                        val_loader = torch.utils.data.DataLoader(dataset.test, batch_size=64, num_workers=8, shuffle=False)
-                        train_loader_cache = torch.utils.data.DataLoader(dataset.train, batch_size=256, num_workers=8, shuffle=False)           
+                        val_loader = torch.utils.data.DataLoader(dataset.test, batch_size=64, num_workers=0, shuffle=False)
+                        train_loader_cache = torch.utils.data.DataLoader(dataset.train, batch_size=256, num_workers=0, shuffle=False)           
                     else:   
                         dataset = build_dataset(set, data_path, k)
                         val_loader = build_data_loader(data_source=dataset.val, batch_size=64, is_train=False, tfm=preprocess, shuffle=False)

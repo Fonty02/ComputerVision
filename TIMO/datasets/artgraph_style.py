@@ -8,9 +8,9 @@ from .oxford_pets import OxfordPets
 template = ['{} texture.']
 
 
-class DescribableTexturesArt(DatasetBase):
+class DescribableTexturesArtStyle(DatasetBase):
 
-    dataset_dir = 'artgraph'
+    dataset_dir = 'artgraph_style'
 
     def __init__(self, root, num_shots):
         self.dataset_dir = os.path.join(root, self.dataset_dir)
@@ -18,9 +18,9 @@ class DescribableTexturesArt(DatasetBase):
         self.split_path = os.path.join(self.dataset_dir, 'artgraph_split.json')
 
         self.template = template
-        self.cupl_path = './Prompt_CuPL/artgraph.json'
-        self.waffle_path = './Prompt_Waffle/artgraph.json'
-        self.DCLIP_path = './Prompt_DCLIP/artgraph.json'
+        self.cupl_path = './Prompt_CuPL/artgraph_style.json'
+        self.waffle_path = './Prompt_Waffle/artgraph_style.json'
+        self.DCLIP_path = './Prompt_DCLIP/artgraph_style.json'
 
 
         train, val, test = OxfordPets.read_split(self.split_path, self.image_dir)

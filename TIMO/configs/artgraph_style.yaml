@@ -18,7 +18,7 @@ w_training_free: [0.5, 0.5]
 w_training: [0.2, 0.8]
  
 # ------ Basic Config ------
-dataset: 'artgraph'
+dataset: 'artgraph_style'
 backbone: 'RN50'
 
 lr: 0.001
