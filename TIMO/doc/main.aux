@@ -1,28 +1,29 @@
 \relax 
-\@writefile{toc}{\contentsline {section}{\numberline {1}Introduzione a TIMO}{2}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Schema generale del framework TIMO.}}{2}{}\protected@file@percent }
-\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:timo_overview}{{1}{2}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2}Ruolo e Utilizzo dei Set di Dati}{2}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Training Set (Few-Shot)}{2}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Esempio di immagine dal training set (ipoteticamente dal dataset DTD, ad es. una texture "interlacciata").}}{3}{}\protected@file@percent }
-\newlabel{fig:train_ex}{{2}{3}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Validation Set}{3}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Test Set}{3}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Esempio di immagine dal test set (ipoteticamente dal dataset DTD, ad es. una texture "punteggiata").}}{3}{}\protected@file@percent }
-\newlabel{fig:test_ex}{{3}{3}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {3}Estrazione e Caricamento delle Feature}{4}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Estrazione delle Feature (\texttt  {extract\_features\_all.py})}{4}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Processo di estrazione delle feature visive e testuali utilizzando CLIP.}}{4}{}\protected@file@percent }
-\newlabel{fig:feature_extraction}{{4}{4}{}{}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Caricamento delle Feature (\texttt  {main.py})}{4}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Caricamento delle feature pre-estratte in \texttt  {main.py}.}}{5}{}\protected@file@percent }
-\newlabel{fig:feature_loading}{{5}{5}{}{}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Funzionamento di TIMO}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Image-Guided Text (IGT)}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Classificazione e Valutazione}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {5}Esempio con il Dataset DTD (Describable Textures Dataset)}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Considerazioni per il nostro lavoro}{6}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Artgraph\_Artist}{6}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Artgraph\_Style}{6}{}\protected@file@percent }
+\providecommand\babel@aux[2]{}
+\@nameuse{bbl@beforestart}
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\babel@aux{italian}{}
+\babel@aux{italian}{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduzione: Problemi nel Few-Shot Learning con CLIP}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Preliminari: CLIP e Classificazione Few-Shot}{1}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}TIMO: Ottimizzazione a Guida Mutua Testo-Immagine}{2}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Text-Guided Image (TGI): Guida Testuale per l'Immagine}{2}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Image-Guided Text (IGT): Guida Visuale per il Testo}{3}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Combinazione in TIMO}{3}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}TIMO-S: Versione Migliorata di TIMO}{3}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Dataset Utilizzato}{4}{section.5}\protected@file@percent }
+\newlabel{sec:dataset}{{5}{4}{Dataset Utilizzato}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Composizione del Dataset Originale}{4}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Creazione del Nuovo Dataset per la Sperimentazione}{4}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Ruolo dei Prompt Testuali Generati da LLM}{5}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Risultati}{5}{section.6}\protected@file@percent }
+\newlabel{sec:risultati}{{6}{5}{Risultati}{section.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Accuracy (\%) dei diversi metodi sul dataset ArtGraph al variare del numero di shots (K). Seed = 42.}}{5}{table.1}\protected@file@percent }
+\newlabel{tab:risultati_artgraph}{{1}{5}{Accuracy (\%) dei diversi metodi sul dataset ArtGraph al variare del numero di shots (K). Seed = 42}{table.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Analisi dei Risultati}{6}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}Pseudo-codice di TIMO}{7}{appendix.Alph1}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Algoritmo principale di TIMO}}{7}{algorithm.1}\protected@file@percent }
+\newlabel{alg:timo}{{1}{7}{Pseudo-codice di TIMO}{algorithm.1}{}}
 \gdef \@abspage@last{7}

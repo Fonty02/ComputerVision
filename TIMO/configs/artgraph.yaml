@@ -29,12 +29,3 @@ train_epoch: 20
 # (deve essere minore o uguale al numero di esempi nel test set per ogni artista)
 max_support_perclass: 16
 
-# Test settings
-test:
-  split: 'test'
-  n_tasks: 600
-
-# Val settings
-val:
-  split: 'val'
-  n_tasks: 100

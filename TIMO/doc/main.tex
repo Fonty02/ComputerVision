@@ -1,212 +1,235 @@
-\documentclass{article}
+\documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[italian]{babel}
+\usepackage{amsmath, amssymb, mathtools}
 \usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
+\usepackage[margin=2.5cm]{geometry}
 \usepackage{xcolor}
-\usepackage{geometry}
-\usepackage{caption}
-\usepackage{listings} % Per blocchi di codice
+\usepackage{hyperref}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode} % noend per non mostrare "end if", "end for", ecc.
 
-\geometry{a4paper, margin=1in}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Spiegazione di TIMO e TIMO-S},
+    pdfpagemode=FullScreen,
+}
 
-\title{Documentazione del Metodo TIMO}
+\title{Text and Image Are Mutually Beneficial (TIMO) per il Few-Shot Classification Training-Free con CLIP e dataset usato}
+\author{Basato sul paper di Yayuan Li, Jintao Guo, Lei Qi, Wenbin Li, Yinghuan Shi}
 \date{\today}
 
-\lstset{
-  basicstyle=\ttfamily\footnotesize,
-  breaklines=true,
-  frame=single,
-  language=Python, % Linguaggio di default per i blocchi di codice
-  keywordstyle=\color{blue},
-  commentstyle=\color{green!40!black},
-  stringstyle=\color{purple},
-  showstringspaces=false
-}
+\newcommand{\Ft}{\mathbf{F}_\text{t}}      % Text features
+\newcommand{\Fv}{\mathbf{F}_\text{v}}      % Visual features (support)
+\newcommand{\Wt}{\mathbf{W}_\text{t}}      % Text prototypes
+\newcommand{\Wv}{\mathbf{W}_\text{v}}      % Visual prototypes (support)
+\newcommand{\fv}{\mathbf{f}_\text{v}}      % Query visual feature
+\newcommand{\Figt}{\mathbf{F}_\text{IGT}}  % IGT features
+\newcommand{\Ftgi}{\mathbf{F}_\text{TGI}}  % TGI features
+\newcommand{\R}{\mathbb{R}}
 
 \begin{document}
 \maketitle
-\tableofcontents
+\begin{abstract}
+Questo documento descrive TIMO (Text-Image Mutual guidance Optimization) e la sua variante migliorata TIMO-S, metodi proposti per migliorare il Few-Shot Learning (FSL) training-free utilizzando il modello CLIP (Contrastive Language-Image Pretraining). L'obiettivo è affrontare due problemi chiave derivanti dalla modellazione indipendente delle modalità testuale e visiva: (1) un severo disallineamento anomalo nella modalità immagine e (2) una qualità variabile dei prompt testuali generati. TIMO introduce un meccanismo di guida reciproca tra testo e immagine per mitigare questi problemi.
+\end{abstract}
+
+\section{Introduzione: Problemi nel Few-Shot Learning con CLIP}
+CLIP ha dimostrato notevoli capacità di generalizzazione zero-shot e si è affermato come una base potente per il Few-Shot Learning (FSL). Tuttavia, molti metodi FSL basati su CLIP che non richiedono addestramento aggiuntivo (training-free) tendono a trattare le modalità testuale e visiva in modo indipendente. Questo approccio presenta due limiti principali:
+
+\begin{enumerate}
+    \item \textbf{Disallineamento Anomalo nella Modalità Immagine (Anomalous Match):}
+    Durante il pre-addestramento di CLIP, possono emergere delle "scorciatoie" o bias che portano a una somiglianza elevata tra rappresentazioni di immagini appartenenti a classi diverse. Questo problema è particolarmente pronunciato in FSL, dove il numero limitato di campioni di supporto può portare il modello a fare previsioni errate con alta confidenza. La modalità visiva, essendo più ricca di informazioni rispetto a quella testuale, è più suscettibile a queste imperfezioni intrinseche di CLIP.
+
+    \item \textbf{Qualità Variabile dei Prompt Testuali Generati:}
+    I metodi training-free spesso si affidano a prompt testuali generati automaticamente (ad esempio, da Large Language Models) per descrivere le classi. Tuttavia, la qualità di questi prompt può variare significativamente. Alcuni prompt possono essere poco descrittivi, semanticamente distanti dalle caratteristiche visive delle immagini, o addirittura fuorvianti. Questo divario semantico tra le rappresentazioni testuali e visive può portare a classificatori sub-ottimali, specialmente quando si considerano più prompt per classe. Il paper evidenzia come i prompt peggiori possano degradare significativamente le prestazioni.
+\end{enumerate}
+
+Per affrontare congiuntamente questi problemi, TIMO propone un meccanismo di \textbf{guida reciproca (mutual guidance)} tra testo e immagine.
+
+\section{Preliminari: CLIP e Classificazione Few-Shot}
+CLIP impara uno spazio di embedding congiunto in cui le rappresentazioni di immagini e testi semanticamente simili sono vicine.
+\begin{itemize}
+    \item Data una query immagine, CLIP ne estrae la feature visiva $\fv \in \R^D$.
+    \item Per ogni classe $i$ (su $N$ classi), si generano $P$ prompt testuali (es. "una foto di una [CLASSE]"). Questi vengono codificati da CLIP per ottenere le feature testuali $\Ft \in \R^{N \times P \times D}$. Solitamente, si calcola una media dei $P$ prompt per ottenere un prototipo testuale per classe $\Wt \in \R^{N \times D}$.
+    \item In FSL, si dispone di $K$ immagini di supporto per classe. Queste vengono codificate per ottenere le feature visive di supporto $\Fv \in \R^{N \times K \times D}$, da cui si possono derivare prototipi visivi per classe $\Wv \in \R^{N \times D}$.
+\end{itemize}
+La classificazione zero-shot standard in CLIP calcola i logits come la similarità coseno tra $\fv$ e $\Wt$.
+I metodi FSL training-free spesso combinano i logits testuali (zero-shot) con i logits derivati da un classificatore basato sulle immagini di supporto (es. $\text{Classifier}_{\text{image}}(\fv)$), tipicamente tramite una somma pesata:
+\[ \text{logits} = \text{logits}_{\text{text}} + \alpha \cdot \text{logits}_{\text{image}} \]
+Tuttavia, come discusso, la costruzione indipendente di questi classificatori è sub-ottimale.
+
+\section{TIMO: Ottimizzazione a Guida Mutua Testo-Immagine}
+TIMO introduce due componenti chiave: Image-Guided Text (IGT) e Text-Guided Image (TGI), che lavorano sinergicamente.
+
+\subsection{Text-Guided Image (TGI): Guida Testuale per l'Immagine}
+\textbf{Obiettivo:} Mitigare il problema del disallineamento anomalo nella modalità immagine, sfruttando le rappresentazioni testuali, generalmente più robuste.
+\textbf{Meccanismo:}
+\begin{enumerate}
+    \item Per ogni classe $i$ e per ciascuno dei suoi $P$ prompt testuali (feature $F_t^{i,p}$), si calcola una matrice di pesi $s^{i,p}$ basata sulla similarità coseno tra il prompt $F_t^{i,p}$ e il prototipo visivo della classe $W_v^i$:
+    \[ s^{i,p} = \frac{F_t^{i,p} \cdot (W_v^i)^T}{\|F_t^{i,p}\| \|W_v^i\|} \]
+    Questo peso indica quanto un prompt testuale è rilevante per le caratteristiche visive della classe.
+    \item Si introduce un iperparametro $\beta$ che controlla il numero di prompt testuali da considerare per la guida. I pesi $s^{i,p}$ vengono utilizzati per selezionare/pesare i prompt più rilevanti. Sia $S \in \R^{N \times P}$ la matrice di questi pesi (eventualmente con zero per i prompt scartati).
+    \item Le feature di supporto visive $\Fv$ vengono combinate con le feature testuali pesate $F_t \odot S$ (prodotto element-wise, o una selezione basata su $\beta$) per ottenere una rappresentazione arricchita $\Ftgi$:
+    \[ \Ftgi = \text{Concat}(\Fv, \Ft \odot S) \in \R^{N \times (K+\beta') \times D} \]
+    dove $\beta'$ è il numero effettivo di prompt testuali usati dopo la selezione.
+    \item Un classificatore per immagini, $\text{Classifier}_{\text{TGI}}$, viene costruito utilizzando queste feature $\Ftgi$ (ad esempio, seguendo la logica di Tip-Adapter o GDA-CLIP, che il paper chiama `ImageClassifierBuilder`).
+    \item I logits TGI per l'immagine di query $\fv$ sono: $\text{logits}_{\text{TGI}} = \text{Classifier}_{\text{TGI}}(\fv)$.
+\end{enumerate}
+In sostanza, TGI "raffina" le feature visive di supporto includendo le informazioni testuali più allineate, con l'obiettivo di creare un classificatore di immagini più robusto ai disallineamenti.
+
+\subsection{Image-Guided Text (IGT): Guida Visuale per il Testo}
+\textbf{Obiettivo:} Rettificare la qualità variabile dei prompt testuali, utilizzando le rappresentazioni delle immagini come guida per selezionare o pesare i prompt in modo più efficace.
+\textbf{Meccanismo:}
+Dal punto di vista dell'ensemble learning, un buon classificatore IGT deve soddisfare due obiettivi:
+\begin{enumerate}
+    \item \textbf{Target I:} Classificare correttamente i dati.
+    \item \textbf{Target II:} Mantenere l'individualità (diversità) delle informazioni originali dei prompt.
+\end{enumerate}
+Per fare ciò:
+\begin{enumerate}
+    \item Per ogni classe $i$, si cerca un vettore di pesi $r^i \in \R^P$ per i $P$ prompt testuali $F_t^i$ che massimizzi l'allineamento con il prototipo visivo $W_v^i$ della classe (dopo normalizzazione L2 di tutte le feature):
+    \[ \max_{r^i} (r^i)^T F_t^i (W_v^i)^T \]
+    soggetto al vincolo che la norma di $r^i$ sia controllata da un iperparametro $\gamma$: $\|r^i\| = \gamma$. Questo vincolo aiuta a preservare la diversità dei prompt (Target II).
+    \item La soluzione ottimale per $r^i$ è proporzionale a $F_t^i (W_v^i)^T$. Questi pesi $r^i$ vengono poi normalizzati (ad es. con Softmax) per ottenere una distribuzione $R^i$ sui prompt. Sia $R \in \R^{N \times P}$ la matrice di questi pesi combinati per tutte le classi.
+    \item Le feature testuali originali $\Ft$ vengono trasformate utilizzando questi pesi per ottenere le feature testuali rettificate $\Figt$:
+    \[ \Figt = \Ft R^T \in \R^{N \times D} \quad (\text{o } \Figt = \text{einsum("np, npd -> nd", R, Ft)}) \]
+    \item Un classificatore testuale, $\text{Classifier}_{\text{IGT}}$, viene costruito utilizzando queste feature $\Figt$ (che il paper chiama `TextClassifierBuilder`).
+    \item I logits IGT per l'immagine di query $\fv$ sono: $\text{logits}_{\text{IGT}} = \text{Classifier}_{\text{IGT}}(\fv)$.
+\end{enumerate}
+IGT quindi ri-pesa o combina linearmente i prompt testuali per ogni classe in modo che siano più semanticamente allineati con le caratteristiche visive di quella classe.
+
+\subsection{Combinazione in TIMO}
+TIMO combina i logits ottenuti dai classificatori TGI e IGT tramite una somma pesata, controllata da un iperparametro $\alpha$:
+\[ \text{logits}_{\text{TIMO}} = \text{logits}_{\text{TGI}} + \alpha \cdot \text{logits}_{\text{IGT}} \]
+L'iperparametro $\alpha$ bilancia il contributo delle due modalità guidate. Viene determinato tramite grid search su un set di validazione.
+
+\section{TIMO-S: Versione Migliorata di TIMO}
+TIMO-S è una variante potenziata di TIMO. Mentre TIMO ottimizza principalmente $\alpha$, TIMO-S estende l'ottimizzazione includendo una grid search anche per gli iperparametri $\beta$ (per TGI, che controlla il grado di guida testuale per l'immagine) e $\gamma$ (per IGT, che controlla il grado di guida visiva per il testo) su un set di validazione.
+Questo permette di trovare una configurazione più robusta e ottimale per il grado di guida reciproca, portando a prestazioni ulteriormente migliorate. Il paper riporta che TIMO-S supera i metodi training-required esistenti con un costo computazionale significativamente inferiore.
+
+
+
+\section{Dataset Utilizzato}
+\label{sec:dataset}
+Per la valutazione di TIMO e TIMO-S, è stato impiegato un dataset derivato da una collezione più ampia di opere d'arte, comunemente nota come ArtGraph. La creazione del dataset specifico per gli esperimenti ha seguito una logica precisa per garantire la pertinenza e la gestibilità nell'ambito del few-shot learning.
+
+\subsection{Composizione del Dataset Originale}
+Il dataset di partenza è costituito da un vasto insieme di immagini di opere d'arte, ciascuna associata a metadati quali il nome dell'artista e lo stile artistico predominante. Queste informazioni sono tipicamente raccolte in un formato tabellare (un file CSV), dove ogni riga corrisponde a un'opera d'arte.
+
+\subsection{Creazione del Nuovo Dataset per la Sperimentazione}
+La costruzione del dataset utilizzato per gli esperimenti di classificazione few-shot, con l'obiettivo di classificare le opere per artista, ha comportato diversi passaggi di selezione e strutturazione:
+\begin{enumerate}
+    \item \textbf{Selezione Basata sullo Stile e Numero di Opere:}
+    Inizialmente, sono stati identificati un numero limitato dei stili artistici più rappresentati nel dataset originale (i primi 10 stili per numero di opere).
+    \item \textbf{Selezione degli Artisti per Stile:}
+    All'interno di ciascuno di questi stili principali, sono stati selezionati un certo numero di artisti. Un criterio fondamentale per la selezione di un artista è stato il numero di opere possedute \textit{all'interno di quello specifico stile}, che doveva rientrare in un intervallo predefinito (tra 30 e 50 opere). Questo assicura che ci siano abbastanza campioni per artista per creare split significativi, ma non così tanti da sbilanciare eccessivamente il dataset o allontanarsi troppo dallo scenario few-shot.
+    \item \textbf{Esclusione degli Altri Artisti:}
+    È importante sottolineare che solo gli artisti che soddisfacevano i criteri di cui sopra (appartenenza a uno stile top e numero di opere adeguato in quello stile) sono stati inclusi nel dataset finale. Tutti gli altri artisti e le loro opere sono stati esclusi dalla sperimentazione.
+    \item \textbf{Divisione in Set di Support, Validazione e Query:}
+    Per ciascun artista selezionato, le sue opere (appartenenti allo stile per cui è stato scelto) sono state suddivise percentualmente in tre insiemi distinti:
+    \begin{itemize}
+        \item \textbf{Support set:} Una porzione maggioritaria delle opere (80\%), utilizzata per "mostrare" al modello le caratteristiche dell'artista durante la fase di adattamento (support set nel few-shot learning).
+        \item \textbf{Validation set:} Una piccola porzione (10\%), usata per l'ottimizzazione degli iperparametri del modello (come $\alpha$, $\beta$, $\gamma$ in TIMO/TIMO-S).
+        \item \textbf{Query set:} La restante porzione (10\%), utilizzata per valutare le prestazioni finali del modello su dati mai visti (query set nel few-shot learning).
+    \end{itemize}
+    \item \textbf{Strutturazione Finale:}
+    Il dataset risultante è stato organizzato in una struttura di directory standard, con le immagini raggruppate per artista e file di etichette separati che definiscono gli split di training, validazione e test. A ogni artista selezionato è stato assegnato un ID numerico univoco.
+\end{enumerate}
+Questa metodologia di creazione del dataset mira a costruire un benchmark focalizzato e bilanciato per la classificazione few-shot di artisti, basandosi su una selezione ragionata degli stili e del numero di opere per artista.
+
+\subsection{Ruolo dei Prompt Testuali Generati da LLM}
+Nel contesto di modelli multimodali come CLIP, e quindi anche per TIMO, i \textbf{prompt testuali} giocano un ruolo cruciale. Termini come \texttt{Prompt\_CuPL}, \texttt{Prompt\_Waffle}, \texttt{Prompt\_DCLIP}, ecc., si riferiscono a insiemi di descrizioni testuali generate per ogni classe del dataset (in questo caso, per ogni artista).
+\begin{itemize}
+    \item \textbf{Generazione tramite Grandi Modelli Linguistici (LLM):} Questi prompt sono tipicamente prodotti utilizzando LLM. Per ogni artista, l'LLM viene istruito a generare molteplici frasi descrittive. Ad esempio, per un artista specifico, i prompt potrebbero includere varianti come "un dipinto di [Nome Artista]", "opere d'arte nello stile distintivo di [Nome Artista]", "arte creata da [Nome Artista]", ecc.
+    \item \textbf{Scopo dei Prompt:}
+    \begin{enumerate}
+        \item \textbf{Creare Rappresentazioni Testuali Ricche:} Fornire diverse descrizioni testuali per ogni artista aiuta a catturare un'ampia gamma di sfumature semantiche associate al suo lavoro e stile.
+        \item \textbf{Migliorare la Generalizzazione di CLIP:} CLIP apprende ad associare immagini e testi. Utilizzando un insieme variegato di prompt per rappresentare testualmente un artista, si può ottenere una rappresentazione vettoriale (un "prototipo testuale") più robusta e generalizzabile per quell'artista.
+        \item \textbf{Supporto al Few-Shot/Zero-Shot Learning:} In scenari con pochi (o nessun) esempi di addestramento per artista, avere prototipi testuali di alta qualità è fondamentale. I prompt generati da LLM permettono di definire le classi al modello anche senza un gran numero di immagini di esempio.
+        \item \textbf{Guida per l'Ottimizzazione (come in TIMO):} Metodi come TIMO utilizzano questi prompt come punto di partenza. La componente IGT (Image-Guided Text) di TIMO, ad esempio, cerca di raffinare o pesare questi prompt testuali utilizzando le informazioni provenienti dalle immagini di supporto, al fine di migliorare l'allineamento tra le modalità visiva e testuale e, di conseguenza, le prestazioni di classificazione.
+    \end{enumerate}
+\end{itemize}
+In sintesi, i prompt generati da LLM forniscono la necessaria controparte testuale che permette a modelli come CLIP di comprendere e classificare le immagini degli artisti, e costituiscono una componente essenziale per le strategie di adattamento e ottimizzazione impiegate in metodi avanzati come TIMO.
+
+
+
+
+\section{Risultati}
+\label{sec:risultati}
+In questa sezione vengono presentati i risultati ottenuti dai diversi metodi di classificazione few-shot sul dataset ArtGraph. I risultati sono stati registrati variando il numero di "shots" (immagini di supporto per classe) e confrontando TIMO e TIMO-S con altri approcci noti. Tutti gli esperimenti sono stati eseguiti con un seed fisso (42) per garantire la riproducibilità.
+
+\begin{table}[H]
+\centering
+\caption{Accuracy (\%) dei diversi metodi sul dataset ArtGraph al variare del numero di shots (K). Seed = 42.}
+\label{tab:risultati_artgraph}
+\begin{tabular}{lccccc}
+\hline
+\textbf{Metodo} & \textbf{K=1} & \textbf{K=2} & \textbf{K=4} & \textbf{K=8} & \textbf{K=16} \\
+\hline
+Tip\_Adapter    & 38.23        & 41.59        & 43.73        & 48.93        & 52.29         \\
+APE             & 44.34        & 49.85        & 53.21        & 56.88        & 55.66         \\
+GDA\_CLIP       & 40.37        & 53.21        & 55.05        & 63.00        & 72.48         \\
+TIMO            & 40.37        & 49.24        & 55.66        & 63.61        & 74.31         \\
+TIMO\_S         & 47.09        & 49.85        & 57.19        & 63.30        & 71.87         \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Analisi dei Risultati}
+Dalla Tabella \ref{tab:risultati_artgraph} si possono trarre le seguenti osservazioni:
+\begin{itemize}
+    \item \textbf{Impatto del Numero di Shots:} Come atteso, per tutti i metodi, l'accuracy tende generalmente ad aumentare con l'incremento del numero di shots (K). Questo è dovuto al fatto che un maggior numero di esempi di supporto fornisce al modello più informazioni per generalizzare e classificare correttamente le immagini di query.
+    \item \textbf{Confronto tra Metodi:}
+    \begin{itemize}
+        \item \textbf{TIMO e TIMO-S} mostrano prestazioni competitive rispetto agli altri metodi. 
+    \end{itemize}
+    \item \textbf{Prestazioni di TIMO vs TIMO-S:} TIMO-S non supera consistentemente TIMO in tutti gli scenari. Ad esempio, per K=8 e K=16, TIMO mostra un'accuracy leggermente superiore. Questo potrebbe indicare che, con un numero sufficiente di shots, l'ottimizzazione aggiuntiva di TIMO-S potrebbe non tradursi sempre in un guadagno o potrebbe portare a un leggero overfitting sugli iperparametri del set di validazione. Tuttavia, la superiorità di TIMO-S con K=1 e K=4 è notevole.
+\end{itemize}
+In conclusione, i metodi TIMO e TIMO-S dimostrano l'efficacia della guida reciproca tra testo e immagine per il few-shot learning training-free. La scelta tra TIMO e TIMO-S potrebbe dipendere dal numero di shots disponibili, con TIMO-S che sembra avere un vantaggio in scenari con un numero estremamente limitato di esempi.
+
+
+
+
 \newpage
+\appendix
+\section{Pseudo-codice di TIMO}
+L'algoritmo 1 del paper originale fornisce uno pseudo-codice in stile PyTorch per l'algoritmo principale di TIMO.
 
-\section{Introduzione a TIMO}
-TIMO è un approccio sviluppato nell'ambito del \textit{few-shot learning} che sfrutta modelli pre-addestrati come CLIP (Contrastive Language-Image Pre-training). L'obiettivo è migliorare la classificazione di immagini utilizzando un numero molto limitato di esempi di training per classe. TIMO opera principalmente estraendo e raffinando feature visive e testuali, per poi utilizzarle in un processo di classificazione. Il codice fornito, in particolare \texttt{main.py} e \texttt{extract\_features\_all.py}, illustra il flusso di lavoro di TIMO e lo confronta con altri metodi \textit{state-of-the-art} come Tip-Adapter, APE e GDA-CLIP.
-
-La Figura \ref{fig:timo_overview} mostra uno schema generale del funzionamento di TIMO.
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.8\textwidth]{TIMO.png}
-    \caption{Schema generale del framework TIMO.}
-    \label{fig:timo_overview}
-\end{figure}
-
-\section{Ruolo e Utilizzo dei Set di Dati}
-TIMO, come molti approcci di machine learning, utilizza distinti set di dati per l'addestramento, la validazione e il test. La gestione di questi set è cruciale per il corretto funzionamento e la valutazione del metodo.
-
-\subsection{Training Set (Few-Shot)}
-Il training set in TIMO è tipicamente un set \textit{few-shot}, il che significa che contiene solo un numero limitato di esempi per ogni classe (ad esempio, 1, 2, 4, 8, o 16 campioni, come specificato dall'argomento \texttt{--shot} e dalla variabile \texttt{k\_shot} in \texttt{extract\_features\_all.py}).
-
-\textbf{Utilizzo nel codice:}
-\begin{enumerate}
-    \item \textbf{Costruzione del Cache Model}: Le immagini del training set vengono utilizzate per costruire un "cache model". Questo processo è gestito dalla funzione \texttt{extract\_few\_shot\_feature} (e \texttt{extract\_few\_shot\_feature\_all}) in \texttt{extract\_features\_all.py}.
-    \item \textbf{Estrazione delle Feature Visive}: Per ogni immagine nel training set, vengono estratte le feature visive utilizzando l'encoder di immagini del modello CLIP (\texttt{clip\_model.encode\_image(images)}).
-    \item \textbf{Data Augmentation}: Per aumentare la robustezza e la generalizzazione con pochi campioni, viene applicata la data augmentation. La variabile \texttt{cfg['augment\_epoch']} controlla il numero di volte in cui le feature vengono estratte con diverse augmentation. Le feature risultanti vengono mediate.
-    \item \textbf{Salvataggio delle Feature}: Le feature estratte (\texttt{cache\_keys}) e le relative etichette in formato one-hot (\texttt{cache\_values}) vengono salvate su disco (ad esempio, \texttt{keys\_\{shots\}shots.pt} e \texttt{values\_\{shots\}shots.pt}) nella directory specificata da \texttt{cfg['cache\_dir']}.
-    \item \textbf{Caricamento in \texttt{main.py}}: Queste feature pre-calcolate vengono poi caricate in \texttt{main.py} tramite la funzione \texttt{load\_few\_shot\_feature(cfg)}.
-\end{enumerate}
-La Figura \ref{fig:train_ex} mostra un esempio di immagine che potrebbe appartenere al training set del dataset DTD.
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.5\textwidth]{TrainEx.png}
-    \caption{Esempio di immagine dal training set (ipoteticamente dal dataset DTD, ad es. una texture "interlacciata").}
-    \label{fig:train_ex}
-\end{figure}
-
-\subsection{Validation Set}
-Il validation set è utilizzato per scopi intermedi, come l'ottimizzazione di iperparametri o la selezione di strategie, prima della valutazione finale sul test set.
-
-\textbf{Utilizzo nel codice:}
-\begin{enumerate}
-    \item \textbf{Estrazione delle Feature Visive}: Similmente al training set, le feature visive delle immagini del validation set vengono estratte usando \texttt{clip\_model.encode\_image(images)} e salvate su disco. Questo è gestito dalla funzione \texttt{extract\_val\_test\_feature(cfg, "val", ...)} in \texttt{extract\_features\_all.py}. I file salvati sono tipicamente \texttt{val\_f.pt} (features) e \texttt{val\_l.pt} (labels).
-    \item \textbf{Caricamento in \texttt{main.py}}: Queste feature vengono caricate in \texttt{main.py} tramite \texttt{loda\_val\_test\_feature(cfg, "val")}.
-    \item \textbf{Ottimizzazione/Ricerca}: Nel caso di TIMO-S (TIMO con Search), il validation set (\texttt{val\_features}, \texttt{val\_labels}) è utilizzato dalla funzione \texttt{image\_guide\_text\_search} per ottimizzare o cercare i parametri migliori per la guida delle feature testuali da parte delle feature immagine.
-\end{enumerate}
-
-\subsection{Test Set}
-Il test set è utilizzato esclusivamente per la valutazione finale delle prestazioni del modello. È fondamentale che questo set non venga utilizzato durante nessuna fase di training o ottimizzazione per garantire una stima imparziale della capacità di generalizzazione del modello.
-
-\textbf{Utilizzo nel codice:}
-\begin{enumerate}
-    \item \textbf{Estrazione delle Feature Visive}: Le feature visive delle immagini del test set vengono estratte e salvate in modo analogo al validation set, utilizzando la funzione \texttt{extract\_val\_test\_feature(cfg, "test", ...)} in \texttt{extract\_features\_all.py}. I file salvati sono tipicamente \texttt{test\_f.pt} e \texttt{test\_l.pt}.
-    \item \textbf{Caricamento in \texttt{main.py}}: Le feature del test set vengono caricate tramite \texttt{loda\_val\_test\_feature(cfg, "test")} (o \texttt{"val"} per ImageNet).
-    \item \textbf{Valutazione Finale}: Le prestazioni di TIMO, TIMO-S e dei metodi baseline (Tip-Adapter, APE, GDA-CLIP) sono calcolate utilizzando le feature del test set (\texttt{test\_features}, \texttt{test\_labels}) e le rispettive strategie di classificazione. Le metriche (tipicamente l'accuracy) vengono poi registrate e salvate in \texttt{outputs/results.csv}.
-\end{enumerate}
-La Figura \ref{fig:test_ex} mostra un esempio di immagine che potrebbe appartenere al test set del dataset DTD.
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.5\textwidth]{TestEx.png}
-    \caption{Esempio di immagine dal test set (ipoteticamente dal dataset DTD, ad es. una texture "punteggiata").}
-    \label{fig:test_ex}
-\end{figure}
-
-\section{Estrazione e Caricamento delle Feature}
-Un passaggio preliminare fondamentale nel flusso di lavoro di TIMO è l'estrazione delle feature, sia visive che testuali, che vengono poi salvate e caricate per l'elaborazione successiva. Questo approccio evita di dover rieseguire l'estrazione, computazionalmente onerosa, ad ogni esecuzione.
-
-\subsection{Estrazione delle Feature (\texttt{extract\_features\_all.py})}
-Il file \texttt{extract\_features\_all.py} è responsabile della generazione e del salvataggio di tutte le feature necessarie.
-\begin{itemize}
-    \item \textbf{Feature Visive}:
-        \begin{itemize}
-            \item \texttt{extract\_few\_shot\_feature}: Estrae feature dalle immagini del training set (few-shot), applica augmentation e le salva come \texttt{cache\_keys} e \texttt{cache\_values}.
-            \item \texttt{extract\_val\_test\_feature}: Estrae feature dalle immagini dei set di validazione e test e le salva.
-        \end{itemize}
-    \item \textbf{Feature Testuali}:
-        \begin{itemize}
-            \item \texttt{extract\_text\_feature} e \texttt{extract\_text\_feature\_all}: Generano embedding testuali per ogni classe. Questo processo coinvolge:
-                \begin{enumerate}
-                    \item Nomi delle classi (es. dal dataset).
-                    \item Template di prompt (es. "una foto di una {}").
-                    \item Eventuali prompt aggiuntivi da file JSON (es. prompt generati da GPT o specifici del dataset come CuPL, specificati in \texttt{dataset.cupl\_path}).
-                \end{enumerate}
-                Questi testi vengono tokenizzati e passati all'encoder testuale di CLIP (\texttt{clip\_model.encode\_text}) per ottenere gli embedding, che vengono poi normalizzati e salvati (es. \texttt{text\_weights\_cupl\_t\_all.pt}).
-        \end{itemize}
-\end{itemize}
-La Figura \ref{fig:feature_extraction} illustra schematicamente il processo di estrazione delle feature.
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.7\textwidth]{FeatureExtract.png}
-    \caption{Processo di estrazione delle feature visive e testuali utilizzando CLIP.}
-    \label{fig:feature_extraction}
-\end{figure}
-
-\subsection{Caricamento delle Feature (\texttt{main.py})}
-Il file \texttt{main.py} inizia caricando le feature pre-estratte e salvate nella directory \texttt{cache\_dir}.
-\begin{itemize}
-    \item \textbf{Feature Testuali}: Caricate da file \texttt{.pt}, ad esempio \texttt[breakable]{clip\_weights\_cupl\_all = torch.load(cfg['cache\_dir'] + "/text\_weights\_cupl\_t\_all.pt")}. Queste possono essere ulteriormente processate (es. media sui prompt) per ottenere i pesi del classificatore testuale di CLIP.
-    \item \textbf{Feature del Training Set (Cache Model)}: Caricate tramite \texttt[breakable]{cache\_keys, cache\_values = load\_few\_shot\_feature(cfg)}.
-    \item \textbf{Feature dei Set di Validazione e Test}: Caricate tramite \texttt[breakable]{val\_features, val\_labels = loda\_val\_test\_feature(cfg, "val")} e \texttt{test\_features, test\_labels = loda\_val\_test\_feature(cfg, "test")}.
-\end{itemize}
-La Figura \ref{fig:feature_loading} illustra il caricamento delle feature pre-calcolate.
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.7\textwidth]{FeatureLoading.png}
-    \caption{Caricamento delle feature pre-estratte in \texttt{main.py}.}
-    \label{fig:feature_loading}
-\end{figure}
-
-\section{Funzionamento di TIMO}
-Una volta caricate tutte le feature necessarie, TIMO procede con il suo meccanismo di fusione e classificazione.
-
-\subsection{Image-Guided Text (IGT)}
-Un aspetto centrale di TIMO sembra essere la capacità di utilizzare le poche feature visive del training set per "guidare" o raffinare le feature testuali.
-\begin{enumerate}
-    \item \textbf{Creazione di "Image Weights"}: Dalle \texttt{cache\_keys} (feature visive del training set), vengono calcolati dei pesi medi per immagine per ogni classe (\texttt{image\_weights}). Questi rappresentano una sorta di prototipo visivo per ciascuna classe, basato sui pochi esempi disponibili.
-    \item \textbf{Guida delle Feature Testuali}: La funzione \texttt{image\_guide\_text} (e la sua variante con ricerca \texttt{image\_guide\_text\_search} usata in TIMO-S) prende in input le feature testuali originali (es. \texttt{clip\_weights\_cupl\_all}) e i pesi delle immagini (\texttt{image\_weights}) per produrre delle feature testuali raffinate (\texttt{clip\_weights\_IGT}). Viene calcolato anche un \texttt{matching\_score}
-\end{enumerate}
-
-\subsection{Classificazione e Valutazione}
-Con le feature testuali raffinate (\texttt{clip\_weights\_IGT}) e, in alcuni casi, le feature testuali originali e il \texttt{matching\_score}, TIMO esegue la classificazione sulle feature del test set.
-\begin{itemize}
-    \item \textbf{TIMO}: Utilizza \texttt{clip\_weights\_IGT}, \texttt{clip\_weights\_cupl\_all} e \texttt{matching\_score} per la classificazione. La funzione \texttt{TIMO(...)} in \texttt{main.py} implementa questa logica.
-    \item \textbf{TIMO-S}: Simile a TIMO, ma \texttt{clip\_weights\_IGT} e \texttt{matching\_score} sono ottenuti tramite una fase di ricerca (\texttt{image\_guide\_text\_search}) che utilizza il validation set per ottimizzare i parametri della guida.
-\end{itemize}
-Le prestazioni (accuracy) vengono calcolate confrontando le predizioni con le \texttt{test\_labels}. I risultati vengono poi salvati, ad esempio in un file CSV (\texttt{outputs/results.csv}).
-
-\section{Esempio con il Dataset DTD (Describable Textures Dataset)}
-Il Describable Textures Dataset (DTD) è un dataset di immagini di texture, ed è uno dei dataset supportati da TIMO (come indicato in \texttt{datasets/\_\_init\_\_.py} e utilizzato in \texttt{extract\_features\_all.py}).
-
-Il flusso di lavoro con DTD sarebbe il seguente:
-\begin{enumerate}
-    \item \textbf{Setup del Dataset}:
-        \begin{itemize}
-            \item Le immagini si trovano in \texttt{\$DATA/dtd/images/}.
-            \item Le etichette e i nomi delle classi sono in \texttt{\$DATA/dtd/labels/}.
-            \item La suddivisione in train, validation e test è definita nel file JSON \texttt{\$DATA/dtd/split\_zhou\_DescribableTextures.json}. Il caricamento e la gestione di queste suddivisioni sono gestiti dalla classe \texttt{DescribableTextures} in \texttt{datasets/dtd.py} (non fornito, ma deducibile da \texttt{datasets/\_\_init\_\_.py}) e dalle utility in \texttt{datasets/utils.py}.
-        \end{itemize}
-    \item \textbf{Estrazione Feature (come da Sezione 3 e 4.1)}:
-        \begin{itemize}
-            \item \textbf{Training (Few-Shot)}: Un piccolo numero di immagini per ogni classe di texture (es. "banded", "blotchy", "braided", come visibile in \texttt{TrainEx.png} che potrebbe rappresentare una texture "interlacciata" o "a rete") viene selezionato dal set di training di DTD. Le loro feature visive vengono estratte e salvate come \texttt{cache\_keys} e \texttt{cache\_values}.
-            \item \textbf{Validation}: Le immagini dal set di validazione di DTD vengono processate per estrarre \texttt{val\_features} e \texttt{val\_labels}.
-            \item \textbf{Test}: Le immagini dal set di test di DTD (es. una texture "punteggiata" come in \texttt{TestEx.png}) vengono processate per estrarre \texttt{test\_features} e \texttt{test\_labels}.
-            \item \textbf{Testuali}: Le feature testuali per le classi di DTD (es. "banded", "blotchy", etc.) vengono estratte usando i template e i prompt specifici per DTD.
-        \end{itemize}
-    \item \textbf{Esecuzione di TIMO (come da Sezione 4.2 e 5)}:
-        \begin{itemize}
-            \item Le feature estratte vengono caricate.
-            \item TIMO utilizza le feature del training set di DTD per raffinare le feature testuali delle texture.
-            \item Il modello viene valutato sulle feature del test set di DTD per misurare la sua capacità di classificare correttamente le texture mai viste prima, basandosi su pochi esempi.
-        \end{itemize}
-\end{enumerate}
-Questo processo permette a TIMO di adattarsi e classificare efficacemente le diverse texture presenti nel dataset DTD, anche con un supporto di training limitato. I risultati, inclusa l'accuracy media per il dataset DTD con un certo numero di shot e seed, vengono salvati nel file \texttt{outputs/results.csv}.
-
-Come possibile vedere dalle immagini \texttt{TrainEx.png} e \texttt{TestEx.png}, gli autori di TIMO hanno inserito le stesse classi sia nel training set che nel test set (ovviamente non inserendo le stesse immagini).
-
-\section{Considerazioni per il nostro lavoro}
-
-Dato che il nostro lavoro si basa su TIMO, è fondamentale comprendere a fondo il suo funzionamento e replicarlo. Il nostro task prevedere di effettuare FSL con k=[1,2,4,8,16]
-
-\subsection{Artgraph\_Artist}
-
-In questo caso le classi sono gli artisti e le immagini sono le loro opere. Dobbiamo organizzare il dataset affinchè sia compatibile con TIMO e con il task di few-shot learning. Per questo motivo viene proposta la seguente divisione in training, validation e test set:
-\begin{itemize}
-    \item \textbf{Test set}: Dato che dobbiamo eseguire task fino a 16-shot, il test set deve contenere almeno 16 immagini per ogni artista. Per questo motivo, il test set è composto da 16 immagini per ogni artista. Le immagini sono state scelte in modo casuale tra le opere di ogni artista.
-    \item \textbf{Training e validation set}: Per il training e il validation set si potrebbero inserire rispettivamente 10 e 5 immagini per artista. 
-    \item \textbf{Artisti con poche opere}: Gli artisti che non presentano opere sufficienti per creare i set verranno esclusi dal dataset.
-\end{itemize}
-
-\subsection{Artgraph\_Style}
-In questo caso le classi sono gli stili e le immagini sono le opere. Dobbiamo organizzare il dataset affinchè sia compatibile con TIMO e con il task di few-shot learning. Prendiamo le 10 classi più rappresentate e creiamo i set di training, validation e test come segue:
-\begin{itemize}
-    \item \textbf{Test set}: Dato che dobbiamo eseguire task fino a 16-shot, il test set deve contenere almeno 16 immagini per ogni stile. Un buon approcio potrebbe essere quello di prendere tutti gli artisti che partecipano a quello stile e prendere 5 immagini di quell'artista in quello stile. (senza alcun problema si dovrebbero raggiungere le 16 immagini per stile)
-    \item \textbf{Training e validation set}: Per il training e il validation set si potrebbero inserire rispettivamente 20 e 10 immagini per stile randomicamente 
-    \item \textbf{Stili con poche opere}: Gli stili che non presentano opere sufficienti per creare i set verranno esclusi dal dataset.
-\end{itemize}
+\begin{algorithm}[H]
+\caption{Algoritmo principale di TIMO}
+\label{alg:timo}
+\begin{algorithmic}[1]
+\State \textbf{Input:} Feature immagini di supporto $\Fv \in \R^{N \times K \times D}$, feature testuali $\Ft \in \R^{N \times P \times D}$, feature immagine di query $\fv \in \R^D$, `ImageClassifierBuilder`, `TextClassifierBuilder`.
+\State \textbf{Parametri:} Peso del branch multimodale $\alpha$, controllore del grado di fusione $\gamma_{\text{IGT}}$ (chiamato $\gamma$ nel paper per IGT, qui $\gamma_{\text{IGT}}$ per chiarezza), controllore grado di guida testuale $\beta_{\text{TGI}}$ (chiamato $\beta$ nel paper per TGI).
+\Statex
+\State \textit{// Modellazione}
+\State $\mathbf{F}_{\text{vp}} \gets \Fv.\text{mean}(1).\text{unsqueeze}(1)$ \Comment{Prototipi visivi per classe}
+\State $\mathbf{F}_{\text{vp}} \gets \mathbf{F}_{\text{vp}} / \mathbf{F}_{\text{vp}}.\text{norm}(-1, \text{keepdim=True})$ \Comment{Normalizzazione L2}
+\State $\mathbf{W}_{\text{sim}} \gets \text{CosineSimilarity}(\Ft, \mathbf{F}_{\text{vp}}, -1)$ \Comment{Pesi di similarità per TGI e IGT}
+\Statex
+\State \textit{// Costruzione Classificatore TGI}
+\State $\mathbf{S}_{\text{TGI}} \gets \text{SelezionaPesi}(\mathbf{W}_{\text{sim}}, \beta_{\text{TGI}})$ \Comment{Selezione/pesatura basata su $\beta_{\text{TGI}}$}
+\State $\Ftgi \gets \text{concat}([\Fv, \Ft \odot \mathbf{S}_{\text{TGI}}], 1)$ \Comment{⊙ è prodotto element-wise o selezione}
+\State $\text{Classifier}_{\text{TGI}} \gets \text{ImageClassifierBuilder}(\Ftgi)$
+\Statex
+\State \textit{// Costruzione Classificatore IGT}
+\State $\mathbf{R}_{\text{IGT}} \gets \text{softmax}(\gamma_{\text{IGT}} \cdot \mathbf{W}_{\text{sim}} / \mathbf{W}_{\text{sim}}.\text{norm}(-1, \text{keepdim=True}), -1)$
+\State $\Figt \gets \text{einsum("np, npd -> nd", } \mathbf{R}_{\text{IGT}}, \Ft \text{)}$ \Comment{Feature testuali rettificate}
+\State $\text{Classifier}_{\text{IGT}} \gets \text{TextClassifierBuilder}(\Figt)$
+\Statex
+\State \textit{// Inferenza}
+\State $\text{logits}_{\text{TGI\_out}} \gets \text{Classifier}_{\text{TGI}}(\fv)$
+\State $\text{logits}_{\text{IGT\_out}} \gets \text{Classifier}_{\text{IGT}}(\fv)$
+\State $\text{logits} \gets \text{logits}_{\text{TGI\_out}} + \alpha \cdot \text{logits}_{\text{IGT\_out}}$
+\State \Return $\text{logits}$
+\end{algorithmic}
+\end{algorithm}
+\textit{Nota: Lo pseudo-codice fornito nel paper è una versione semplificata. Ad esempio, $\mathbf{W}_{\text{sim}}$ qui rappresenta i pesi $s^i$ per TGI e i pesi $r^i$ (prima della softmax) per IGT. $\beta_{\text{TGI}}$ e $\gamma_{\text{IGT}}$ controllano il modo in cui questi pesi vengono usati.}
 
 \end{document}
-
