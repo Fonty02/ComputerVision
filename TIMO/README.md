@@ -29,6 +29,27 @@ pip install -r requirements.txt
 ### Dataset
 Follow [DATASET.md](https://github.com/gaopengcuhk/Tip-Adapter/blob/main/DATASET.md) to install ImageNet and other 10 datasets referring to CoOp.
 
+## Using ArtGraph Dataset
+
+The ArtGraph dataset contains artworks organized by artists. To use the ArtGraph dataset with TIMO:
+
+1. Prepare the dataset:
+   ```
+   cd artgraph
+   python script.py
+   ```
+   This will:
+   - Split data by artist into train/val/test sets
+   - Create the DTD-compatible directory structure
+   - Copy images to the appropriate locations
+
+2. Run TIMO with ArtGraph:
+   ```
+   python main.py --config configs/artgraph.yaml
+   ```
+
+ArtGraph uses artists as the classes where each class represents a different artist.
+
 ## Get Started
 ### Configs
 

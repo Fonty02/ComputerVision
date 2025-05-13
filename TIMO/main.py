@@ -48,7 +48,7 @@ def main():
         os.makedirs(output_dir)
     
     csv_file_path = os.path.join(output_dir, 'results.csv')
-    csv_header = ['SEED', 'SHOTS', 'DATASET', 'MODELLO', 'METRICA']
+    csv_header = ['SEED', 'SHOTS', 'DATASET', 'MODEL', 'AVG ACC']
 
     cache_dir = os.path.join(f'./caches/{cfg["backbone"]}/{cfg["seed"]}/{cfg["dataset"]}')
     os.makedirs(cache_dir, exist_ok=True)

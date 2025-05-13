@@ -8,14 +8,14 @@ from .oxford_pets import OxfordPets
 template = ['{} texture.']
 
 
-class DescribableTexturesArt(DatasetBase):
+class Artgraph(DatasetBase):
 
     dataset_dir = 'artgraph'
 
     def __init__(self, root, num_shots):
         self.dataset_dir = os.path.join(root, self.dataset_dir)
         self.image_dir = os.path.join(self.dataset_dir, 'images')
-        self.split_path = os.path.join(self.dataset_dir, 'artgraph_split.json')
+        self.split_path = os.path.join(self.dataset_dir, 'artgraph.json')
 
         self.template = template
         self.cupl_path = './Prompt_CuPL/artgraph.json'
@@ -31,8 +31,8 @@ class DescribableTexturesArt(DatasetBase):
     @staticmethod
     def read_and_split_data(
         image_dir,
-        p_trn=0.5,
-        p_val=0.2,
+        p_trn=0.1,
+        p_val=0.1,
         ignored=[],
         new_cnames=None
     ):

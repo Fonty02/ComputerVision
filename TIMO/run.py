@@ -3,7 +3,7 @@ import os
 
 shots = [1, 2, 4, 8, 16]
 seed = 42
-config_file = "configs/artgraph.yaml"
+config_file = "configs/artgraph_style.yaml"
 
 # Imposta CUDA_VISIBLE_DEVICES se necessario, altrimenti puoi rimuovere questa riga
 # se è già impostata globalmente o non ti serve specificarla qui.

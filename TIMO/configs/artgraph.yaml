@@ -1,5 +1,3 @@
-
-
 # ------ Hyperparamters ------
 search_hp: True
 
@@ -24,3 +22,19 @@ backbone: 'RN50'
 lr: 0.001
 augment_epoch: 10
 train_epoch: 20
+
+# ArtGraph configuration for TIMO using artists as classes
+
+# Specify the maximum number of shots for support extraction 
+# (deve essere minore o uguale al numero di esempi nel test set per ogni artista)
+max_support_perclass: 16
+
+# Test settings
+test:
+  split: 'test'
+  n_tasks: 600
+
+# Val settings
+val:
+  split: 'val'
+  n_tasks: 100
