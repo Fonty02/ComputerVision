@@ -22,6 +22,8 @@ def extract_few_shot_feature(cfg, clip_model, train_loader_cache, norm=True):
     cache_keys = []
     cache_values = []
     with torch.no_grad():
+        #print device in use
+        print("Using device: ", torch.cuda.get_device_name(0))
         # Data augmentation for the cache model
         for augment_idx in range(cfg['augment_epoch']):
             train_features = []
@@ -200,7 +202,6 @@ if __name__ == '__main__':
                     
                     random.seed(seed)
                     torch.manual_seed(seed)
-                    
                     cfg['shots'] = k
                     print(cfg)
                     if set == 'imagenet':
