@@ -2,6 +2,7 @@
 /env
 /$DATA
 /artgraph
+caches.zip
 
 ### VS Code ###
 /.vscode/
