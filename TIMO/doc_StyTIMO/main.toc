@@ -14,4 +14,11 @@
 \contentsline {section}{\numberline {6}Risultati}{7}{section.6}%
 \contentsline {subsection}{\numberline {6.1}Tabelle dei Risultati}{7}{subsection.6.1}%
 \contentsline {subsection}{\numberline {6.2}Analisi dei Risultati}{12}{subsection.6.2}%
-\contentsline {section}{\numberline {A}Pseudo-codice di TIMO}{14}{appendix.Alph1}%
+\contentsline {section}{\numberline {7}Proposta: StyTIMO}{13}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Motivazione}{13}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Architettura di StyTIMO}{14}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Estrazione delle Feature Stilistiche con Matrici di Gram}{14}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Fusion Adapter con Architettura Bottleneck}{14}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Formula di StyTIMO}{15}{subsection.7.5}%
+\contentsline {subsection}{\numberline {7.6}Conclusione}{15}{subsection.7.6}%
+\contentsline {section}{\numberline {A}Pseudo-codice di TIMO}{16}{appendix.Alph1}%

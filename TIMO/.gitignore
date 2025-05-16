@@ -12,3 +12,4 @@ caches.zip
 old_env.tar.gz
 requirements_old.txt
 Analyze.py
+best_style_adapted_clip_artgraph.pt

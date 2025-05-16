@@ -67,11 +67,11 @@ def extract_few_shot_feature_all(cfg, clip_model, train_loader_cache, norm=True)
         labels = torch.cat(labels)
         
         if norm:
-            torch.save(vecs, cfg['cache_dir'] + "/" + f"{k}_vecs_f.pt")
-            torch.save(labels, cfg['cache_dir'] + "/" + f"{k}_labels_f.pt")
+            torch.save(vecs, cfg['cache_dir'] + "/" + f"{cfg['shots']}_vecs_f.pt")
+            torch.save(labels, cfg['cache_dir'] + "/" + f"{cfg['shots']}_labels_f.pt")
         else:
-            torch.save(vecs, cfg['cache_dir'] + "/" + f"{k}_vecs_f_unnormed.pt")
-            torch.save(labels, cfg['cache_dir'] + "/" + f"{k}_labels_f_unnormed.pt")
+            torch.save(vecs, cfg['cache_dir'] + "/" + f"{cfg['shots']}_vecs_f_unnormed.pt")
+            torch.save(labels, cfg['cache_dir'] + "/" + f"{cfg['shots']}_labels_f_unnormed.pt")
 
 
 def extract_val_test_feature(cfg, split, clip_model, loader, norm=True):

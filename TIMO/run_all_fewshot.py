@@ -16,7 +16,8 @@ from extract_features_all import *
 
 # Parametri da iterare
 DATASETS = ['artgraph']  # aggiungi altri dataset se vuoi
-BACKBONES = ["RN50","RN101", "ViT-B/32", "ViT-B/16"] #RN50
+#BACKBONES = ["RN50","RN101", "ViT-B/32", "ViT-B/16","CustomRN50"]
+BACKBONES=["CustomRN50"]
 SEEDS = [1,2,3,4,5,6,7,8,9,42]             #42
 K_SHOTS = [1, 2, 4, 8, 16]
 
@@ -136,6 +137,8 @@ def estrai_e_carica_feature(cfg, backbone, seed, k, preprocess):
     clip_weights_IGT, matching_score = image_guide_text(cfg, clip_weights_cupl_all, image_weights, return_matching=True)
     clip_weights_IGT = clip_weights_IGT.t()
     metric = {}
+    cache_keys, cache_values, val_features, test_features, clip_weights_cupl = ensure_float32_tensors(
+    cache_keys, cache_values, val_features, test_features, clip_weights_cupl)
 
     # Baseline e metodi
     metric['Tip_Adapter'] = run_tip_adapter(cfg, cache_keys, cache_values, val_features, val_labels, test_features, test_labels, clip_weights_cupl)

@@ -116,16 +116,16 @@ def load(name, device="cuda" if torch.cuda.is_available() else "cpu", jit=False,
     """
     if name == "CustomRN50":
         print("Caricamento del modello CustomRN50 (adapted_RN50_artgraph.pt)...")
-        # Importa CLIPWithAdapter dalla classe Adapter
+        # Importa CLIPWithStyleAdapter dalla classe Adapter
         import sys
         sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        from Adapter import CLIPWithAdapter
+        from StyleAdapter.StyleAdapter import CLIPWithStyleAdapter
         
         # Carica il modello CLIP base per ottenere la struttura e il preprocessing
         clip_model, preprocess = load("RN50", device, jit, download_root)
         
         # Cerca il modello adattato
-        adapted_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "best_adapted_clip_artgraph.pt")
+        adapted_path = "/home/fonty/Scrivania/UniRepo/ComputerVision/TIMO/best_style_adapted_clip_artgraph.pt"
         if not os.path.exists(adapted_path):
             # Cerca il modello nella directory corrente
             adapted_path = os.path.join(os.getcwd(), "best_adapted_clip_artgraph.pt")
@@ -148,38 +148,124 @@ def load(name, device="cuda" if torch.cuda.is_available() else "cpu", jit=False,
                 bottleneck_dim = checkpoint["args"].bottleneck_dim
             else:
                 # Deduce la dimensione dal primo parametro del modello
-                first_layer_shape = next(iter(checkpoint["model_state_dict"].items()))[1].shape
-                if len(first_layer_shape) == 2:  # È un layer lineare
-                    if "down_project.weight" in checkpoint["model_state_dict"]:
-                        bottleneck_dim = checkpoint["model_state_dict"]["down_project.weight"].shape[0]
-                    else:
-                        bottleneck_dim = 64  # Default fallback
+                # Verifica prima se model_state_dict esiste nel checkpoint
+                if "model_state_dict" in checkpoint:
+                    state_dict_to_check = checkpoint["model_state_dict"]
+                else:
+                    # Se model_state_dict non esiste, utilizza il checkpoint stesso come state_dict
+                    state_dict_to_check = checkpoint
+
+                # Verifica se down_project.weight esiste nello state_dict
+                if "down_project.weight" in state_dict_to_check:
+                    bottleneck_dim = state_dict_to_check["down_project.weight"].shape[0]
                 else:
                     bottleneck_dim = 64  # Default fallback
 
-            print(f"Creazione del modello CLIPWithAdapter con bottleneck_dim={bottleneck_dim}")
-            adapted_model = CLIPWithAdapter(clip_model, bottleneck_dim=bottleneck_dim).to(device)
+            # Verifica i parametri accettati dal costruttore di CLIPWithStyleAdapter
+            print(f"Creazione del modello CLIPWithStyleAdapter...")
+            
+            # Ottieni la firma del costruttore
+            import inspect
+            constructor_params = inspect.signature(CLIPWithStyleAdapter.__init__).parameters
+            
+            # Aggiorna la creazione del modello con parametri corretti
+            try:
+                # Usa valori predefiniti per i parametri richiesti
+                fusion_bottleneck_dim = 128  # Un valore ragionevole basato sul codice in StyleAdapter.py
+                gram_style_projection_dim = 256  # Un valore predefinito
+                layers_for_gram_rn50 = ['layer2', 'layer3']  # Aggiungi questo parametro
+                dropout_rate = 0.1
+                use_layernorm_adapter = True
+                
+                # Crea il modello StyleAdapter con i parametri corretti
+                adapted_model = CLIPWithStyleAdapter(
+                    clip_model_name="RN50",  # Usa direttamente "RN50" invece di "CustomRN50" per evitare problemi
+                    fusion_bottleneck_dim=fusion_bottleneck_dim,
+                    gram_style_projection_dim=gram_style_projection_dim,
+                    layers_for_gram_rn50=layers_for_gram_rn50,
+                    dropout_rate=dropout_rate,
+                    use_layernorm_adapter=use_layernorm_adapter,
+                    device=device
+                ).to(device)
+                
+                print(f"Modello CLIPWithStyleAdapter creato con fusion_bottleneck_dim={fusion_bottleneck_dim}")
+            except Exception as e:
+                print(f"Errore nella creazione del modello CLIPWithStyleAdapter: {e}")
+                print("Utilizzo del modello CLIP base senza adapter.")
+                return clip_model, preprocess
             
             # Carica lo state_dict nel modello adattato
             if "model_state_dict" in checkpoint:
                 print("Caricamento del modello dallo state_dict...")
-                # Carica solo i parametri dell'adapter, non tutto il modello
-                adapted_model.image_adapter.load_state_dict(checkpoint["model_state_dict"])
+                # Carica nei moduli corretti basandosi sui nomi presenti nello state_dict
+                if hasattr(adapted_model, 'gram_layer_projections') and 'gram_layer_projections_state_dict' in checkpoint:
+                    adapted_model.gram_layer_projections.load_state_dict(checkpoint["gram_layer_projections_state_dict"])
+                    print("Caricati parametri gram_layer_projections")
+                if hasattr(adapted_model, 'fusion_adapter') and 'fusion_adapter_state_dict' in checkpoint:
+                    adapted_model.fusion_adapter.load_state_dict(checkpoint["fusion_adapter_state_dict"])
+                    print("Caricati parametri fusion_adapter")
                 print(f"Modello adattato caricato con successo da {adapted_path}")
             else:
-                print("ATTENZIONE: Il checkpoint non contiene model_state_dict. Tentativo di caricamento diretto.")
+                print("Tentativo di caricamento diretto dello state_dict...")
                 try:
-                    # Prova a caricare direttamente, assumendo che lo stato sia dell'adapter
-                    adapted_model.image_adapter.load_state_dict(checkpoint)
+                    # Prova a caricare direttamente nei moduli corretti
+                    state_dict_keys = list(checkpoint.keys())
+                    print(f"Chiavi disponibili nel checkpoint: {state_dict_keys[:5]}...")
+                    
+                    # Carica nei componenti disponibili basandosi sui prefissi delle chiavi
+                    has_loaded = False
+                    
+                    # Controlla se è presente fusion_adapter_state_dict
+                    if 'fusion_adapter_state_dict' in checkpoint and hasattr(adapted_model, 'fusion_adapter'):
+                        adapted_model.fusion_adapter.load_state_dict(checkpoint['fusion_adapter_state_dict'])
+                        has_loaded = True
+                        print("Caricati parametri fusion_adapter dal checkpoint")
+                    
+                    # Controlla se è presente gram_layer_projections_state_dict
+                    if 'gram_layer_projections_state_dict' in checkpoint and hasattr(adapted_model, 'gram_layer_projections'):
+                        adapted_model.gram_layer_projections.load_state_dict(checkpoint['gram_layer_projections_state_dict'])
+                        has_loaded = True
+                        print("Caricati parametri gram_layer_projections dal checkpoint")
+                    
+                    if not has_loaded:
+                        # Fallback: prova a caricare direttamente il modello completo
+                        adapted_model.load_state_dict(checkpoint)
+                        print("Caricato state_dict completo")
+                    
+                    print("Caricamento del modello completato con successo")
                 except Exception as e:
-                    print(f"Errore nel caricamento diretto: {e}")
+                    print(f"Errore nel caricamento: {e}")
                     print("Utilizzo del modello con adapter non inizializzato.")
             
-            # Restituisci il modello adattato, non il modello CLIP base
-            return adapted_model, preprocess
-        else:
-            print(f"ATTENZIONE: Modello adattato non trovato in {adapted_path}, utilizzo del modello base non adattato.")
-            return clip_model, preprocess
+            # Prima di restituire il modello, assicurati che l'attributo feature_extractor_hooks sia inizializzato
+            if not hasattr(adapted_model, 'feature_extractor_hooks'):
+                adapted_model.feature_extractor_hooks = []
+            
+            # Assicurati che extracted_gram_feature_maps sia inizializzato
+            if not hasattr(adapted_model, 'extracted_gram_feature_maps'):
+                adapted_model.extracted_gram_feature_maps = {}
+            
+            # Modifica il name da CustomRN50 a RN50 quando necessario
+            if adapted_model.clip_model_name == "CustomRN50":
+                adapted_model.clip_model_name = "RN50"
+                print("Corretto clip_model_name da CustomRN50 a RN50 per la compatibilità con gli hook")
+            
+            # Verifica finale del modello
+            print("Verifica finale del modello...")
+            # Test di funzionalità base
+            dummy_input = torch.randn(1, 3, 224, 224).to(device)
+            try:
+                _ = adapted_model.encode_image(dummy_input)
+                print("Il modello funziona correttamente!")
+                return adapted_model, preprocess
+            except Exception as e:
+                print(f"Il modello non funziona: {e}, ritorno al modello base")
+                return clip_model, preprocess
+                
+            except Exception as main_error:
+                print(f"Errore generale: {main_error}")
+                print("Ritorno al modello base per sicurezza")
+                return clip_model, preprocess
     
     # Codice originale per gli altri modelli...
     # ...existing code...

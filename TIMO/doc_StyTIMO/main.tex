@@ -16,6 +16,22 @@
 \usepackage{enumitem} % Per personalizzare le liste
 \usepackage{float} % <--- AGGIUNGI QUESTO PACCHETTO
 
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Configura l'aspetto dei blocchi di codice
+\lstset{
+    basicstyle=\ttfamily\small,
+    commentstyle=\color{green!50!black},
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    breaklines=true,
+    breakatwhitespace=true,
+    tabsize=4,
+    showstringspaces=false,
+    frame=single
+}
+
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
@@ -409,6 +425,68 @@ L'analisi dei risultati medi, ottenuti mediando le performance su 10 diversi see
         \item Nonostante i miglioramenti, il dataset \texttt{artgraph} si conferma sfidante, con le migliori performance che indicano margini per ulteriori progressi, specialmente nel bilanciamento tra precisione e recall.
     \end{itemize}
 \end{enumerate}
+\section{Proposta: StyTIMO}
+StyTIMO è un'estensione proposta di TIMO che integra informazioni stilistiche nelle rappresentazioni visive, particolarmente rilevante per la classificazione di opere d'arte. Mentre TIMO si concentra sulla guida reciproca tra rappresentazioni testuali e visive semantiche, StyTIMO aggiunge un terzo elemento: la rappresentazione esplicita dello stile artistico.
+
+\subsection{Motivazione}
+La classificazione di opere d'arte per artista è una sfida particolare poiché richiede di cogliere non solo il contenuto semantico dell'opera (cosa rappresenta), ma anche le caratteristiche stilistiche distintive dell'artista (come è rappresentato). I modelli pre-addestrati come CLIP tendono a focalizzarsi principalmente sulle caratteristiche semantiche, perdendo potenzialmente le sottili differenze stilistiche che caratterizzano gli artisti.
+
+\subsection{Architettura di StyTIMO}
+StyTIMO estende TIMO integrando caratteristiche stilistiche esplicite attraverso un modulo chiamato StyleAdapter, che cattura e incorpora le informazioni dello stile artistico nelle rappresentazioni visive. L'architettura si articola in quattro componenti principali:
+
+\begin{enumerate}
+    \item \textbf{Estrazione di Feature Stilistiche}: Utilizza le matrici di Gram calcolate su feature map intermedie della rete CLIP per catturare le caratteristiche stilistiche delle immagini.
+    
+    \item \textbf{Proiezione delle Feature Stilistiche}: Riduce la dimensionalità delle matrici di Gram vettorizzate attraverso layer lineari addestrabili.
+    
+    \item \textbf{Fusion Adapter}: Integra le feature semantiche standard di CLIP con le feature stilistiche proiettate attraverso un adattatore con architettura bottleneck.
+    
+    \item \textbf{Pipeline TIMO Potenziata}: Utilizza le rappresentazioni visive arricchite di stile all'interno del framework di guida reciproca di TIMO.
+\end{enumerate}
+
+\subsection{Estrazione delle Feature Stilistiche con Matrici di Gram}
+Le matrici di Gram sono ampiamente utilizzate nella letteratura sul trasferimento stilistico per catturare le caratteristiche statistiche dello stile di un'immagine:
+
+\begin{enumerate}
+    \item \textbf{Selezione di Layer}: Le feature map intermedie (tipicamente dai layer \texttt{layer2} e \texttt{layer3} per ResNet-50) vengono estratte tramite hook durante il forward pass.
+    
+    \item \textbf{Calcolo delle Matrici di Gram}: Per una feature map di forma $[B,C,H,W]$, la matrice di Gram è calcolata come:
+    \[G = \frac{FF^T}{H \cdot W}\]
+    dove $F$ è la feature map ridimensionata a $[C, H \cdot W]$.
+    
+    \item \textbf{Vettorizzazione Efficiente}: Dato che la matrice di Gram è simmetrica, viene vettorizzata estraendo solo la triangolare superiore, riducendo la dimensionalità da $C^2$ a $C(C+1)/2$.
+\end{enumerate}
+
+\subsection{Fusion Adapter con Architettura Bottleneck}
+Il Fusion Adapter integra le informazioni semantiche con quelle stilistiche:
+
+\begin{enumerate}
+    \item \textbf{Concatenazione}: Le feature semantiche di CLIP e le feature stilistiche proiettate vengono concatenate.
+    
+    \item \textbf{Proiezione Bottleneck}: Il vettore concatenato è processato attraverso un'architettura bottleneck:
+    \[input \rightarrow \text{down-projection} \rightarrow \text{layer norm} \rightarrow \text{ReLU} \rightarrow \text{dropout} \rightarrow \text{up-projection} \rightarrow output\]
+    
+    \item \textbf{Connessione Residuale Scalata}: Una connessione residuale modulata da un fattore $\alpha$ garantisce che le feature semantiche originali non vengano perse durante la fusione.
+\end{enumerate}
+
+\subsection{Formula di StyTIMO}
+L'algoritmo di inferenza di StyTIMO può essere descritto come:
+
+\begin{enumerate}
+    \item \textbf{Estrazione Feature}: Per un'immagine query $q$:
+    \begin{itemize}
+        \item Estrai feature semantiche: $f_{\text{sem}}(q)$
+        \item Estrai feature stilistiche dalle matrici di Gram: $G_l(q)$ per ogni layer $l$
+        \item Vettorizza e proietta le matrici di Gram: $f_{\text{sty}}(q) = \text{concat}(P_l(G_l(q)))$
+        \item Fondi le feature: $f_{\text{fused}}(q) = \text{FusionAdapter}(\text{concat}(f_{\text{sem}}(q), f_{\text{sty}}(q)))$
+    \end{itemize}
+    
+    \item \textbf{Applicazione TIMO}: Utilizza $f_{\text{fused}}(q)$ al posto di $\fv$ standard nelle componenti TGI e IGT di TIMO.
+\end{enumerate}
+
+\subsection{Conclusione}
+
+StyTIMO mira a superare TIMO nelle prestazioni di classificazione di opere d'arte, combinando efficacemente le capacità di guida mutua testo-immagine di TIMO con una rappresentazione esplicita dello stile artistico attraverso le matrici di Gram.
 
 \newpage
 \appendix
