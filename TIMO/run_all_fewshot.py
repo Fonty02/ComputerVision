@@ -151,7 +151,7 @@ if __name__ == '__main__':
     output_dir = 'outputs'
     os.makedirs(output_dir, exist_ok=True)
     csv_file_path = os.path.join(output_dir, 'results_all.csv')
-    csv_header = ['SEED', 'SHOTS', 'DATASET', 'MODEL', 'BACKBONE', 'AVG ACC']
+    csv_header = ['SEED', 'SHOTS', 'DATASET', 'MODEL', 'BACKBONE', 'ACC', 'PRECISION_MACRO', 'RECALL_MACRO', 'F1_MACRO']
 
     # Controlla se il file esiste e se è vuoto per decidere se scrivere l'header
     file_exists = os.path.isfile(csv_file_path)
@@ -171,7 +171,7 @@ if __name__ == '__main__':
                 for k in K_SHOTS:
                     clip_model, preprocess = clip.load(backbone)
                     clip_model.eval()
-                    metric = estrai_e_carica_feature(cfg, backbone, seed, k, preprocess)
+                    metrics_dict = estrai_e_carica_feature(cfg, backbone, seed, k, preprocess)
                     
                     # Apri e chiudi il file per ogni esperimento
                     with open(csv_file_path, 'a', newline='') as csvfile:
@@ -183,8 +183,18 @@ if __name__ == '__main__':
                             write_header = False  # Imposta a False per non scrivere più l'header
                         
                         # Scrivi i risultati per ogni metodo
-                        for model_name, metric_value in metric.items():
-                            row = [seed, k, dataset_name, model_name, backbone, metric_value]
+                        for model_name, model_metrics in metrics_dict.items():
+                            row = [
+                                seed, 
+                                k, 
+                                dataset_name, 
+                                model_name, 
+                                backbone,
+                                model_metrics['accuracy'], 
+                                model_metrics['precision_macro'], 
+                                model_metrics['recall_macro'], 
+                                model_metrics['f1_macro']
+                            ]
                             writer.writerow(row)
                     
                     print(f"Risultati salvati per {dataset_name} | {backbone} | seed={seed} | shots={k}")

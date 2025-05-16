@@ -48,7 +48,7 @@ def main():
         os.makedirs(output_dir)
     
     csv_file_path = os.path.join(output_dir, 'results.csv')
-    csv_header = ['SEED', 'SHOTS', 'DATASET', 'MODEL', 'AVG ACC']
+    csv_header = ['SEED', 'SHOTS', 'DATASET', 'MODEL', 'BACKBONE', 'ACC', 'PRECISION_MACRO', 'RECALL_MACRO', 'F1_MACRO']
 
     cache_dir = os.path.join(f'./caches/{cfg["backbone"]}/{cfg["seed"]}/{cfg["dataset"]}')
     os.makedirs(cache_dir, exist_ok=True)
@@ -96,44 +96,41 @@ def main():
         clip_weights_cupl_all, image_weights, return_matching=True)
     clip_weights_IGT = clip_weights_IGT.t()
     metric = {}
+
+
+    cache_keys, cache_values, val_features, test_features, clip_weights_cupl = ensure_float32_tensors(
+    cache_keys, cache_values, val_features, test_features, clip_weights_cupl)
+
     
     # ------------------------------------------ Baseline ------------------------------------------
     # Tip-Adapter
-    acc_free = run_tip_adapter(cfg, cache_keys, cache_values, val_features, val_labels, 
+    metrics_tip = run_tip_adapter(cfg, cache_keys, cache_values, val_features, val_labels, 
         test_features, test_labels, clip_weights_cupl)
-    metric['Tip_Adapter'] = acc_free
-    # with open(os.path.join('outputs', 'Tip_Adapter.txt'), 'w') as f:
-    #     f.write(f"{cfg['dataset']}_{cfg['shots']}_{cfg['seed']}: {acc_free}\n")
+    metric['Tip_Adapter'] = metrics_tip
     
     # APE
-    acc_free = APE(cfg, cache_keys, cache_values, val_features, val_labels,  
+    metrics_ape = APE(cfg, cache_keys, cache_values, val_features, val_labels,  
         test_features, test_labels, clip_weights_cupl)
-    metric['APE'] = acc_free
-    # with open(os.path.join('outputs', 'APE.txt'), 'w') as f:
-    #     f.write(f"{cfg['dataset']}_{cfg['shots']}_{cfg['seed']}: {acc_free}\n")
+    metric['APE'] = metrics_ape
     
     # GDA-CLIP
-    acc_free = GDA_CLIP(cfg, val_features, val_labels, test_features, test_labels, clip_weights_cupl)
-    metric['GDA_CLIP'] = acc_free
-    # with open(os.path.join('outputs', 'GDA_CLIP.txt'), 'w') as f:
-    #     f.write(f"{cfg['dataset']}_{cfg['shots']}_{cfg['seed']}: {acc_free}\n")
+    metrics_gda = GDA_CLIP(cfg, val_features, val_labels, test_features, test_labels, clip_weights_cupl)
+    metric['GDA_CLIP'] = metrics_gda
     
     # ------------------------------------------ Ours ------------------------------------------
     # TIMO   
-    acc_free = TIMO(cfg, val_features, val_labels, test_features, test_labels, 
+    metrics_timo = TIMO(cfg, val_features, val_labels, test_features, test_labels, 
         clip_weights_IGT, clip_weights_cupl_all, matching_score,
         grid_search=False, is_print=True)
-    metric['TIMO'] = acc_free
+    metric['TIMO'] = metrics_timo
 
     # TIMO-S
     clip_weights_IGT, matching_score = image_guide_text_search(cfg, 
         clip_weights_cupl_all, val_features, val_labels, image_weights)
-    acc_free = TIMO(cfg, val_features, val_labels, test_features, test_labels, 
+    metrics_timo_s = TIMO(cfg, val_features, val_labels, test_features, test_labels, 
         clip_weights_IGT, clip_weights_cupl_all, matching_score, 
         grid_search=True, n_quick_search=10, is_print=True)
-    metric['TIMO_S'] = acc_free
-
-    # save_log(cfg, metric) # Rimuovi la vecchia chiamata a save_log se presente
+    metric['TIMO_S'] = metrics_timo_s
 
     # Salva i risultati nel file CSV
     file_exists = os.path.isfile(csv_file_path)
@@ -142,11 +139,20 @@ def main():
         if not file_exists:
             writer.writerow(csv_header)  # Scrivi l'intestazione se il file è nuovo
         
-        for model_name, metric_value in metric.items():
-            row = [cfg['seed'], cfg['shots'], cfg['dataset'], model_name, metric_value]
+        for model_name, model_metrics in metric.items():
+            row = [
+                cfg['seed'], 
+                cfg['shots'], 
+                cfg['dataset'], 
+                model_name, 
+                cfg['backbone'],
+                model_metrics['accuracy'], 
+                model_metrics['precision_macro'], 
+                model_metrics['recall_macro'], 
+                model_metrics['f1_macro']
+            ]
             writer.writerow(row)
     print(f"Risultati salvati in {csv_file_path}")
-    
     
     
 if __name__ == '__main__':

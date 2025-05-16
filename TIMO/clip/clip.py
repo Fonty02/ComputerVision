@@ -33,6 +33,7 @@ _MODELS = {
     "RN50x16": "https://openaipublic.azureedge.net/clip/models/52378b407f34354e150460fe41077663dd5b39c54cd0bfd2b27167a4a06ec9aa/RN50x16.pt",
     "ViT-B/32": "https://openaipublic.azureedge.net/clip/models/40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af/ViT-B-32.pt",
     "ViT-B/16": "https://openaipublic.azureedge.net/clip/models/5806e77cd80f8b59890b7e101eabd078d9fb84e6937f9e85e4ecb61988df416f/ViT-B-16.pt",
+    "CustomRN50": "",
 }
 
 
@@ -87,13 +88,14 @@ def available_models() -> List[str]:
     return list(_MODELS.keys())
 
 
-def load(name: str, device: Union[str, torch.device] = "cuda" if torch.cuda.is_available() else "cpu", jit: bool = False, download_root: str = None):
-    """Load a CLIP model
+def load(name, device="cuda" if torch.cuda.is_available() else "cpu", jit=False, download_root=None):
+    """
+    Load a CLIP model
 
     Parameters
     ----------
     name : str
-        A model name listed by `clip.available_models()`, or the path to a model checkpoint containing the state_dict
+        A model name listed in the model card or the path to a model checkpoint containing the state_dict
 
     device : Union[str, torch.device]
         The device to put the loaded model
@@ -112,6 +114,76 @@ def load(name: str, device: Union[str, torch.device] = "cuda" if torch.cuda.is_a
     preprocess : Callable[[PIL.Image], torch.Tensor]
         A torchvision transform that converts a PIL image into a tensor that the returned model can take as its input
     """
+    if name == "CustomRN50":
+        print("Caricamento del modello CustomRN50 (adapted_RN50_artgraph.pt)...")
+        # Importa CLIPWithAdapter dalla classe Adapter
+        import sys
+        sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        from Adapter import CLIPWithAdapter
+        
+        # Carica il modello CLIP base per ottenere la struttura e il preprocessing
+        clip_model, preprocess = load("RN50", device, jit, download_root)
+        
+        # Cerca il modello adattato
+        adapted_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "best_adapted_clip_artgraph.pt")
+        if not os.path.exists(adapted_path):
+            # Cerca il modello nella directory corrente
+            adapted_path = os.path.join(os.getcwd(), "best_adapted_clip_artgraph.pt")
+            
+        if os.path.exists(adapted_path):
+            # Carica il checkpoint completo
+            checkpoint = torch.load(adapted_path, map_location=device,weights_only=False)
+            
+            # Stampa le informazioni sul checkpoint
+            print(f"Informazioni sul checkpoint:")
+            if "epoch" in checkpoint:
+                print(f"Epoca: {checkpoint['epoch']}")
+            if "val_acc" in checkpoint:
+                print(f"Accuratezza di validazione: {checkpoint['val_acc']}")
+            if "classnames" in checkpoint:
+                print(f"Numero di classi: {len(checkpoint['classnames'])}")
+            
+            # Ottieni il bottleneck_dim corretto dal checkpoint o dagli argomenti salvati
+            if "args" in checkpoint and hasattr(checkpoint["args"], "bottleneck_dim"):
+                bottleneck_dim = checkpoint["args"].bottleneck_dim
+            else:
+                # Deduce la dimensione dal primo parametro del modello
+                first_layer_shape = next(iter(checkpoint["model_state_dict"].items()))[1].shape
+                if len(first_layer_shape) == 2:  # È un layer lineare
+                    if "down_project.weight" in checkpoint["model_state_dict"]:
+                        bottleneck_dim = checkpoint["model_state_dict"]["down_project.weight"].shape[0]
+                    else:
+                        bottleneck_dim = 64  # Default fallback
+                else:
+                    bottleneck_dim = 64  # Default fallback
+
+            print(f"Creazione del modello CLIPWithAdapter con bottleneck_dim={bottleneck_dim}")
+            adapted_model = CLIPWithAdapter(clip_model, bottleneck_dim=bottleneck_dim).to(device)
+            
+            # Carica lo state_dict nel modello adattato
+            if "model_state_dict" in checkpoint:
+                print("Caricamento del modello dallo state_dict...")
+                # Carica solo i parametri dell'adapter, non tutto il modello
+                adapted_model.image_adapter.load_state_dict(checkpoint["model_state_dict"])
+                print(f"Modello adattato caricato con successo da {adapted_path}")
+            else:
+                print("ATTENZIONE: Il checkpoint non contiene model_state_dict. Tentativo di caricamento diretto.")
+                try:
+                    # Prova a caricare direttamente, assumendo che lo stato sia dell'adapter
+                    adapted_model.image_adapter.load_state_dict(checkpoint)
+                except Exception as e:
+                    print(f"Errore nel caricamento diretto: {e}")
+                    print("Utilizzo del modello con adapter non inizializzato.")
+            
+            # Restituisci il modello adattato, non il modello CLIP base
+            return adapted_model, preprocess
+        else:
+            print(f"ATTENZIONE: Modello adattato non trovato in {adapted_path}, utilizzo del modello base non adattato.")
+            return clip_model, preprocess
+    
+    # Codice originale per gli altri modelli...
+    # ...existing code...
+    
     if name in _MODELS:
         model_path = _download(_MODELS[name], download_root or os.path.expanduser("~/.cache/clip"))
     elif os.path.isfile(name):

@@ -5,6 +5,20 @@ import torch.nn.functional as F
 from tqdm import tqdm
 
 
+
+def ensure_float32_tensors(*tensors):
+    """
+    Converte tutti i tensori in input in float32 e restituisce una tupla con i tensori convertiti.
+    Se un elemento non è un tensore, lo lascia inalterato.
+    """
+    result = []
+    for t in tensors:
+        if isinstance(t, torch.Tensor):
+            result.append(t.to(dtype=torch.float32))
+        else:
+            result.append(t)
+    return tuple(result) if len(result) > 1 else result[0]
+
 def cls_acc(output, target, topk=1):
     pred = output.topk(topk, 1, True, True)[1].t()
     correct = pred.eq(target.view(1, -1).expand_as(pred))
@@ -228,4 +242,51 @@ def save_log(cfg, metric:dict):
         for key in metric.keys():
             with open(f'outputs/{key}.txt', 'a') as f:
                 f.write(f"{cfg['dataset']}_{cfg['shots']}_{cfg['seed']}: {metric[key]}\n")
-                
+
+
+def calculate_metrics(outputs, targets):
+    """
+    Calcola accuratezza, precision, recall e F1 score (macro average)
+    
+    Args:
+        outputs: tensore di logits predetti [num_samples, num_classes]
+        targets: tensore di etichette [num_samples]
+    
+    Returns:
+        dict: dizionario con le metriche calcolate
+    """
+    import torch
+    from sklearn.metrics import precision_score, recall_score, f1_score
+    
+    # Convertiamo le predizioni in classi
+    _, preds = outputs.topk(1, 1, True, True)
+    preds = preds.squeeze().cpu().numpy()
+    targets = targets.cpu().numpy()
+    
+    # Calcoliamo l'accuratezza
+    accuracy = (preds == targets).mean() * 100.0
+    
+    # Calcoliamo precision, recall e F1 (macro)
+    precision_macro = precision_score(targets, preds, average='macro', zero_division=0) * 100.0
+    recall_macro = recall_score(targets, preds, average='macro', zero_division=0) * 100.0
+    f1_macro = f1_score(targets, preds, average='macro', zero_division=0) * 100.0
+    
+    return {
+        'accuracy': accuracy,
+        'precision_macro': precision_macro,
+        'recall_macro': recall_macro,
+        'f1_macro': f1_macro
+    }
+
+# Versione originale modificata di cls_acc per restituire sia l'accuratezza che le predizioni
+def cls_acc_with_preds(output, target, topk=1):
+    """
+    Calcola l'accuratezza e restituisce anche le predizioni
+    """
+    _, pred = output.topk(topk, 1, True, True)
+    pred = pred.t()
+    correct = pred.eq(target.view(1, -1).expand_as(pred))
+    acc = correct[0].float().sum().item() / target.size(0) * 100.0
+    
+    # Restituisce sia l'accuratezza che l'output completo per il calcolo di altre metriche
+    return acc, output

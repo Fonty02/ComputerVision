@@ -123,8 +123,6 @@ L'iperparametro $\alpha$ bilancia il contributo delle due modalità guidate. Vie
 TIMO-S è una variante potenziata di TIMO. Mentre TIMO ottimizza principalmente $\alpha$, TIMO-S estende l'ottimizzazione includendo una grid search anche per gli iperparametri $\beta$ (per TGI, che controlla il grado di guida testuale per l'immagine) e $\gamma$ (per IGT, che controlla il grado di guida visiva per il testo) su un set di validazione.
 Questo permette di trovare una configurazione più robusta e ottimale per il grado di guida reciproca, portando a prestazioni ulteriormente migliorate. Il paper riporta che TIMO-S supera i metodi training-required esistenti con un costo computazionale significativamente inferiore.
 
-
-
 \section{Dataset Utilizzato}
 \label{sec:dataset}
 Per la valutazione di TIMO e TIMO-S, è stato impiegato un dataset derivato da una collezione più ampia di opere d'arte, comunemente nota come ArtGraph. La creazione del dataset specifico per gli esperimenti ha seguito una logica precisa per garantire la pertinenza e la gestibilità nell'ambito del few-shot learning.
@@ -167,101 +165,250 @@ Nel contesto di modelli multimodali come CLIP, e quindi anche per TIMO, i \textb
 \end{itemize}
 In sintesi, i prompt generati da LLM forniscono la necessaria controparte testuale che permette a modelli come CLIP di comprendere e classificare le immagini degli artisti, e costituiscono una componente essenziale per le strategie di adattamento e ottimizzazione impiegate in metodi avanzati come TIMO.
 
-
-
-
 \section{Risultati}
-\subsection{Tabella}
-\begin{table}[H] % <--- MODIFICA QUI DA [htbp] A [H]
+
+\subsection{Tabelle dei Risultati}
+Vengono presentate di seguito le tabelle riassuntive delle performance medie ottenute sul dataset ArtGraph, valutando Accuratezza, Precisione Macro, Recall Macro e F1-Score Macro.
+
+\begin{table}[H]
     \centering
     \caption{Risultati Medi di Accuratezza (\%) su ArtGraph. Ogni valore rappresenta la media delle accuratezze ottenute su 10 diversi seed per la specifica combinazione di Backbone, Numero di Shots e Modello di Adattamento.}   
     \sisetup{
-  round-mode=places,
-  round-precision=2,
-  output-decimal-marker={,},
-  table-format=2.2 % Ho rimosso la virgola finale qui, non era necessaria
-}
-    \resizebox{\textwidth}{!}{% Riduci la tabella se è troppo larga per la pagina
+      round-mode=places,
+      round-precision=2,
+      output-decimal-marker={,},
+      table-format=2.2 
+    }
+    \resizebox{\textwidth}{!}{%
     \begin{tabular}{@{}lcSSSSS@{}}
     \toprule
     Backbone & Shots & {\rotatebox{90}{APE}} & {\rotatebox{90}{GDA\_CLIP}} & {\rotatebox{90}{TIMO}} & {\rotatebox{90}{TIMO\_S}} & {\rotatebox{90}{Tip\_Adapter}} \\
     \midrule
     \multirow{5}{*}{RN101}
-    & 1  & 42.39 & 41.68 & 45.90 & 45.90 & 38.47 \\
-    & 2  & 47.71 & 46.88 & 47.52 & 49.20 & 41.10 \\
-    & 4  & 52.39 & 55.66 & 57.89 & 58.26 & 45.44 \\
-    & 8  & 57.31 & 64.07 & 64.62 & 65.02 & 49.76 \\
-    & 16 & 59.05 & 71.28 & 71.13 & 71.31 & 54.25 \\
+    & 1  & 42.354740061162076 & 41.681957186544345 & 45.90214067278288 & 45.90214067278288 & 38.53211009174312 \\
+    & 2  & 47.73700305810398 & 46.88073394495413 & 47.522935779816514 & 49.20489296636086 & 41.13149847094802 \\
+    & 4  & 52.41590214067278 & 55.657492354740064 & 57.88990825688073 & 58.25688073394495 & 45.50458715596331 \\
+    & 8  & 57.30886850152905 & 64.06727828746178 & 64.61773700305811 & 65.01529051987768 & 49.78593272171254 \\
+    & 16 & 59.1131498470948 & 71.28440366972477 & 71.131498470948 & 71.31498470948011 & 54.189602446483185 \\
     \midrule
     \multirow{5}{*}{RN50}
-    & 1  & 44.28 & 41.41 & 43.88 & 46.09 & 38.65 \\
-    & 2  & 47.22 & 47.22 & 47.89 & 48.69 & 40.61 \\
-    & 4  & 53.85 & 55.54 & 56.48 & 57.28 & 44.95 \\
-    & 8  & 58.10 & 63.61 & 65.26 & 65.05 & 48.50 \\
-    & 16 & 62.17 & 73.06 & 73.36 & 73.49 & 52.54 \\
+    & 1  & 44.31192660550458 & 41.406727828746185 & 43.883792048929664 & 45.963302752293586 & 38.654434250764524 \\
+    & 2  & 47.09480122324159 & 47.217125382263 & 47.88990825688073 & 48.65443425076453 & 40.73394495412844 \\
+    & 4  & 53.883792048929664 & 55.535168195718654 & 56.48318042813455 & 57.2782874617737 & 44.95412844036697 \\
+    & 8  & 58.103975535168196 & 63.608562691131496 & 65.25993883792049 & 65.07645259938838 & 48.440366972477065 \\
+    & 16 & 62.171253822629964 & 73.05810397553516 & 73.36391437308869 & 73.45565749235473 & 52.90519877675841 \\
     \midrule
     \multirow{5}{*}{ViT-B/16}
-    & 1  & 50.89 & 48.93 & 52.39 & 53.58 & 47.06 \\
-    & 2  & 54.74 & 55.54 & 54.43 & 56.21 & 49.14 \\
-    & 4  & 60.28 & 63.15 & 64.25 & 64.74 & 52.57 \\
-    & 8  & 63.82 & 70.73 & 71.41 & 71.35 & 58.23 \\
-    & 16 & 68.47 & 77.71 & 78.10 & 78.01 & 62.66 \\
+    & 1  & 50.8868501529052 & 48.92966360856269 & 52.38532110091743 & 53.57798165137615 & 47.06422018348624 \\
+    & 2  & 54.77064220183486 & 55.535168195718654 & 54.434250764526 & 56.20795107033639 & 49.14373088685015 \\
+    & 4  & 60.21406727828746 & 63.149847094801224 & 64.25076452599389 & 64.74006116207951 & 52.59938837920489 \\
+    & 8  & 63.82262996941896 & 70.73394495412843 & 71.40672782874618 & 71.34556574923548 & 58.1651376146789 \\
+    & 16 & 68.47094801223241 & 77.70642201834862 & 78.10397553516819 & 78.01223241590215 & 62.69113149847095 \\
     \midrule
     \multirow{5}{*}{ViT-B/32}
-    & 1  & 45.41 & 43.36 & 47.52 & 48.13 & 41.47 \\
-    & 2  & 48.17 & 47.34 & 49.48 & 49.36 & 42.54 \\
-    & 4  & 55.02 & 56.67 & 59.33 & 59.45 & 45.90 \\
-    & 8  & 59.91 & 63.46 & 64.46 & 64.43 & 49.97 \\
-    & 16 & 62.91 & 70.43 & 71.28 & 71.28 & 56.97 \\
+    & 1  & 45.50458715596331 & 43.36391437308869 & 47.522935779816514 & 48.13455657492355 & 41.37614678899082 \\
+    & 2  & 48.13455657492355 & 47.3394495412844 & 49.48012232415902 & 49.357798165137616 & 42.50764525993884 \\
+    & 4  & 54.98470948012233 & 56.666666666666664 & 59.32721712538226 & 59.44954128440368 & 45.90214067278288 \\
+    & 8  & 59.87767584097859 & 63.45565749235474 & 64.46483180428135 & 64.434250764526 & 50.0 \\
+    & 16 & 62.8440366972477 & 70.42813455657492 & 71.28440366972477 & 71.28440366972477 & 56.91131498470948 \\
     \bottomrule
     \end{tabular}%
     } % Fine resizebox
-    \label{tab:artgraph_results_avg_provided}
+    \label{tab:artgraph_results_avg_accuracy}
 \end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Risultati Medi di Precisione Macro (\%) su ArtGraph. Ogni valore rappresenta la media dei punteggi di Precisione Macro ottenuti su 10 diversi seed.}
+    \sisetup{
+      round-mode=places,
+      round-precision=2,
+      output-decimal-marker={,},
+      table-format=2.2 
+    }
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lcSSSSS@{}}
+    \toprule
+    Backbone & Shots & {\rotatebox{90}{APE}} & {\rotatebox{90}{GDA\_CLIP}} & {\rotatebox{90}{TIMO}} & {\rotatebox{90}{TIMO\_S}} & {\rotatebox{90}{Tip\_Adapter}} \\
+    \midrule
+    \multirow{5}{*}{RN101}
+    & 1  & 43.05135379900868 & 40.255692117024786 & 46.962843869093874 & 45.897433485421125 & 35.89954348624519 \\
+    & 2  & 50.0695614656528 & 48.5759032360393 & 49.0394007034632 & 50.435037933199695 & 38.65352921352026 \\
+    & 4  & 56.03590620819239 & 59.27504234438735 & 61.51508474164724 & 61.757158350908355 & 44.32104039688994 \\
+    & 8  & 60.83930218236285 & 66.49949616355866 & 67.57454004329006 & 67.76104797979798 & 49.85838001468845 \\
+    & 16 & 62.74830031080031 & 73.71490575396825 & 73.55195932539682 & 73.5905257936508 & 55.84780397674651 \\
+    \midrule
+    \multirow{5}{*}{RN50}
+    & 1  & 44.419927192905135 & 38.86063532074466 & 44.3172037147221 & 44.472965965564654 & 30.849328670644944 \\
+    & 2  & 47.769854073622454 & 47.89951399873275 & 48.42613078657406 & 48.7832323756037 & 32.99438541979177 \\
+    & 4  & 54.925460304838204 & 58.23556564962816 & 59.137366973304474 & 59.7717511076886 & 39.15567157640977 \\
+    & 8  & 58.93553408397158 & 67.18288297010723 & 68.42943948412699 & 68.2510333994709 & 45.25988407876953 \\
+    & 16 & 63.6503351972102 & 76.11747685185185 & 76.58767823611574 & 76.51931980056979 & 51.89539511414512 \\
+    \midrule
+    \multirow{5}{*}{ViT-B/16}
+    & 1  & 53.06164146830265 & 48.31639212081022 & 53.38168602231102 & 54.10456094831095 & 43.101542041424494 \\
+    & 2  & 57.12861586495004 & 57.81490153365153 & 55.799199642949645 & 57.718036593036594 & 47.71252612286378 \\
+    & 4  & 62.98829787111036 & 66.03974237567988 & 66.32724942881194 & 67.12920499639249 & 52.45289975565227 \\
+    & 8  & 66.83949990981242 & 73.74673445767196 & 74.20258763227513 & 74.08316798941799 & 59.642196440631515 \\
+    & 16 & 71.46413915945166 & 80.36995701058201 & 80.62251984126983 & 80.42427248677248 & 65.81936235061235 \\
+    \midrule
+    \multirow{5}{*}{ViT-B/32}
+    & 1  & 44.49598720485669 & 40.33418190265617 & 46.15219719516595 & 46.50982929107929 & 37.24655006111807 \\
+    & 2  & 49.20309281200825 & 46.704966597550765 & 50.1168617642713 & 49.685001919376916 & 38.206107919464145 \\
+    & 4  & 55.54039002085877 & 58.022387334887334 & 60.5360833123991 & 60.76066313520357 & 41.82590392654731 \\
+    & 8  & 61.41135687229437 & 66.19184027777779 & 67.0110367063492 & 66.9660330988456 & 47.78336998649498 \\
+    & 16 & 63.81056472462723 & 72.49340879028378 & 73.50190145502646 & 73.33304398148148 & 56.986363462925965 \\
+    \bottomrule
+    \end{tabular}%
+    } % Fine resizebox
+    \label{tab:artgraph_results_precision_macro}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Risultati Medi di Recall Macro (\%) su ArtGraph. Ogni valore rappresenta la media dei punteggi di Recall Macro ottenuti su 10 diversi seed.}
+    \sisetup{
+      round-mode=places,
+      round-precision=2,
+      output-decimal-marker={,},
+      table-format=2.2 
+    }
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lcSSSSS@{}}
+    \toprule
+    Backbone & Shots & {\rotatebox{90}{APE}} & {\rotatebox{90}{GDA\_CLIP}} & {\rotatebox{90}{TIMO}} & {\rotatebox{90}{TIMO\_S}} & {\rotatebox{90}{Tip\_Adapter}} \\
+    \midrule
+    \multirow{5}{*}{RN101}
+    & 1  & 42.03125 & 41.25868055555555 & 45.47743055555556 & 45.46875 & 38.081597222222214 \\
+    & 2  & 47.421875 & 46.31944444444444 & 46.979166666666664 & 48.68923611111111 & 40.77256944444444 \\
+    & 4  & 52.41319444444444 & 55.3125 & 57.46527777777777 & 57.78645833333333 & 45.12152777777777 \\
+    & 8  & 57.25694444444444 & 63.628472222222214 & 64.22743055555556 & 64.64409722222221 & 49.52256944444444 \\
+    & 16 & 58.97569444444444 & 70.72916666666666 & 70.52083333333334 & 70.703125 & 54.07118055555556 \\
+    \midrule
+    \multirow{5}{*}{RN50}
+    & 1  & 43.94097222222222 & 40.76388888888889 & 43.51562499999999 & 45.53819444444444 & 38.37673611111111 \\
+    & 2  & 46.64930555555556 & 46.41493055555555 & 47.31770833333333 & 47.951388888888886 & 40.32986111111111 \\
+    & 4  & 53.71527777777777 & 54.96527777777777 & 55.90277777777777 & 56.744791666666664 & 44.375 \\
+    & 8  & 57.96875 & 63.19444444444444 & 64.93055555555556 & 64.74826388888889 & 47.99479166666667 \\
+    & 16 & 61.953125 & 72.578125 & 72.94270833333334 & 73.03819444444444 & 52.369791666666664 \\
+    \midrule
+    \multirow{5}{*}{ViT-B/16}
+    & 1  & 50.416666666666664 & 48.26388888888889 & 51.744791666666664 & 52.760416666666664 & 46.467013888888886 \\
+    & 2  & 54.35763888888889 & 54.887152777777786 & 53.68923611111111 & 55.503472222222214 & 48.44618055555556 \\
+    & 4  & 59.947916666666664 & 62.760416666666664 & 63.73263888888889 & 64.23611111111111 & 52.005208333333336 \\
+    & 8  & 63.550347222222214 & 70.46006944444444 & 71.09375 & 71.06770833333333 & 57.734375 \\
+    & 16 & 68.125 & 77.34375 & 77.75173611111111 & 77.56944444444443 & 61.91840277777777 \\
+    \midrule
+    \multirow{5}{*}{ViT-B/32}
+    & 1  & 44.947916666666664 & 42.717013888888886 & 46.796875 & 47.38715277777777 & 40.95486111111111 \\
+    & 2  & 47.717013888888886 & 46.5625 & 48.72395833333333 & 48.697916666666664 & 42.10069444444444 \\
+    & 4  & 54.51388888888889 & 56.03298611111111 & 58.68923611111111 & 58.784722222222214 & 45.347222222222214 \\
+    & 8  & 59.583333333333336 & 63.090277777777786 & 64.14930555555556 & 64.08854166666667 & 49.40104166666667 \\
+    & 16 & 62.369791666666664 & 69.74826388888889 & 70.76388888888889 & 70.72048611111111 & 56.041666666666664 \\
+    \bottomrule
+    \end{tabular}%
+    } % Fine resizebox
+    \label{tab:artgraph_results_recall_macro}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Risultati Medi di F1-Score Macro (\%) su ArtGraph. Ogni valore rappresenta la media dei punteggi di F1-Score Macro ottenuti su 10 diversi seed.}
+    \sisetup{
+      round-mode=places,
+      round-precision=2,
+      output-decimal-marker={,},
+      table-format=2.2 
+    }
+    \resizebox{\textwidth}{!}{%
+    \begin{tabular}{@{}lcSSSSS@{}}
+    \toprule
+    Backbone & Shots & {\rotatebox{90}{APE}} & {\rotatebox{90}{GDA\_CLIP}} & {\rotatebox{90}{TIMO}} & {\rotatebox{90}{TIMO\_S}} & {\rotatebox{90}{Tip\_Adapter}} \\
+    \midrule
+    \multirow{5}{*}{RN101}
+    & 1  & 38.22480832517401 & 35.92247954009474 & 41.82578425455264 & 41.38888866629744 & 32.543459168991355 \\
+    & 2  & 44.15010495593747 & 42.21386966248248 & 44.38232820885685 & 45.60103994249215 & 35.061724463608776 \\
+    & 4  & 49.124615475394094 & 52.796017736828766 & 55.09538485322154 & 55.41959194808459 & 39.507916497388386 \\
+    & 8  & 53.94211276912515 & 61.86328598552863 & 62.6860992017242 & 63.04887936137936 & 43.94208926205231 \\
+    & 16 & 55.59800859203433 & 69.58837574462575 & 69.40211524586525 & 69.57427641802641 & 49.02615712230566 \\
+    \midrule
+    \multirow{5}{*}{RN50}
+    & 1  & 39.75858247986247 & 35.32592723652289 & 40.291962922018065 & 41.068853859594746 & 30.917586834729537 \\
+    & 2  & 42.37257063040732 & 42.46836105001656 & 43.723073312257746 & 43.98020758892953 & 32.581819715473515 \\
+    & 4  & 49.72670853363388 & 52.661093502086146 & 53.95745567427068 & 54.54884865270894 & 37.18713264738134 \\
+    & 8  & 54.03185332505185 & 61.57093196155696 & 63.66344477281977 & 63.454451220076216 & 41.19705450508932 \\
+    & 16 & 58.358082311207305 & 71.62958627021126 & 72.09026308658662 & 72.10209673904527 & 46.3837157863135 \\
+    \midrule
+    \multirow{5}{*}{ViT-B/16}
+    & 1  & 46.86134621487735 & 43.44192866754061 & 48.77821810452905 & 49.376949866300784 & 40.265990582989424 \\
+    & 2  & 51.217461035016186 & 51.642804820702466 & 50.99345978436052 & 52.442428503549834 & 42.90267840819312 \\
+    & 4  & 57.061529981349054 & 60.658542964173776 & 61.60608026233026 & 62.13342964905464 & 46.927358946200854 \\
+    & 8  & 60.74658443408443 & 69.19408542846043 & 69.86315767565767 & 69.7550609113109 & 53.409287271322874 \\
+    & 16 & 65.6820766039516 & 76.49890445202945 & 76.9664797008547 & 76.60665607540606 & 58.83030334317099 \\
+    \midrule
+    \multirow{5}{*}{ViT-B/32}
+    & 1  & 40.71803339992194 & 36.725527141703616 & 42.78675947232448 & 42.98310193346958 & 34.796268284948624 \\
+    & 2  & 43.91984343271108 & 41.871811822687405 & 45.341659391412676 & 45.2947052177412 & 35.742660825823094 \\
+    & 4  & 50.561446845817 & 52.93884228856656 & 55.79287928506678 & 55.84903695841196 & 39.00138294439765 \\
+    & 8  & 56.005300833425835 & 61.37481430266357 & 62.30416747604247 & 62.29904297091797 & 43.660447463756284 \\
+    & 16 & 58.52284058534059 & 67.89625652125652 & 69.09418532856033 & 68.97160709660709 & 51.17863151962416 \\
+    \bottomrule
+    \end{tabular}%
+    } % Fine resizebox
+    \label{tab:artgraph_results_f1_macro}
+\end{table}
+
 \subsection{Analisi dei Risultati}
 L'analisi dei risultati medi, ottenuti mediando le performance su 10 diversi seed per ciascuna configurazione, permette di delineare le seguenti osservazioni chiave:
 
 \begin{enumerate}
     \item \textbf{Impatto del Numero di Shots (Campioni di Addestramento):}
     \begin{itemize}[label=\textbullet, leftmargin=*]
-        \item Si osserva un incremento consistente dell'accuratezza media per tutti i backbone e modelli di adattamento all'aumentare del numero di ``shots''. Questo conferma l'efficacia di fornire più esempi specifici per il task target.
+        \item Si osserva un incremento consistente delle performance (Accuratezza, Precisione Macro, Recall Macro, F1-Score Macro) per tutti i backbone e modelli di adattamento all'aumentare del numero di ``shots''. Questo conferma l'efficacia di fornire più esempi specifici per il task target.
         \item I guadagni di performance sono generalmente più marcati nei passaggi iniziali (es. da 1 a 2 shots, o da 2 a 4 shots) rispetto agli incrementi con un numero maggiore di campioni (es. da 8 a 16 shots), suggerendo rendimenti decrescenti ma comunque positivi.
     \end{itemize}
 
     \item \textbf{Performance dei Backbone Pre-addestrati:}
     \begin{itemize}[label=\textbullet, leftmargin=*]
-        \item Il backbone \texttt{ViT-B/16} emerge come il più performante in maniera predominante, raggiungendo le accuratezze più elevate in quasi tutte le condizioni, specialmente con 16 shots dove supera il \SI{78}{\percent} con i migliori metodi di adattamento.
-        \item \texttt{ViT-B/32} si posiziona come il secondo miglior backbone, superando i modelli ResNet ma rimanendo generalmente al di sotto di \texttt{ViT-B/16}, indicando un possibile vantaggio delle patch di dimensioni inferiori per questo task.
-        \item I backbone \texttt{RN50} e \texttt{RN101} mostrano prestazioni competitive tra loro, ma sono tendenzialmente superati dai modelli ViT. La differenza tra \texttt{RN50} e \texttt{RN101} non appare così significativa come quella tra i ViT e i ResNet. In alcune configurazioni a 16 shots, \texttt{RN50} eguaglia o supera leggermente \texttt{RN101}.
+        \item Il backbone \texttt{ViT-B/16} emerge come il più performante in maniera predominante su tutte le metriche, raggiungendo i valori più elevati in quasi tutte le condizioni.
+        \item \texttt{ViT-B/32} si posiziona generalmente come il secondo miglior backbone, superando i modelli ResNet ma rimanendo al di sotto di \texttt{ViT-B/16}.
+        \item I backbone \texttt{RN50} e \texttt{RN101} mostrano prestazioni competitive tra loro, ma sono tendenzialmente superati dai modelli ViT.
     \end{itemize}
 
-    \item \textbf{Efficacia dei Modelli di Adattamento Few-Shot:}
+    \item \textbf{Efficacia dei Modelli di Adattamento Few-Shot (basata sull'Accuratezza):}
     \begin{itemize}[label=\textbullet, leftmargin=*]
-        \item \texttt{Tip\_Adapter} registra costantemente le prestazioni più basse, fungendo da baseline ma venendo nettamente superato dagli altri metodi.
+        \item \texttt{Tip\_Adapter} registra costantemente le prestazioni di accuratezza più basse, fungendo da baseline ma venendo nettamente superato dagli altri metodi.
         \item \texttt{APE} mostra un miglioramento rispetto a \texttt{Tip\_Adapter}, ma si colloca in una posizione intermedia.
-        \item I modelli \texttt{GDA\_CLIP}, \texttt{TIMO} e \texttt{TIMO\_S} si dimostrano i più efficaci, contendendosi le prime posizioni.
+        \item I modelli \texttt{GDA\_CLIP}, \texttt{TIMO} e \texttt{TIMO\_S} si dimostrano i più efficaci in termini di accuratezza, contendendosi le prime posizioni.
             \begin{itemize}[label=\textendash, leftmargin=*]
-                \item \textit{Con pochi shots (1-shot):} \texttt{TIMO\_S} e \texttt{TIMO} tendono a mostrare un leggero vantaggio o a essere i migliori (es. \texttt{TIMO\_S} con \texttt{ViT-B/16} raggiunge \SI{53.58}{\percent}).
-                \item \textit{Con un numero maggiore di shots (specialmente 8 e 16):} Le performance di \texttt{GDA\_CLIP}, \texttt{TIMO} e \texttt{TIMO\_S} diventano molto ravvicinate. \texttt{TIMO} con \texttt{ViT-B/16} e 16 shots ottiene la performance più alta in assoluto (\SI{78.10}{\percent}), seguito da vicino da \texttt{TIMO\_S} e \texttt{GDA\_CLIP}.
+                \item \textit{Con pochi shots (1-shot):} \texttt{TIMO\_S} e \texttt{TIMO} tendono a mostrare un leggero vantaggio o a essere i migliori (es. \texttt{TIMO\_S} con \texttt{ViT-B/16} raggiunge \SI{53.58}{\percent} di accuratezza).
+                \item \textit{Con un numero maggiore di shots (specialmente 8 e 16):} Le performance di accuratezza di \texttt{GDA\_CLIP}, \texttt{TIMO} e \texttt{TIMO\_S} diventano molto ravvicinate. \texttt{TIMO} con \texttt{ViT-B/16} e 16 shots ottiene la performance di accuratezza più alta in assoluto (\SI{78.10}{\percent}), seguito da vicino da \texttt{TIMO\_S} e \texttt{GDA\_CLIP}.
             \end{itemize}
-        \item La differenza tra \texttt{TIMO} e \texttt{TIMO\_S} è generalmente minima, con \texttt{TIMO\_S} che a volte presenta un piccolo margine con un numero esiguo di dati.
+        \item La differenza di accuratezza tra \texttt{TIMO} e \texttt{TIMO\_S} è generalmente minima, con \texttt{TIMO\_S} che a volte presenta un piccolo margine con un numero esiguo di dati.
+    \end{itemize}
+    
+    \item \textbf{Analisi delle Metriche di Precisione Macro, Recall Macro e F1-Score Macro:}
+    \begin{itemize}[label=\textbullet, leftmargin=*]
+        \item \textbf{Tendenze Generali Consistenti:} Le metriche di Precisione Macro, Recall Macro e F1-Score Macro seguono tendenze generali molto simili a quelle osservate per l'accuratezza. Si registra un miglioramento delle prestazioni con l'aumento del numero di shots. Il backbone \texttt{ViT-B/16} si conferma generalmente il più performante, e i metodi di adattamento \texttt{TIMO}, \texttt{TIMO\_S} e \texttt{GDA\_CLIP} rimangono i leader, mentre \texttt{Tip\_Adapter} è costantemente il meno performante e \texttt{APE} si posiziona a un livello intermedio.
+        \item \textbf{Precisione vs. Recall:} Per molti dei metodi e backbone più performanti, specialmente con un numero elevato di shots, i valori di Precisione Macro tendono ad essere leggermente superiori a quelli di Recall Macro. Ad esempio, con \texttt{ViT-B/16} e 16 shots, \texttt{TIMO} ottiene una Precisione Macro del \SI{80.62}{\percent} e un Recall Macro del \SI{77.75}{\percent}. Questo suggerisce che i modelli sono, in media, leggermente più conservativi, preferendo evitare falsi positivi a costo di qualche falso negativo in più.
+        \item \textbf{F1-Score Macro come Bilanciamento:} L'F1-Score Macro, che bilancia Precisione e Recall, vede anch'esso \texttt{TIMO}, \texttt{TIMO\_S} e \texttt{GDA\_CLIP} come i metodi migliori. Con \texttt{ViT-B/16} e 16 shots, \texttt{TIMO} raggiunge l'F1-Score Macro più elevato (\SI{76.97}{\percent}), seguito da \texttt{TIMO\_S} (\SI{76.61}{\percent}) e \texttt{GDA\_CLIP} (\SI{76.50}{\percent}). Questi valori sono tipicamente leggermente inferiori alle rispettive accuratezze quando precisione e recall non sono perfettamente bilanciate.
+        \item \textbf{Performance Relative di TIMO e TIMO\_S:} Le differenze tra \texttt{TIMO} e \texttt{TIMO\_S} rimangono minime anche per queste metriche, con variazioni marginali a seconda della configurazione specifica, rispecchiando quanto osservato per l'accuratezza.
+        \item \textbf{Gerarchia dei Metodi:} La gerarchia generale delle prestazioni dei metodi di adattamento (\texttt{Tip\_Adapter} $<$ \texttt{APE} $<$ \{\texttt{GDA\_CLIP}, \texttt{TIMO}, \texttt{TIMO\_S}\}) è sostanzialmente mantenuta attraverso tutte le metriche considerate.
     \end{itemize}
 
-    \item \textbf{Combinazioni Ottimali e Performance Massime:}
+    \item \textbf{Combinazioni Ottimali e Performance Massime (Considerando Tutte le Metriche):}
     \begin{itemize}[label=\textbullet, leftmargin=*]
-        \item Le accuratezze più elevate si ottengono combinando il backbone \texttt{ViT-B/16} con 16 shots e i modelli di adattamento \texttt{TIMO}, \texttt{TIMO\_S} o \texttt{GDA\_CLIP}, superando la soglia del \SI{78}{\percent}.
-        \item Anche con 8 shots, la combinazione di \texttt{ViT-B/16} con questi tre modelli di adattamento permette di raggiungere o superare il \SI{70}{\percent} -- \SI{71}{\percent} di accuratezza, indicando una buona efficienza dei campioni.
+        \item Le performance più elevate su tutte le metriche si ottengono combinando il backbone \texttt{ViT-B/16} con 16 shots e i modelli di adattamento \texttt{TIMO}, \texttt{TIMO\_S} o \texttt{GDA\_CLIP}. Ad esempio, \texttt{TIMO} con \texttt{ViT-B/16} a 16 shots raggiunge Accuratezza del \SI{78.10}{\percent}, Precisione Macro del \SI{80.62}{\percent}, Recall Macro del \SI{77.75}{\percent} e F1-Score Macro del \SI{76.97}{\percent}.
+        \item Anche con 8 shots, la combinazione di \texttt{ViT-B/16} con questi tre modelli di adattamento permette di ottenere risultati molto competitivi su tutte le metriche (es. F1-Score Macro intorno al \SI{69}{\percent}-\SI{70}{\percent}).
     \end{itemize}
 
     \item \textbf{Considerazioni Generali:}
     \begin{itemize}[label=\textbullet, leftmargin=*]
         \item La mediazione dei risultati su 10 diversi seed fornisce una stima più robusta e affidabile delle prestazioni, riducendo l'impatto della variabilità stocastica.
-        \item Emerge chiaramente la sinergia tra un backbone potente (come \texttt{ViT-B/16}) e un metodo di adattamento few-shot efficace per massimizzare le performance.
-        \item Nonostante i miglioramenti, il dataset \texttt{artgraph} si conferma sfidante, con le migliori accuratezze che si attestano intorno al \SI{78}{\percent} anche con 16 shots, suggerendo margini per ulteriori progressi.
+        \item Emerge chiaramente la sinergia tra un backbone potente (come \texttt{ViT-B/16}) e un metodo di adattamento few-shot efficace per massimizzare le performance su un ampio spettro di metriche.
+        \item Nonostante i miglioramenti, il dataset \texttt{artgraph} si conferma sfidante, con le migliori performance che indicano margini per ulteriori progressi, specialmente nel bilanciamento tra precisione e recall.
     \end{itemize}
 \end{enumerate}
-
-
 
 \newpage
 \appendix

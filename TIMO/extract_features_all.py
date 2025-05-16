@@ -22,8 +22,6 @@ def extract_few_shot_feature(cfg, clip_model, train_loader_cache, norm=True):
     cache_keys = []
     cache_values = []
     with torch.no_grad():
-        #print device in use
-        print("Using device: ", torch.cuda.get_device_name(0))
         # Data augmentation for the cache model
         for augment_idx in range(cfg['augment_epoch']):
             train_features = []
@@ -69,11 +67,11 @@ def extract_few_shot_feature_all(cfg, clip_model, train_loader_cache, norm=True)
         labels = torch.cat(labels)
         
         if norm:
-            torch.save(vecs, cfg['cache_dir'] + "/" + f"{cfg['shots']}_vecs_f.pt")
-            torch.save(labels, cfg['cache_dir'] + "/" + f"{cfg['shots']}_labels_f.pt")
+            torch.save(vecs, cfg['cache_dir'] + "/" + f"{k}_vecs_f.pt")
+            torch.save(labels, cfg['cache_dir'] + "/" + f"{k}_labels_f.pt")
         else:
-            torch.save(vecs, cfg['cache_dir'] + "/" + f"{cfg['shots']}_vecs_f_unnormed.pt")
-            torch.save(labels, cfg['cache_dir'] + "/" + f"{cfg['shots']}_labels_f_unnormed.pt")
+            torch.save(vecs, cfg['cache_dir'] + "/" + f"{k}_vecs_f_unnormed.pt")
+            torch.save(labels, cfg['cache_dir'] + "/" + f"{k}_labels_f_unnormed.pt")
 
 
 def extract_val_test_feature(cfg, split, clip_model, loader, norm=True):
@@ -99,8 +97,8 @@ def extract_val_test_feature(cfg, split, clip_model, loader, norm=True):
 def extract_text_feature(cfg, classnames, prompt_paths, clip_model, template, use_gpt_prompt=True):
     prompts = []
     for prompt_path in prompt_paths:
-        with open(prompt_path, encoding='utf-8') as f:
-            prompts.append(json.load(f))
+        f = open(prompt_path)
+        prompts.append(json.load(f))
         
     with torch.no_grad():
         clip_weights = []
@@ -135,8 +133,8 @@ def extract_text_feature(cfg, classnames, prompt_paths, clip_model, template, us
 def extract_text_feature_all(cfg, classnames, prompt_paths, clip_model, template, norm=True):
     prompts = []
     for prompt_path in prompt_paths:
-        with open(prompt_path, encoding='utf-8') as f:
-            prompts.append(json.load(f))
+        f = open(prompt_path)
+        prompts.append(json.load(f))
         
     with torch.no_grad():
         clip_weights = []
@@ -176,7 +174,7 @@ def extract_text_feature_all(cfg, classnames, prompt_paths, clip_model, template
 
 if __name__ == '__main__':
     
-    for backbone in ["RN50"]:  # "RN101", "RN50", "ViT-B/32", "ViT-B/16", "RN50x16", "RN50x4"
+    for backbone in ["CustomRN50"]:  # "RN101", "RN50", "ViT-B/32", "ViT-B/16", "RN50x16", "RN50x4"
         for seed in [42]: # 
             clip_model, preprocess = clip.load(backbone)
             clip_model.eval()
@@ -202,6 +200,7 @@ if __name__ == '__main__':
                     
                     random.seed(seed)
                     torch.manual_seed(seed)
+                    
                     cfg['shots'] = k
                     print(cfg)
                     if set == 'imagenet':

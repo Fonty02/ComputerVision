@@ -1,4 +1,5 @@
 from utils import *
+from utils import calculate_metrics
 
 # ------------------------------------------ Training Free ------------------------------------------
 def run_tip_adapter(cfg, cache_keys, cache_values, val_features, val_labels, test_features, test_labels, clip_weights):
@@ -40,7 +41,9 @@ def run_tip_adapter(cfg, cache_keys, cache_values, val_features, val_labels, tes
     acc = cls_acc(tip_logits, test_labels)
     print("**** Tip-Adapter's test accuracy: {:.2f}. ****\n".format(acc))
     
-    return acc
+    # Calcola e restituisci tutte le metriche
+    metrics = calculate_metrics(tip_logits, test_labels)
+    return metrics
 
 
 def Refinement(cfg, new_cache_keys, cache_values, clip_weights, new_clip_weights,  
@@ -101,7 +104,9 @@ def Refinement(cfg, new_cache_keys, cache_values, clip_weights, new_clip_weights
     acc = cls_acc(ape_logits, test_labels)
     print("**** APE's test accuracy: {:.2f}. ****\n".format(acc))
     
-    return acc
+    # Calcola e restituisci tutte le metriche
+    metrics = calculate_metrics(ape_logits, test_labels)
+    return metrics
 
 
 def APE(cfg, cache_keys, cache_values, val_features, val_labels, test_features, test_labels, clip_weights, early_stop=False):
@@ -128,11 +133,11 @@ def APE(cfg, cache_keys, cache_values, val_features, val_labels, test_features, 
     if early_stop:
         return new_clip_weights, new_cache_keys, new_val_features, new_test_features
     
-    acc = Refinement(cfg, new_cache_keys, cache_values, clip_weights, new_clip_weights,  
+    metrics = Refinement(cfg, new_cache_keys, cache_values, clip_weights, new_clip_weights,  
         val_features, new_val_features, val_labels, 
         test_features, new_test_features, test_labels)
     
-    return acc
+    return metrics
 
 
 def GDA(vecs, labels, clip_weights, val_features, val_labels, alpha_shift=False):
@@ -201,7 +206,10 @@ def GDA_CLIP(cfg, val_features, val_labels, test_features, test_labels, clip_wei
         test_logits = 100. * test_features.float() @ clip_weights.float() + alpha * (test_features.float() @ W + b)
         notune_acc = cls_acc(test_logits, test_labels)    
         print("training-free acc:", notune_acc)
-    return notune_acc
+    
+    # Calcola e restituisci tutte le metriche
+    metrics = calculate_metrics(test_logits, test_labels)
+    return metrics
 
 
 def TIMO(cfg, val_features, val_labels, test_features, test_labels, 
@@ -264,11 +272,13 @@ def TIMO(cfg, val_features, val_labels, test_features, test_labels,
         test_logits = alpha * test_features.float() @ clip_weights.float() + \
             (test_features.float() @ best_weights[0] + best_weights[1]) 
         acc = cls_acc(test_logits, test_labels)    
-        
-        if is_print:
-            print("best_val_alpha: %s \t best_val_acc: %s" % (best_alpha, best_val_acc))
-            print("best_beta:", best_beta)
-            print("training-free acc:", acc)
-            print()
-
-    return acc
+    
+    if is_print:
+        print("best_val_alpha: %s \t best_val_acc: %s" % (best_alpha, best_val_acc))
+        print("best_beta:", best_beta)
+        print("training-free acc:", acc)
+        print()
+    
+    # Calcola e restituisci tutte le metriche
+    metrics = calculate_metrics(test_logits, test_labels)
+    return metrics

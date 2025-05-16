@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.18.0 (TeX Live 2025/dev/Debian)  (format=lualatex 2025.3.22)  16 MAY 2025 08:31
+This is LuaHBTeX, Version 1.18.0 (TeX Live 2025/dev/Debian)  (format=lualatex 2025.3.22)  16 MAY 2025 18:53
  system commands enabled.
  file:line:error style messages enabled.
 **/home/fonty/Scrivania/UniRepo/ComputerVision/TIMO/doc/main
@@ -714,7 +714,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 [4]
 
 [5]
-LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 157.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 155.
  (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
@@ -723,22 +723,29 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 
 [7]
 
-[8]
-Overfull \vbox (20.89201pt too high) has occurred while \output is active []
-
-
-
-[9
+[8
 warning  (pdf backend): ignoring duplicate destination with the name 'table.1'
 ]
 
-[10]
+[9
+warning  (pdf backend): ignoring duplicate destination with the name 'table.2'
+]
 
-[11]
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 272.
+[10
+warning  (pdf backend): ignoring duplicate destination with the name 'table.3'
+]
+
+[11
+warning  (pdf backend): ignoring duplicate destination with the name 'table.4'
+]
+
+[12]
+
+[13]
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on input line 419.
 
 
-[12
+[14
 Missing character: There is no ⊙ (U+2299) in font ec-lmr10!
 ] (./main.aux)
  ***********
@@ -746,23 +753,23 @@ LaTeX2e <2024-06-01> patch level 2
 L3 programming layer <2024-05-27>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: FF9B6E38415E5CF0CE4D6C967CFEFB08;3477.
+(rerunfilecheck)             Checksum: D3DFBF3E8541BC651AA76807B87BAA2B;3553.
 )
 
 Here is how much of LuaTeX's memory you used:
- 18075 strings out of 475915
- 125005,1977958 words of node,token memory allocated
- 590 words of node memory still in use:
-   7 hlist, 2 vlist, 2 rule, 5 glue, 4 kern, 1 glyph, 22 attribute, 58 glue_spec, 13 attribute_list, 1 write nodes
-   avail lists: 1:1,2:3724,3:243,4:104,5:525,6:54,7:8682,8:49,9:1538,10:14,11:1267
- 40302 multiletter control sequences out of 65536+600000
+ 18084 strings out of 475915
+ 125009,1977958 words of node,token memory allocated
+ 595 words of node memory still in use:
+   7 hlist, 2 vlist, 2 rule, 5 glue, 4 kern, 1 glyph, 22 attribute, 59 glue_spec, 13 attribute_list, 1 write nodes
+   avail lists: 2:7135,3:216,4:104,5:733,6:54,7:8715,8:49,9:2277,10:16,11:1267
+ 40305 multiletter control sequences out of 65536+600000
  56 fonts using 3742783 bytes
- 72i,12n,75p,692b,1087s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,12n,75p,692b,1129s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi6.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr17.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lmr9.pfb></usr/share/texmf/fonts/type1/public/lm/lmri10.pfb></usr/share/texmf/fonts/type1/public/lm/lmri8.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy6.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (12 pages, 314174 bytes).
+Output written on main.pdf (14 pages, 323563 bytes).
 
-PDF statistics: 252 PDF objects out of 1000 (max. 8388607)
- 218 compressed objects within 3 object streams
- 59 named destinations out of 1000 (max. 131072)
+PDF statistics: 265 PDF objects out of 1000 (max. 8388607)
+ 229 compressed objects within 3 object streams
+ 65 named destinations out of 1000 (max. 131072)
  121 words of extra memory for PDF output out of 10000 (max. 100000000)
 
