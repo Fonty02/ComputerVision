@@ -1,0 +1,20 @@
+{
+    "n_trials": 2,
+    "study_name": "styleadapter_hpo_20250519_112337",
+    "study_dir": "optuna_search_20250519_112337",
+    "storage": null,
+    "pruning": false,
+    "clip_model_name": "RN50",
+    "gram_style_projection_dim": 256,
+    "layers_for_gram_rn50": [
+        "layer2",
+        "layer3"
+    ],
+    "use_layernorm_adapter": true,
+    "epochs": 5,
+    "batch_size": 16,
+    "warmup_steps": 200,
+    "early_stopping_patience": 2,
+    "early_stopping_min_delta": 0.001,
+    "seed": 42
+}

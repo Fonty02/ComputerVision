@@ -379,7 +379,11 @@ def main():
     parser.add_argument('--use_layernorm_adapter', type=bool, default=True, help="Usa LayerNorm nel fusion adapter")
     parser.add_argument('--warmup_steps', type=int, default=200, help="Numero di warmup steps")
     parser.add_argument('--weight_decay', type=float, default=1e-5, help="Weight decay")
-
+    parser.add_argument('--early_stopping_patience', type=int, default=3, 
+                      help="Numero di epoche da attendere prima di terminare se non c'è miglioramento")
+    parser.add_argument('--early_stopping_min_delta', type=float, default=0.001, 
+                      help="Miglioramento minimo da considerare significativo per l'early stopping")
+    
     args = parser.parse_args()
     print(f"Argomenti: {args}")
 
@@ -462,6 +466,7 @@ def main():
     # Addestramento
     print(f"Inizio addestramento per {args.epochs} epoche...")
     best_val_acc = 0.0
+    no_improvement_count = 0
     
     for epoch in range(args.epochs):
         # Training
@@ -485,10 +490,19 @@ def main():
               f'Train Acc={train_acc:.4f}, Val Acc={val_acc:.4f}')
         sys.stdout.flush()
 
-        if val_acc > best_val_acc:
+        # Salvataggio modello e controllo early stopping
+        if val_acc - best_val_acc > args.early_stopping_min_delta:
             best_val_acc = val_acc
             save_model(model, epoch, val_acc, args, train_dataset.classnames)
             print(f'Miglior modello salvato con Val Acc: {best_val_acc:.4f}')
+            no_improvement_count = 0  # Reset del contatore
+        else:
+            no_improvement_count += 1
+            print(f'Nessun miglioramento per {no_improvement_count} epoche...')
+            
+            if no_improvement_count >= args.early_stopping_patience:
+                print(f'Early stopping attivato dopo {epoch+1} epoche.')
+                break
     
     print(f'Addestramento completato. Miglior Val Acc: {best_val_acc:.4f}')
     model._remove_gram_hooks()
@@ -576,6 +590,7 @@ def save_model(model, epoch, val_acc, args, classnames):
         save_dict['fusion_adapter_state_dict'] = model.fusion_adapter.state_dict()
     
     torch.save(save_dict, args.output_model)
+    print(f"Modello salvato in {args.output_model}")
 
 
 if __name__ == '__main__':
