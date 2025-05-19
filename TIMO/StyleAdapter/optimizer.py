@@ -22,8 +22,8 @@ def define_model_and_train(trial, args, device, train_loader, val_loader, text_t
     Restituisce la metrica di valutazione (accuratezza di validazione).
     """
     # Parametri da ottimizzare
-    fusion_bottleneck_dim = trial.suggest_categorical("fusion_bottleneck_dim", [64, 128, 256, 512])
-    lr = trial.suggest_float("lr", 1e-5, 1e-4, log=True)
+    fusion_bottleneck_dim = trial.suggest_categorical("fusion_bottleneck_dim", [64, 128,256])
+    lr = trial.suggest_float("lr", 1e-5, 1e-4, 1e-6, log=True)
     dropout_rate_adapter = trial.suggest_float("dropout_rate_adapter", 0.0, 0.3, step=0.1)
     weight_decay = trial.suggest_float("weight_decay", 1e-6, 1e-4, log=True)
     
@@ -191,7 +191,7 @@ def main():
     parser = argparse.ArgumentParser(description='Ottimizzazione iperparametri per StyleAdapter con Optuna')
     
     # Parametri per la ricerca degli iperparametri
-    parser.add_argument('--n_trials', type=int, default=20, help='Numero di trial per la ricerca')
+    parser.add_argument('--n_trials', type=int, default=10, help='Numero di trial per la ricerca')
     parser.add_argument('--study_name', type=str, default=f"styleadapter_hpo_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
     parser.add_argument('--study_dir', type=str, default=None, help='Directory per salvare i risultati dello studio')
     parser.add_argument('--storage', type=str, default=None, help='URL di storage per Optuna (es. sqlite:///example.db)')
@@ -204,10 +204,10 @@ def main():
     parser.add_argument('--use_layernorm_adapter', type=bool, default=True, help='Uso di LayerNorm negli adapter')
     
     # Parametri di training
-    parser.add_argument('--epochs', type=int, default=5, help='Numero massimo di epoche per trial')
-    parser.add_argument('--batch_size', type=int, default=16, help='Dimensione del batch')
-    parser.add_argument('--warmup_steps', type=int, default=200, help='Step di warmup per lo scheduler')
-    parser.add_argument('--early_stopping_patience', type=int, default=2, help='Patience per early stopping')
+    parser.add_argument('--epochs', type=int, default=100, help='Numero massimo di epoche per trial')
+    parser.add_argument('--batch_size', type=int, default=32, help='Dimensione del batch')
+    parser.add_argument('--warmup_steps', type=int, default=0, help='Step di warmup per lo scheduler')
+    parser.add_argument('--early_stopping_patience', type=int, default=5, help='Patience per early stopping')
     parser.add_argument('--early_stopping_min_delta', type=float, default=0.001, help='Minimo miglioramento per early stopping')
     parser.add_argument('--seed', type=int, default=42, help='Seed per riproducibilità')
     
