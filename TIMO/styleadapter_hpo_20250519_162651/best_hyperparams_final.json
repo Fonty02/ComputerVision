@@ -1,0 +1,8 @@
+{
+    "fusion_bottleneck_dim": 256,
+    "lr": 3.7319416501195484e-05,
+    "dropout_rate_adapter": 0.1,
+    "weight_decay": 7.185193716285857e-05,
+    "val_accuracy_from_search": 0.27025880356385235,
+    "best_trial_number": 0
+}
