@@ -24,11 +24,11 @@ def find_artgraph_path():
     # Lista di possibili percorsi relativi/assoluti da provare
     possible_paths = [
         # Percorso relativo al script
-        os.path.join(current_script_dir, "..", "$DATA", "artgraph"),
+        os.path.join(current_script_dir, "..", "$DATA", "artgraph_complementary"),
         # Percorso assoluto Windows (dal percorso del progetto)
-        os.path.join(os.path.dirname(os.path.dirname(current_script_dir)), "$DATA", "artgraph"),
+        os.path.join(os.path.dirname(os.path.dirname(current_script_dir)), "$DATA", "artgraph_complementary"),
         # Fallback sul path Linux precedente
-        os.path.abspath("/home/fonty/Scrivania/UniRepo/ComputerVision/TIMO/$DATA/artgraph")
+        os.path.abspath("/home/fonty/Scrivania/UniRepo/ComputerVision/TIMO/$DATA/artgraph_complementary")
     ]
     
     for path in possible_paths:
@@ -41,7 +41,7 @@ def find_artgraph_path():
 
 # --- Classe ArtgraphDataset (invariata) ---
 class ArtgraphDataset(data.Dataset):
-    def __init__(self, root_dir, split='train', transform=None, train_ratio=0.7, val_ratio=0.15, seed=42):
+    def __init__(self, root_dir, split='train', transform=None, train_ratio=0.7, val_ratio=0.3, seed=42):
         self.root_dir = root_dir
         self.transform = transform
         self.images_dir = os.path.join(root_dir, 'images')
@@ -54,7 +54,7 @@ class ArtgraphDataset(data.Dataset):
         if not self.classnames:
             raise FileNotFoundError(f"Nessuna sottocartella (classe/artista) trovata in {self.images_dir}")
             
-        self.class_to_idx = {cls_name: i for i, cls_name in enumerate(self.classnames)}
+        self.class_to_idx = {cls_name: i + 150 for i, cls_name in enumerate(self.classnames)} # MODIFICATO: le etichette partono da 150
         
         all_samples_by_class = {label: [] for label in self.class_to_idx.values()}
         
@@ -367,7 +367,7 @@ class CLIPWithStyleAdapter(nn.Module):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--clip_model_name', type=str, default='RN50', help="Nome del modello CLIP (es. RN50, ViT-B/32)")
-    parser.add_argument('--fusion_bottleneck_dim', type=int, default=128, help="Dimensione bottleneck del Fusion Adapter")
+    parser.add_argument('--fusion_bottleneck_dim', type=int, default=256, help="Dimensione bottleneck del Fusion Adapter")
     parser.add_argument('--gram_style_projection_dim', type=int, default=256, help="Dimensione totale delle Gram features proiettate")
     parser.add_argument('--layers_for_gram_rn50', type=str, nargs='+', default=['layer2', 'layer3'], help="Layer RN50 per Gram")
     parser.add_argument('--lr', type=float, default=5e-5, help="Learning rate")
@@ -482,12 +482,12 @@ def main():
         model.gram_layer_projections.eval() if model.gram_layer_projections else None
         model.fusion_adapter.eval()
         
-        val_acc = validate_model(model, val_loader, text_tokens, device, epoch, args.epochs)
+        val_loss, val_acc = validate_model(model, val_loader, text_tokens, criterion, device, epoch, args.epochs) # MODIFICATA QUESTA RIGA
         
         # Logging e salvataggio modello
         current_lr = optimizer.param_groups[0]['lr']
         print(f'Epoca {epoch+1}: LR={current_lr:.2e}, Train Loss={train_loss:.4f}, '
-              f'Train Acc={train_acc:.4f}, Val Acc={val_acc:.4f}')
+              f'Train Acc={train_acc:.4f}, Val Loss={val_loss:.4f}, Val Acc={val_acc:.4f}') # Aggiunto Val Loss al log
         sys.stdout.flush()
 
         # Salvataggio modello e controllo early stopping
@@ -526,7 +526,8 @@ def train_epoch(model, train_loader, text_tokens, criterion, optimizer, schedule
             continue
             
         # Loss e backward
-        loss = criterion(logits, labels)
+        adjusted_labels = labels - 150 # MODIFICATO: Aggiusta le etichette per la loss
+        loss = criterion(logits, adjusted_labels)
         if torch.isnan(loss):
             print(f"AVVISO: NaN nella loss, batch {i} saltato")
             continue
@@ -540,7 +541,7 @@ def train_epoch(model, train_loader, text_tokens, criterion, optimizer, schedule
         # Statistiche
         total_loss += loss.item() * images.size(0)
         preds = logits.argmax(dim=1)
-        correct += (preds == labels).sum().item()
+        correct += (preds == adjusted_labels).sum().item() # MODIFICATO: Confronta con etichette aggiustate
         total_samples += images.size(0)
     
     # Metriche medie
@@ -549,11 +550,13 @@ def train_epoch(model, train_loader, text_tokens, criterion, optimizer, schedule
     return avg_loss, avg_acc
 
 
-def validate_model(model, val_loader, text_tokens, device, epoch, total_epochs):
+def validate_model(model, val_loader, text_tokens, criterion, device, epoch, total_epochs): # Aggiunto criterion
     """Funzione di validazione"""
+    total_val_loss = 0 # Aggiunto per accumulare la loss
     correct = 0
     total_samples = 0
     
+    model.eval() # Assicurati che il modello sia in modalità valutazione
     with torch.no_grad():
         for images, labels in tqdm(val_loader, desc=f'Epoca {epoch+1}/{total_epochs} [Val]'):
             images, labels = images.to(device), labels.to(device)
@@ -563,15 +566,28 @@ def validate_model(model, val_loader, text_tokens, device, epoch, total_epochs):
             
             # Controllo NaN/Inf
             if torch.isnan(logits).any() or torch.isinf(logits).any():
-                print(f"AVVISO: NaN/Inf nei logits di validazione")
+                print(f"AVVISO: NaN/Inf nei logits di validazione, batch saltato")
+                # Potresti voler gestire diversamente, es. assegnando una loss alta o saltando l'aggiornamento delle metriche per questo batch
                 continue
                 
+            # Calcolo loss
+            adjusted_labels = labels - 150 
+            loss = criterion(logits, adjusted_labels)
+            if torch.isnan(loss):
+                print(f"AVVISO: NaN nella loss di validazione, batch saltato")
+                continue
+            
+            total_val_loss += loss.item() * images.size(0)
+            
             # Calcolo accuratezza
             preds = logits.argmax(dim=1)
-            correct += (preds == labels).sum().item()
+            correct += (preds == adjusted_labels).sum().item() 
             total_samples += images.size(0)
     
-    return correct / total_samples if total_samples > 0 else 0
+    avg_val_loss = total_val_loss / total_samples if total_samples > 0 else 0
+    accuracy = correct / total_samples if total_samples > 0 else 0
+    
+    return avg_val_loss, accuracy 
 
 
 def save_model(model, epoch, val_acc, args, classnames):

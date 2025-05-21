@@ -97,8 +97,8 @@ def extract_val_test_feature(cfg, split, clip_model, loader, norm=True):
 def extract_text_feature(cfg, classnames, prompt_paths, clip_model, template, use_gpt_prompt=True):
     prompts = []
     for prompt_path in prompt_paths:
-        f = open(prompt_path)
-        prompts.append(json.load(f))
+        with open(prompt_path, 'r', encoding='utf-8') as f:
+            prompts.append(json.load(f))
         
     with torch.no_grad():
         clip_weights = []
@@ -133,8 +133,8 @@ def extract_text_feature(cfg, classnames, prompt_paths, clip_model, template, us
 def extract_text_feature_all(cfg, classnames, prompt_paths, clip_model, template, norm=True):
     prompts = []
     for prompt_path in prompt_paths:
-        f = open(prompt_path)
-        prompts.append(json.load(f))
+        with open(prompt_path, 'r', encoding='utf-8') as f:
+            prompts.append(json.load(f))
         
     with torch.no_grad():
         clip_weights = []
