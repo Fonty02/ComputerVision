@@ -25,7 +25,7 @@ from StyleAdapterFLS import CLIPWithStyleAdapter, find_artgraph_path, ArtgraphDa
 # --- Parametri Fissi per Meta-Learning ---
 # Questi potrebbero essere resi argomenti del parser o iperparametri di Optuna
 N_WAY = 10  # Numero di classi per task
-K_SHOT = 1  # Numero di esempi di supporto per classe per N_WAY > 1
+K_SHOT = 4  # Numero di esempi di supporto per classe per N_WAY > 1
 Q_QUERIES = 3 # Numero di esempi di query per classe
 
 
@@ -565,7 +565,7 @@ def main():
     parser.add_argument('--num_workers', type=int, default=0)
     parser.add_argument('--warmup_steps', type=int, default=100) # Relativo agli step totali del trial
     parser.add_argument('--early_stopping_patience', type=int, default=10)
-    parser.add_argument('--early_stopping_min_delta', type=float, default=0.0001)
+    parser.add_argument('--early_stopping_min_delta', type=float, default=0.001)
     parser.add_argument('--seed', type=int, default=42)
 
     # Parametri Episodici (Fissi per ora, potrebbero diventare iperparametri)
