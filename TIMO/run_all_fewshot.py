@@ -17,7 +17,7 @@ from extract_features_all import *
 # Parametri da iterare
 DATASETS = ['artgraph']  # aggiungi altri dataset se vuoi
 #BACKBONES = ["RN50","RN101", "ViT-B/32", "ViT-B/16","CustomRN50"]
-BACKBONES=["Custom_FSL1_RN50","Custom_FSL_RN50","RN50"]
+BACKBONES=["Custom_FSL1_RN50","Custom_FSL4_RN50","RN50"]
 SEEDS = [1,2,3,4,5,6,7,8,9,42]             #42
 K_SHOTS = [1, 2, 4, 8, 16]
 
@@ -59,55 +59,80 @@ def estrai_e_carica_feature(cfg, backbone, seed, k, preprocess):
     if files_to_extract:
         print(f"\n[Estrazione necessaria] {cfg['dataset']} | {backbone} | seed={seed} | shots={k}")
         
+        # Libera memoria GPU prima di iniziare
+        torch.cuda.empty_cache()
+        
         # Carica modello CLIP
         clip_model, _ = clip.load(backbone)
         clip_model.eval()
+        
+        # Sposta il modello su GPU se disponibile
+        if torch.cuda.is_available():
+            clip_model = clip_model.cuda()
     
         # Prepara dataset e loader
         if cfg['dataset'] == 'imagenet':
             dataset = ImageNet(cfg['root_path'], cfg['shots'], preprocess)
-            val_loader = torch.utils.data.DataLoader(dataset.test, batch_size=64, num_workers=0, shuffle=False)
-            train_loader_cache = torch.utils.data.DataLoader(dataset.train, batch_size=256, num_workers=0, shuffle=False)
+            val_loader = torch.utils.data.DataLoader(dataset.test, batch_size=32, num_workers=0, shuffle=False)
+            train_loader_cache = torch.utils.data.DataLoader(dataset.train, batch_size=32, num_workers=0, shuffle=False)
         else:
             data_path = os.path.join(os.getcwd(), '$DATA/')
             dataset = build_dataset(cfg['dataset'], data_path, k)
-            val_loader = build_data_loader(data_source=dataset.val, batch_size=64, is_train=False, tfm=preprocess, shuffle=False)
-            test_loader = build_data_loader(data_source=dataset.test, batch_size=64, is_train=False, tfm=preprocess, shuffle=False)
+            val_loader = build_data_loader(data_source=dataset.val, batch_size=32, is_train=False, tfm=preprocess, shuffle=False)
+            test_loader = build_data_loader(data_source=dataset.test, batch_size=32, is_train=False, tfm=preprocess, shuffle=False)
             train_tranform = transforms.Compose([
                 transforms.RandomResizedCrop(size=224, scale=(0.5, 1), interpolation=transforms.InterpolationMode.BICUBIC),
                 transforms.RandomHorizontalFlip(p=0.5),
                 transforms.ToTensor(),
                 transforms.Normalize(mean=(0.48145466, 0.4578275, 0.40821073), std=(0.26862954, 0.26130258, 0.27577711))])
-            train_loader_cache = build_data_loader(data_source=dataset.train_x, batch_size=256, tfm=train_tranform, is_train=True, shuffle=False)
+            train_loader_cache = build_data_loader(data_source=dataset.train_x, batch_size=32, tfm=train_tranform, is_train=True, shuffle=False)
     
-        # Estrazione feature (controlla file per file)
+        # Estrazione feature (controlla file per file) con gestione memoria
         if not os.path.exists(keys_file) or not os.path.exists(values_file):
             print(f"Estraendo feature few-shot...")
+            torch.cuda.empty_cache()  # Libera memoria prima dell'estrazione
             extract_few_shot_feature(cfg, clip_model, train_loader_cache)
+            torch.cuda.empty_cache()  # Libera memoria dopo l'estrazione
         
         if not os.path.exists(vecs_file):
             print(f"Estraendo feature few-shot all...")
+            torch.cuda.empty_cache()
             extract_few_shot_feature_all(cfg, clip_model, train_loader_cache, norm=True)
+            torch.cuda.empty_cache()
         
         if not os.path.exists(val_features_file):
             print(f"Estraendo feature val...")
+            torch.cuda.empty_cache()
             extract_val_test_feature(cfg, "val", clip_model, val_loader, norm=True)
+            torch.cuda.empty_cache()
         
         if cfg['dataset'] != 'imagenet' and not os.path.exists(test_features_file):
             print(f"Estraendo feature test...")
+            torch.cuda.empty_cache()
             extract_val_test_feature(cfg, "test", clip_model, test_loader, norm=True)
+            torch.cuda.empty_cache()
         
         if not os.path.exists(text_weights_file):
             print(f"Estraendo feature text (no GPT)...")
+            torch.cuda.empty_cache()
             extract_text_feature(cfg, dataset.classnames, [dataset.cupl_path], clip_model, dataset.template, use_gpt_prompt=False)
+            torch.cuda.empty_cache()
         
         if not os.path.exists(text_weights_gpt_file):
             print(f"Estraendo feature text (GPT)...")
+            torch.cuda.empty_cache()
             extract_text_feature(cfg, dataset.classnames, [dataset.cupl_path], clip_model, dataset.template)
+            torch.cuda.empty_cache()
         
         if not os.path.exists(text_weights_all_file):
             print(f"Estraendo feature text all...")
+            torch.cuda.empty_cache()
             extract_text_feature_all(cfg, dataset.classnames, [dataset.cupl_path], clip_model, dataset.template, norm=True)
+            torch.cuda.empty_cache()
+            
+        # Libera il modello CLIP dalla memoria GPU dopo l'estrazione
+        del clip_model
+        torch.cuda.empty_cache()
     else:
         print(f"\n[Feature già estratte] {cfg['dataset']} | {backbone} | seed={seed} | shots={k}")
         # Carica il dataset solo per ottenere le classi (necessario per il resto del codice)
@@ -119,6 +144,10 @@ def estrai_e_carica_feature(cfg, backbone, seed, k, preprocess):
 
     # Caricamento feature per il task few-shot (come in main.py)
     print("Caricamento feature per elaborazione...")
+    
+    # Libera memoria prima del caricamento
+    torch.cuda.empty_cache()
+    
     clip_weights_cupl_all = torch.load(cfg['cache_dir'] + "/text_weights_cupl_t_all.pt", weights_only=False)
     cate_num, prompt_cupl_num, dim = clip_weights_cupl_all.shape
     clip_weights_cupl = clip_weights_cupl_all.mean(dim=1).t()
@@ -137,7 +166,7 @@ def estrai_e_carica_feature(cfg, backbone, seed, k, preprocess):
     clip_weights_IGT, matching_score = image_guide_text(cfg, clip_weights_cupl_all, image_weights, return_matching=True)
     clip_weights_IGT = clip_weights_IGT.t()
     metric = {}
-    if backbone in ["Custom_FSL_RN50", "Custom_FSL1_RN50"]:
+    if backbone in ["Custom_FSL4_RN50", "Custom_FSL1_RN50"]:
         cache_keys, cache_values, val_features, test_features, clip_weights_cupl = ensure_float32_tensors(
         cache_keys, cache_values, val_features, test_features, clip_weights_cupl)
 

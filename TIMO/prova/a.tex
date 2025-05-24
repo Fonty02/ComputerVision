@@ -1,0 +1,110 @@
+\documentclass[a4paper, 12pt]{article}
+
+% --- IMPOSTAZIONI DI CODIFICA E LINGUA ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+
+% --- LAYOUT DELLA PAGINA ---
+\usepackage{geometry}
+\geometry{
+  a4paper,
+  left=2.5cm,
+  right=2.5cm,
+  top=2.5cm,
+  bottom=2.5cm
+}
+
+% --- PACCHETTI PER LA MATEMATICA ---
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+% --- PACCHETTI PER IMMAGINI E ROTAZIONE ---
+\usepackage{graphicx} % Per \rotatebox
+
+% --- PACCHETTI SPECIFICI PER LE TABELLE ---
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{caption} % Per \captionof
+
+% --- PACCHETTO PER TESTO DUMMY (RIMUOVERE SE NON NECESSARIO) ---
+% \usepackage{lipsum} % Commentato perché non strettamente necessario per la tabella
+
+
+\title{Exercise 2 Report}
+\author{Fontana Emanuele}
+\date{}
+
+\begin{document}
+\maketitle
+
+% \lipsum[1-2] % Testo prima della tabella (se necessario)
+
+% È consigliabile mettere un oggetto così grande e ruotato su una pagina a sé stante.
+% L'ambiente 'figure' con [p] tenta di fare questo.
+\begin{figure}[p]
+\centering % Centra il blocco ruotato orizzontalmente sulla pagina
+\rotatebox{90}{%
+  \begin{minipage}{\textheight} % La LARGHEZZA della minipage diventa l'ALTEZZA della pagina portrait
+    \centering % Se la longtable (nella sua altezza originale) è più stretta della larghezza della pagina portrait
+    \begin{scriptsize}
+    % \setlength{\tabcolsep}{3pt} % Prova a ridurre la spaziatura tra colonne se necessario
+    % \captionsetup{type=table} % Assicura che la caption sia numerata come tabella
+    % La didascalia dentro longtable in questo contesto può essere problematica.
+    % Un'alternativa è usare \captionof{table}{Testo didascalia} fuori dalla minipage, ma dentro 'figure'.
+    % Oppure, come qui, sperare che la \caption di longtable funzioni.
+    \begin{longtable}{l|ccccccccccccccccccccccccc}
+    \caption{Matrice di confronto (ACC) per 2 shot(s) - Tabella Ruotata. Valori positivi indicano che il modello di riga è migliore del modello di colonna. L'asterisco (*) indica p<0.05.}\label{tab:matrix-2shots-acc-rotated}\\
+    \toprule
+    % Le intestazioni ora non devono essere più ruotate rispetto al testo della tabella
+     & {\scriptsize\bfseries\strut APE\_CustomRN50} & {\scriptsize\bfseries\strut APE\_RN101} & {\scriptsize\bfseries\strut APE\_RN50} & {\scriptsize\bfseries\strut APE\_ViT-B/16} & {\scriptsize\bfseries\strut APE\_ViT-B/32} & {\scriptsize\bfseries\strut GDA\_CLIP\_CustomRN50} & {\scriptsize\bfseries\strut GDA\_CLIP\_RN101} & {\scriptsize\bfseries\strut GDA\_CLIP\_RN50} & {\scriptsize\bfseries\strut GDA\_CLIP\_ViT-B/16} & {\scriptsize\bfseries\strut GDA\_CLIP\_ViT-B/32} & {\scriptsize\bfseries\strut TIMO\_CustomRN50} & {\scriptsize\bfseries\strut TIMO\_RN101} & {\scriptsize\bfseries\strut TIMO\_RN50} & {\scriptsize\bfseries\strut TIMO\_S\_CustomRN50} & {\scriptsize\bfseries\strut TIMO\_S\_RN101} & {\scriptsize\bfseries\strut TIMO\_S\_RN50} & {\scriptsize\bfseries\strut TIMO\_S\_ViT-B/16} & {\scriptsize\bfseries\strut TIMO\_S\_ViT-B/32} & {\scriptsize\bfseries\strut TIMO\_ViT-B/16} & {\scriptsize\bfseries\strut TIMO\_ViT-B/32} & {\scriptsize\bfseries\strut Tip\_Adapter\_CustomRN50} & {\scriptsize\bfseries\strut Tip\_Adapter\_RN101} & {\scriptsize\bfseries\strut Tip\_Adapter\_RN50} & {\scriptsize\bfseries\strut Tip\_Adapter\_ViT-B/16} & {\scriptsize\bfseries\strut Tip\_Adapter\_ViT-B/32} \\
+    \midrule
+    \endfirsthead
+    \caption[]{(Segue) Matrice di confronto (ACC) per 2 shot(s) - Tabella Ruotata}\\
+    \toprule
+     & {\scriptsize\bfseries\strut APE\_CustomRN50} & {\scriptsize\bfseries\strut APE\_RN101} & {\scriptsize\bfseries\strut APE\_RN50} & {\scriptsize\bfseries\strut APE\_ViT-B/16} & {\scriptsize\bfseries\strut APE\_ViT-B/32} & {\scriptsize\bfseries\strut GDA\_CLIP\_CustomRN50} & {\scriptsize\bfseries\strut GDA\_CLIP\_RN101} & {\scriptsize\bfseries\strut GDA\_CLIP\_RN50} & {\scriptsize\bfseries\strut GDA\_CLIP\_ViT-B/16} & {\scriptsize\bfseries\strut GDA\_CLIP\_ViT-B/32} & {\scriptsize\bfseries\strut TIMO\_CustomRN50} & {\scriptsize\bfseries\strut TIMO\_RN101} & {\scriptsize\bfseries\strut TIMO\_RN50} & {\scriptsize\bfseries\strut TIMO\_S\_CustomRN50} & {\scriptsize\bfseries\strut TIMO\_S\_RN101} & {\scriptsize\bfseries\strut TIMO\_S\_RN50} & {\scriptsize\bfseries\strut TIMO\_S\_ViT-B/16} & {\scriptsize\bfseries\strut TIMO\_S\_ViT-B/32} & {\scriptsize\bfseries\strut TIMO\_ViT-B/16} & {\scriptsize\bfseries\strut TIMO\_ViT-B/32} & {\scriptsize\bfseries\strut Tip\_Adapter\_CustomRN50} & {\scriptsize\bfseries\strut Tip\_Adapter\_RN101} & {\scriptsize\bfseries\strut Tip\_Adapter\_RN50} & {\scriptsize\bfseries\strut Tip\_Adapter\_ViT-B/16} & {\scriptsize\bfseries\strut Tip\_Adapter\_ViT-B/32} \\
+    \midrule
+    \endhead
+    \midrule
+    \multicolumn{26}{r}{\textit{Segue nella pagina successiva}} \\
+    \endfoot
+    \bottomrule
+    \endlastfoot
+    % DATI DELLA TABELLA (come quelli forniti)
+    APE\_CustomRN50 & 0.00 & -27.80* & -27.16* & -34.83* & -28.20* & -15.44* & -26.94* & -27.28* & -35.60* & -27.40* & -15.17* & -27.58* & -27.95* & -15.11* & -29.27* & -28.72* & -36.27* & -29.42* & -34.50* & -29.54* & 18.32* & -21.19* & -20.80* & -29.20* & -22.57* \\
+    APE\_RN101 & 27.80* & 0.00 & 0.64 & -7.03* & -0.40 & 12.35* & 0.86 & 0.52 & -7.80* & 0.40 & 12.63* & 0.21 & -0.15 & 12.69* & -1.47 & -0.92 & -8.47* & -1.62* & -6.70* & -1.74 & 46.12* & 6.61* & 7.00* & -1.41* & 5.23* \\
+    APE\_RN50 & 27.16* & -0.64 & 0.00 & -7.68* & -1.04 & 11.71* & 0.21 & -0.12 & -8.44* & -0.24 & 11.99* & -0.43 & -0.80 & 12.05* & -2.11* & -1.56* & -9.11* & -2.26* & -7.34* & -2.39* & 45.47* & 5.96* & 6.36* & -2.05* & 4.59* \\
+    APE\_ViT-B/16 & 34.83* & 7.03* & 7.68* & 0.00 & 6.64* & 19.39* & 7.89* & 7.55* & -0.76 & 7.43* & 19.66* & 7.25* & 6.88* & 19.72* & 5.57* & 6.12* & -1.44 & 5.41* & 0.34 & 5.29* & 53.15* & 13.64* & 14.04* & 5.63* & 12.26* \\
+    APE\_ViT-B/32 & 28.20* & 0.40 & 1.04 & -6.64* & 0.00 & 12.75* & 1.25 & 0.92 & -7.40* & 0.80 & 13.03* & 0.61 & 0.24 & 13.09* & -1.07 & -0.52 & -8.07* & -1.22 & -6.30* & -1.35 & 46.51* & 7.00* & 7.40* & -1.01 & 5.63* \\
+    GDA\_CLIP\_CustomRN50 & 15.44* & -12.35* & -11.71* & -19.39* & -12.75* & 0.00 & -11.50* & -11.83* & -20.15* & -11.96* & 0.28 & -12.14* & -12.51* & 0.34 & -13.82* & -13.27* & -20.83* & -13.98* & -19.05* & -14.10* & 33.76* & -5.75* & -5.35* & -13.76* & -7.13* \\
+    GDA\_CLIP\_RN101 & 26.94* & -0.86 & -0.21 & -7.89* & -1.25 & 11.50* & 0.00 & -0.34 & -8.65* & -0.46 & 11.77* & -0.64 & -1.01 & 11.83* & -2.32* & -1.77* & -9.33* & -2.48* & -7.55* & -2.60* & 45.26* & 5.75* & 6.15* & -2.26* & 4.37* \\
+    GDA\_CLIP\_RN50 & 27.28* & -0.52 & 0.12 & -7.55* & -0.92 & 11.83* & 0.34 & 0.00 & -8.32* & -0.12 & 12.11* & -0.31 & -0.67 & 12.17* & -1.99* & -1.44 & -8.99* & -2.14* & -7.22* & -2.26* & 45.60* & 6.09* & 6.48* & -1.93* & 4.71* \\
+    GDA\_CLIP\_ViT-B/16 & 35.60* & 7.80* & 8.44* & 0.76 & 7.40* & 20.15* & 8.65* & 8.32* & 0.00 & 8.20* & 20.43* & 8.01* & 7.65* & 20.49* & 6.33* & 6.88* & -0.67 & 6.18* & 1.10 & 6.06* & 53.91* & 14.40* & 14.80* & 6.39* & 13.03* \\
+    GDA\_CLIP\_ViT-B/32 & 27.40* & -0.40 & 0.24 & -7.43* & -0.80 & 11.96* & 0.46 & 0.12 & -8.20* & 0.00 & 12.23* & -0.18 & -0.55 & 12.29* & -1.87* & -1.31 & -8.87* & -2.02* & -7.09* & -2.14* & 45.72* & 6.21* & 6.61* & -1.80* & 4.83* \\
+    TIMO\_CustomRN50 & 15.17* & -12.63* & -11.99* & -19.66* & -13.03* & -0.28 & -11.77* & -12.11* & -20.43* & -12.23* & 0.00 & -12.42* & -12.78* & 0.06 & -14.10* & -13.55* & -21.10* & -14.25* & -19.33* & -14.37* & 33.49* & -6.02* & -5.63* & -14.04* & -7.40* \\
+    TIMO\_RN101 & 27.58* & -0.21 & 0.43 & -7.25* & -0.61 & 12.14* & 0.64 & 0.31 & -8.01* & 0.18 & 12.42* & 0.00 & -0.37 & 12.48* & -1.68 & -1.13 & -8.69* & -1.83 & -6.91* & -1.96 & 45.90* & 6.39* & 6.79* & -1.62 & 5.02* \\
+    TIMO\_RN50 & 27.95* & 0.15 & 0.80 & -6.88* & -0.24 & 12.51* & 1.01 & 0.67 & -7.65* & 0.55 & 12.78* & 0.37 & 0.00 & 12.84* & -1.31 & -0.76 & -8.32* & -1.47* & -6.54* & -1.59 & 46.27* & 6.76* & 7.16* & -1.25* & 5.38* \\
+    TIMO\_S\_CustomRN50 & 15.11* & -12.69* & -12.05* & -19.72* & -13.09* & -0.34 & -11.83* & -12.17* & -20.49* & -12.29* & -0.06 & -12.48* & -12.84* & 0.00 & -14.16* & -13.61* & -21.16* & -14.31* & -19.39* & -14.43* & 33.43* & -6.09* & -5.69* & -14.10* & -7.46* \\
+    TIMO\_S\_RN101 & 29.27* & 1.47 & 2.11* & -5.57* & 1.07 & 13.82* & 2.32* & 1.99* & -6.33* & 1.87* & 14.10* & 1.68 & 1.31 & 14.16* & 0.00 & 0.55 & -7.00* & -0.15 & -5.23* & -0.28 & 47.58* & 8.07* & 8.47* & 0.06 & 6.70* \\
+    TIMO\_S\_RN50 & 28.72* & 0.92 & 1.56* & -6.12* & 0.52 & 13.27* & 1.77* & 1.44 & -6.88* & 1.31 & 13.55* & 1.13 & 0.76 & 13.61* & -0.55 & 0.00 & -7.55* & -0.70 & -5.78* & -0.83 & 47.03* & 7.52* & 7.92* & -0.49 & 6.15* \\
+    TIMO\_S\_ViT-B/16 & 36.27* & 8.47* & 9.11* & 1.44 & 8.07* & 20.83* & 9.33* & 8.99* & 0.67 & 8.87* & 21.10* & 8.69* & 8.32* & 21.16* & 7.00* & 7.55* & 0.00 & 6.85* & 1.77 & 6.73* & 54.59* & 15.08* & 15.47* & 7.06* & 13.70* \\
+    TIMO\_S\_ViT-B/32 & 29.42* & 1.62* & 2.26* & -5.41* & 1.22 & 13.98* & 2.48* & 2.14* & -6.18* & 2.02* & 14.25* & 1.83 & 1.47* & 14.31* & 0.15 & 0.70 & -6.85* & 0.00 & -5.08* & -0.12 & 47.74* & 8.23* & 8.62* & 0.21 & 6.85* \\
+    TIMO\_ViT-B/16 & 34.50* & 6.70* & 7.34* & -0.34 & 6.30* & 19.05* & 7.55* & 7.22* & -1.10 & 7.09* & 19.33* & 6.91* & 6.54* & 19.39* & 5.23* & 5.78* & -1.77 & 5.08* & 0.00 & 4.95* & 52.81* & 13.30* & 13.70* & 5.29* & 11.93* \\
+    TIMO\_ViT-B/32 & 29.54* & 1.74 & 2.39* & -5.29* & 1.35 & 14.10* & 2.60* & 2.26* & -6.06* & 2.14* & 14.37* & 1.96 & 1.59 & 14.43* & 0.28 & 0.83 & -6.73* & 0.12 & -4.95* & 0.00 & 47.86* & 8.35* & 8.75* & 0.34 & 6.97* \\
+    Tip\_Adapter\_CustomRN50 & -18.32* & -46.12* & -45.47* & -53.15* & -46.51* & -33.76* & -45.26* & -45.60* & -53.91* & -45.72* & -33.49* & -45.90* & -46.27* & -33.43* & -47.58* & -47.03* & -54.59* & -47.74* & -52.81* & -47.86* & 0.00 & -39.51* & -39.11* & -47.52* & -40.89* \\
+    Tip\_Adapter\_RN101 & 21.19* & -6.61* & -5.96* & -13.64* & -7.00* & 5.75* & -5.75* & -6.09* & -14.40* & -6.21* & 6.02* & -6.39* & -6.76* & 6.09* & -8.07* & -7.52* & -15.08* & -8.23* & -13.30* & -8.35* & 39.51* & 0.00 & 0.40 & -8.01* & -1.38* \\
+    Tip\_Adapter\_RN50 & 20.80* & -7.00* & -6.36* & -14.04* & -7.40* & 5.35* & -6.15* & -6.48* & -14.80* & -6.61* & 5.63* & -6.79* & -7.16* & 5.69* & -8.47* & -7.92* & -15.47* & -8.62* & -13.70* & -8.75* & 39.11* & -0.40 & 0.00 & -8.41* & -1.77* \\
+    Tip\_Adapter\_ViT-B/16 & 29.20* & 1.41* & 2.05* & -5.63* & 1.01 & 13.76* & 2.26* & 1.93* & -6.39* & 1.80* & 14.04* & 1.62 & 1.25* & 14.10* & -0.06 & 0.49 & -7.06* & -0.21 & -5.29* & -0.34 & 47.52* & 8.01* & 8.41* & 0.00 & 6.64* \\
+    Tip\_Adapter\_ViT-B/32 & 22.57* & -5.23* & -4.59* & -12.26* & -5.63* & 7.13* & -4.37* & -4.71* & -13.03* & -4.83* & 7.40* & -5.02* & -5.38* & 7.46* & -6.70* & -6.15* & -13.70* & -6.85* & -11.93* & -6.97* & 40.89* & 1.38* & 1.77* & -6.64* & 0.00 \\
+    \end{longtable}
+    \end{scriptsize}
+  \end{minipage}%
+} % Fine \rotatebox
+\end{figure}
+
+\clearpage % Assicura che il contenuto successivo inizi su una nuova pagina
+% \lipsum[3-4] % Testo dopo la tabella (se necessario)
+
+\end{document}

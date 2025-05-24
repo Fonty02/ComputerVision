@@ -114,7 +114,7 @@ def load(name, device="cuda" if torch.cuda.is_available() else "cpu", jit=False,
     preprocess : Callable[[PIL.Image], torch.Tensor]
         A torchvision transform that converts a PIL image into a tensor that the returned model can take as its input
     """
-    if name == "Custom_FSL_RN50":
+    if name == "Custom_FSL4_RN50":
             print("Caricamento del modello Custom_FSL_RN50 ...")
             import sys
             import json

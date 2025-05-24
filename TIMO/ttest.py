@@ -297,29 +297,6 @@ def generate_latex_tables(comparison_df, shots_list=[1, 2, 4, 8, 16], metric='AC
         print(f"\nNessuna matrice LaTeX è stata generata per la metrica '{metric}'. Controllare i messaggi precedenti per dettagli.")
         return f"Nessuna matrice LaTeX è stata generata per la metrica '{metric}'."
 
-# --- Per testare lo script ---
-if __name__ == "__main__":
-    # Creazione di un DataFrame fittizio per il test
-    # Nella tua implementazione, comparison_df proverrebbe dal tuo caricamento dati e analisi.
-    mock_data = {
-        'Model 1': ['APE_CustomRN50', 'APE_RN101', 'GDA_CLIP_CustomRN50'],
-        'Model 2': ['APE_RN50', 'GDA_CLIP_ViT-B/16', 'TIMO_S_RN50'],
-        'Difference': [1.23, -0.45, 2.89],
-        'p-value': [0.01, 0.23, 0.001],
-        'Significant (p<0.05)': [True, False, True],
-        'Shots': [1, 1, 1],
-        'Metric': ['ACC', 'ACC', 'ACC']
-    }
-    comparison_df_mock = pd.DataFrame(mock_data)
-
-    print("Generating LaTeX tables with rotated headers...")
-    # Assicurati che create_comparison_matrix sia definito e funzionante con comparison_df_mock
-    # o che la tua vera comparison_df sia passata qui.
-    # Qui sto usando il mock di comparison_df per la chiamata a generate_latex_tables
-    # ma la tua `create_comparison_matrix` riceverà questo df.
-    latex_result = generate_latex_tables(comparison_df_mock, shots_list=[1], metric='ACC') 
-    print(latex_result)
-    print("\nAnalysis completed successfully!")
 
 
 
@@ -332,7 +309,7 @@ if __name__ == "__main__":
     
     # Models and backbones to compare
     models = ['TIMO', 'TIMO_S', 'Tip_Adapter', 'APE', 'GDA_CLIP']
-    backbones = ['RN50', 'RN101', 'ViT-B/16', 'ViT-B/32', 'CustomRN50']
+    backbones = ["Custom_FSL1_RN50","Custom_FSL4_RN50","RN50"]
     shots_list = [1, 2, 4, 8, 16]
     
     # Run comprehensive comparison

@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99d (TeX Live 2025/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: IEEEtran.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: bibo.bib
+Warning--entry type for "ArtGraph" isn't style-file defined
+--line 58 of file bibo.bib
+-- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+
+Done.
+You've used 9 entries,
+            4087 wiz_defined-function locations,
+            887 strings with 9660 characters,
+and the built_in function-call counts, 8231 in all, are:
+= -- 572
+> -- 293
+< -- 56
++ -- 155
+- -- 59
+* -- 419
+:= -- 1123
+add.period$ -- 21
+call.type$ -- 9
+change.case$ -- 11
+chr.to.int$ -- 144
+cite$ -- 9
+duplicate$ -- 567
+empty$ -- 698
+format.name$ -- 69
+if$ -- 1927
+int.to.chr$ -- 0
+int.to.str$ -- 9
+missing$ -- 121
+newline$ -- 54
+num.names$ -- 11
+pop$ -- 325
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 2
+skip$ -- 605
+stack$ -- 0
+substring$ -- 345
+swap$ -- 456
+text.length$ -- 8
+text.prefix$ -- 0
+top$ -- 5
+type$ -- 9
+warning$ -- 0
+while$ -- 30
+width$ -- 10
+write$ -- 108
+(There was 1 warning)

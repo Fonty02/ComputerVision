@@ -25,7 +25,7 @@ from StyleAdapterFLS import CLIPWithStyleAdapter, find_artgraph_path, ArtgraphDa
 # --- Parametri Fissi per Meta-Learning ---
 # Questi potrebbero essere resi argomenti del parser o iperparametri di Optuna
 N_WAY = 10  # Numero di classi per task
-K_SHOT = 4  # Numero di esempi di supporto per classe per N_WAY > 1
+K_SHOT = 1  # Numero di esempi di supporto per classe per N_WAY > 1
 Q_QUERIES = 3 # Numero di esempi di query per classe
 
 
