@@ -1,0 +1,50 @@
+This is BibTeX, Version 0.99d (TeX Live 2025/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: pres.aux
+The style file: plain.bst
+Database file #1: bibo.bib
+Warning--entry type for "ArtGraph" isn't style-file defined
+--line 58 of file bibo.bib
+Warning--can't use both volume and number fields in TIMO
+You've used 9 entries,
+            2118 wiz_defined-function locations,
+            561 strings with 6222 characters,
+and the built_in function-call counts, 4677 in all, are:
+= -- 430
+> -- 310
+< -- 7
++ -- 121
+- -- 111
+* -- 354
+:= -- 739
+add.period$ -- 29
+call.type$ -- 9
+change.case$ -- 78
+chr.to.int$ -- 0
+cite$ -- 10
+duplicate$ -- 168
+empty$ -- 314
+format.name$ -- 111
+if$ -- 993
+int.to.chr$ -- 0
+int.to.str$ -- 9
+missing$ -- 8
+newline$ -- 47
+num.names$ -- 20
+pop$ -- 102
+preamble$ -- 1
+purify$ -- 69
+quote$ -- 0
+skip$ -- 139
+stack$ -- 0
+substring$ -- 238
+swap$ -- 72
+text.length$ -- 7
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 36
+warning$ -- 1
+while$ -- 34
+width$ -- 10
+write$ -- 100
+(There were 2 warnings)
