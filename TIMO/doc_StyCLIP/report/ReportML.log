@@ -1,11 +1,11 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  28 MAY 2025 18:13
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  28 MAY 2025 17:05
  system commands enabled.
  file:line:error style messages enabled.
 **c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/report
-/main
+/ReportML
 
 (c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/report/
-main.tex
+ReportML.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 Lua module: luaotfload 2024-12-03 v3.29 Lua based OpenType font support
@@ -797,8 +797,8 @@ Inserting `l3color' in `luaotfload.parse_color'.
 LaTeX Warning: Unused global option(s):
     [6pt].
 
-(./main.aux)
-\openout1 = main.aux
+(./ReportML.aux)
+\openout1 = ReportML.aux
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
 LaTeX Font Info:    ... okay on input line 49.
@@ -849,10 +849,10 @@ fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package hyperref Info: Link coloring OFF on input line 49.
- (./main.out) (./main.out)
+ (./ReportML.out) (./ReportML.out)
 \@outlinefile=\write3
 
-\openout3 = main.out
+\openout3 = ReportML.out
 
 (C:/Users/fonta/AppData/Local/Programs/MiKTeX/tex/latex/translations/dicts/tran
 slations-basic-dictionary-english.trsl
@@ -909,6 +909,11 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 93.
+<../img/diagram.png, id=132, 5973.31625pt x 2409.0pt>
+File: ../img/diagram.png Graphic file (type png)
+<use ../img/diagram.png>
+Package luatex.def Info: ../img/diagram.png  used on input line 125.
+(luatex.def)             Requested size: 515.97383pt x 134.38846pt.
 
 
 [1
@@ -917,85 +922,87 @@ ftex.map}
 
 
 ]
-<../img/diagram.png, id=177, 5973.31625pt x 2409.0pt>
-File: ../img/diagram.png Graphic file (type png)
-<use ../img/diagram.png>
-Package luatex.def Info: ../img/diagram.png  used on input line 163.
-(luatex.def)             Requested size: 515.97383pt x 134.38846pt.
 
+<../img/episode_results.png, id=160, 1438.173pt x 298.9569pt>
+File: ../img/episode_results.png Graphic file (type png)
+<use ../img/episode_results.png>
+Package luatex.def Info: ../img/episode_results.png  used on input line 183.
+(luatex.def)             Requested size: 516.00826pt x 80.63731pt.
 
-<../img/episode_example.drawio.png, id=180, 3766.07pt x 1758.57pt>
-File: ../img/episode_example.drawio.png Graphic file (type png)
-<use ../img/episode_example.drawio.png>
-Package luatex.def Info: ../img/episode_example.drawio.png  used on input line 
-222.
-(luatex.def)             Requested size: 515.98297pt x 335.98329pt.
-
-Underfull \hbox (badness 2772) in paragraph at lines 230--231
+Underfull \hbox (badness 2772) in paragraph at lines 191--192
 []\T1/lmr/bx/n/8 N-way Clas-si-fi-ca-tion: \T1/lmr/m/n/8 Each episode in-volves clas-si-fy-ing
+ []
+
+
+Underfull \hbox (badness 1460) in paragraph at lines 204--205
+[]\T1/lmr/bx/n/8 Model Ini-tial-iza-tion Ef-fects: \T1/lmr/m/n/8 Stochas-tic com
+-po-nents in
  []
 
 
 
 [2
 Missing character: There is no ∈ (U+2208) in font ec-lmr8!
+<../img/diagram.png>]
+Overfull \hbox (3.96938pt too wide) in paragraph at lines 262--283
+ [][] 
+ []
+
+
+Overfull \hbox (3.96938pt too wide) in paragraph at lines 292--313
+ [][] 
+ []
+
+
+Underfull \vbox (badness 3568) has occurred while \output is active []
+
+
+
+
+Overfull \hbox (3.96938pt too wide) in paragraph at lines 322--343
+ [][] 
+ []
+
+
+Overfull \hbox (3.96938pt too wide) in paragraph at lines 352--373
+ [][] 
+ []
+
+
+Overfull \hbox (3.96938pt too wide) in paragraph at lines 381--402
+ [][] 
+ []
+
+
+Overfull \hbox (264.04074pt too wide) in paragraph at lines 413--436
+ [][] 
+ []
+
+
+
+[3<../img/episode_results.png>]
+Overfull \hbox (264.0524pt too wide) in paragraph at lines 448--471
+ [][] 
+ []
+
+
+Overfull \hbox (264.0524pt too wide) in paragraph at lines 483--506
+ [][] 
+ []
+
+
+
+
+
+[4
+
 ]
-Underfull \hbox (badness 1460) in paragraph at lines 243--244
-[]\T1/lmr/bx/n/8 Model Ini-tial-iza-tion Ef-fects: \T1/lmr/m/n/8 Stochas-tic com
--po-nents in
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-
-Underfull \vbox (badness 6859) has occurred while \output is active []
-
-
-
-[3<../img/diagram.png><../img/episode_example.drawio.png>]
-Overfull \hbox (3.96938pt too wide) in paragraph at lines 301--322
+Overfull \hbox (264.0524pt too wide) in paragraph at lines 519--542
  [][] 
  []
 
 
-Overfull \hbox (3.96938pt too wide) in paragraph at lines 331--352
- [][] 
- []
-
-
-Overfull \hbox (3.96938pt too wide) in paragraph at lines 361--382
- [][] 
- []
-
-
-
-
-Overfull \hbox (3.96938pt too wide) in paragraph at lines 391--412
- [][] 
- []
-
-
-Overfull \hbox (3.96938pt too wide) in paragraph at lines 420--441
- [][] 
- []
-
-
-
-[4]
-Overfull \hbox (264.04074pt too wide) in paragraph at lines 452--475
- [][] 
- []
-
-
-Overfull \hbox (264.0524pt too wide) in paragraph at lines 487--510
- [][] 
- []
-
-
-Overfull \hbox (264.0524pt too wide) in paragraph at lines 522--545
+Overfull \hbox (264.0524pt too wide) in paragraph at lines 554--577
  [][] 
  []
 
@@ -1006,33 +1013,9 @@ Overfull \hbox (264.0524pt too wide) in paragraph at lines 522--545
 [5
 
 
-]
-Overfull \hbox (264.0524pt too wide) in paragraph at lines 558--581
- [][] 
- []
-
-
-Overfull \hbox (264.0524pt too wide) in paragraph at lines 593--616
- [][] 
- []
-
-
-
-
-
-[6
-
-
-]
-
-
-
-[7
-
-
 Missing character: There is no — (U+2014) in font ec-lmr8!
 
-] (./main.bbl)
+] (./ReportML.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -1076,9 +1059,9 @@ Pagestretch: 0.0pt
 FLUSHEND [output]: 210.84451pt
 FLUSHEND [leftcolumn badness]: 46
 FUSHEND [rightcolumn badness]: 4
-[8
+[6
 
-] (./main.aux)
+] (./ReportML.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -1087,49 +1070,44 @@ L3 programming layer <2025-01-18>
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 775A79602D7677D79FA7FBD7BBD369D8;5425.
+Package rerunfilecheck Info: File `ReportML.out' has not changed.
+(rerunfilecheck)             Checksum: AD1D92C46EA970ADDF139C26DAB485C9;4920.
 )
 
 Here is how much of LuaTeX's memory you used:
- 21416 strings out of 475506
- 244181,953878 words of node,token memory allocated
- 615 words of node memory still in use:
-   6 hlist, 2 vlist, 2 rule, 3 glue, 4 kern, 1 penalty, 1 glyph, 30 attribute, 5
-9 glue_spec, 16 attribute_list, 1 write, 3 pdf_action nodes
-   avail lists: 1:2,2:9239,3:653,4:104,5:1389,6:106,7:20868,8:101,9:3378,10:19,1
-1:1890
- 43997 multiletter control sequences out of 65536+600000
+ 21404 strings out of 475506
+ 305224,953878 words of node,token memory allocated
+ 585 words of node memory still in use:
+   6 hlist, 2 vlist, 2 rule, 3 glue, 4 kern, 1 penalty, 1 glyph, 20 attribute, 5
+9 glue_spec, 11 attribute_list, 1 write, 3 pdf_action nodes
+   avail lists: 1:1,2:11201,3:653,4:112,5:1430,6:114,7:23873,8:101,9:3777,10:19,
+11:1960
+ 43991 multiletter control sequences out of 65536+600000
  89 fonts using 6938151 bytes
- 72i,11n,75p,953b,1037s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,11n,75p,957b,1057s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {C:/Users/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/U
-sers/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/
-fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/f
-onta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/fo
-nta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}<C:/Users/fon
-ta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx5.pfb><C:/Users/fonta
-/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/fonta/A
-ppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx9.pfb><C:/Users/fonta/App
-Data/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/fonta/App
-Data/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.pfb><C:/Users/fonta/App
-Data/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/fonta/AppD
-ata/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi5.pfb><C:/Users/fonta/AppDat
-a/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/fonta/AppData/
-Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/fonta/AppData/Lo
-cal/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/fonta/AppData/Loca
-l/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/fonta/AppData/Local/
-Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb><C:/Users/fonta/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/lm/lmr5.pfb><C:/Users/fonta/AppData/Local/Progr
-ams/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/fonta/AppData/Local/Programs
-/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/Users/fonta/AppData/Local/Programs/Mi
-KTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTe
-X/fonts/type1/public/lm/lmri10.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX
-/fonts/type1/public/lm/lmri8.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/f
-onts/type1/public/lm/lmsy6.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/fon
-ts/type1/public/lm/lmsy8.pfb>
-Output written on main.pdf (8 pages, 8113751 bytes).
+sers/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Us
+ers/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/f
+onta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}<C:/Users/fo
+nta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx5.pfb><C:/Users/font
+a/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/fonta/
+AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx9.pfb><C:/Users/fonta/Ap
+pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/fonta/Ap
+pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.pfb><C:/Users/fonta/Ap
+pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi5.pfb><C:/Users/fonta/AppD
+ata/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/fonta/AppDat
+a/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/fonta/AppData/
+Local/Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb><C:/Users/fonta/AppData/Lo
+cal/Programs/MiKTeX/fonts/type1/public/lm/lmr5.pfb><C:/Users/fonta/AppData/Local
+/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/fonta/AppData/Local/Pr
+ograms/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/Users/fonta/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/fonta/AppData/Local/Programs
+/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/fonta/AppData/Local/Programs/
+MiKTeX/fonts/type1/public/lm/lmri8.pfb><C:/Users/fonta/AppData/Local/Programs/Mi
+KTeX/fonts/type1/public/lm/lmsy6.pfb>
+Output written on ReportML.pdf (6 pages, 10399376 bytes).
 
-PDF statistics: 318 PDF objects out of 1000 (max. 8388607)
- 64 named destinations out of 1000 (max. 131072)
- 273 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 272 PDF objects out of 1000 (max. 8388607)
+ 58 named destinations out of 1000 (max. 131072)
+ 241 words of extra memory for PDF output out of 10000 (max. 100000000)
 

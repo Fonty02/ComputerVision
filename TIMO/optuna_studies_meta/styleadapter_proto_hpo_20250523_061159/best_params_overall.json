@@ -1,0 +1,8 @@
+{
+    "trial_number": 12,
+    "fusion_bottleneck_dim": 128,
+    "lr": 1.0183642005359743e-05,
+    "dropout_rate_adapter": 0.1,
+    "weight_decay": 1.0250758102315065e-06,
+    "val_accuracy": 0.6053333333333333
+}

@@ -99,59 +99,21 @@ Our few-shot dataset follows a systematic two-stage selection process:
 \subsection{ArtGraph StyCLIP Subset}
 
 For style-aware training, we use complementary artists (16-50 artworks) excluded from the few-shot subset, ensuring no data leakage between training and evaluation phases.
-\section{Background: TIMO}
+\section{Experiments}
 
-TIMO (Text-Image Mutual Guidance Optimization) is a method proposed to improve training-free Few-Shot Learning with CLIP, specifically designed to address the problems of anomalous visual misalignment and variable quality of textual prompts resulting from independent modality modeling. TIMO introduces a mutual guidance mechanism between text and image, composed of two main branches that work synergistically:
-
-\subsection{Text-Guided Image (TGI)}
-This branch uses textual representations to guide and refine visual features, helping to address misalignment issues in the image modality.
-
-The method computes similarity weights between textual prompts and visual prototypes. For each class $i$ with textual prompt $F_{i,p}^t$ and visual prototype $W_i^v$, the similarity weight is:
-\[
-s_{i,p}^t = \frac{F_{i,p}^t \cdot W_i^v}{||F_{i,p}^t|| ||W_i^v||}
-\]
-
-These weights guide the selection of relevant textual prompts. The visual support features $F_v$ are then combined with weighted textual features to create enriched representations:
-\[
-F_{\text{TGI}} = \text{Concat}(F_v, F^t \odot S, \text{dim}=1)
-\]
-where $S$ contains the similarity weights and $\odot$ denotes element-wise multiplication. Finally, TGI logits are computed using a classifier built on these enriched features.
-
-\subsection{Image-Guided Text (IGT)}
-This branch improves textual prompt quality by leveraging visual representations as guidance, maintaining prompt diversity while enhancing alignment.
-
-For each class $i$, the method finds optimal weights $r_i$ for its textual prompts that maximize alignment with the visual prototype:
-\[
-\max_{r_i} r_i^T (F_i^t W_i^v) \quad \text{subject to } ||r_i|| = \gamma
-\]
-
-The constraint $||r_i|| = \gamma$ preserves prompt diversity. These weights are normalized to obtain a distribution $R$ over prompts. The original textual features are then transformed using these weights to create rectified textual prototypes:
-\[
-F_{\text{IGT}}[n, d] = \sum_{p=1}^P R[n,p] \cdot F^t[n,p,d]
-\]
-
-IGT logits are computed using a classifier built on these rectified features.
-
-\subsection{Combination}
-The logits obtained from the two guided branches, $logits_{\text{TGI}}$ and $logits_{\text{IGT}}$, are combined via a weighted sum to produce TIMO's final logits:
-\[
-\text{logits}_{\text{TIMO}} = \text{logits}_{\text{TGI}} + \alpha \cdot \text{logits}_{\text{IGT}}
-\]
-The hyperparameter $\alpha$ balances the contribution of the two guided branches and is typically determined through a grid search on a validation set. This combination mechanism allows TIMO to leverage the strengths of both modalities, guiding each other to improve few-shot classification performance.
-\section{Our Approach: StyCLIP}
-
-In this section, we describe our approach
+In this section, we describe the experimental setup used to create, train, StyCLIP, and evaluate the models.
+All these experiments were conducted on a single NVIDIA RTX 3060 GPU with 12GB of memory, 16GB of 3200MHz DDR4 RAM and Ryzen 5 3600 CPU.
 
 \subsection{StyCLIP structure}
 
-StyCLIP extends the standard CLIP architecture by integrating explicit style representations through Gram matrix features, specifically designed to capture artistic style information that complements semantic understanding. 
+StyCLIP extends the standard CLIP architecture by integrating explicit style representations through Gram matrix features, specifically designed to capture artistic style information that complements semantic understanding. This section details the architectural components and modifications introduced in our approach.
 
-\subsubsection{Standard CLIP}
+\subsubsection{Standard CLIP with RN50 Backbone}
 
-The baseline CLIP model consists of:
+The baseline CLIP model with ResNet-50 backbone consists of:
 \begin{itemize}
-    \item \textbf{Visual Encoder}: To extract visual features from images into a D-dimensional embedding space
-    \item \textbf{Text Encoder}: To extract semantic features from text descriptions into a D-dimensional embedding space
+    \item \textbf{Visual Encoder}: To extract visual features from images into a 1024-dimensional embedding space
+    \item \textbf{Text Encoder}: To extract semantic features from text descriptions into a 1024-dimensional embedding space
     \item \textbf{Contrastive Learning}: To align visual and text embeddings in a shared space using a contrastive loss function
 \end{itemize}
 
@@ -169,10 +131,8 @@ Our StyCLIP architecture maintains the original CLIP backbone while introducing 
     \item \textbf{Fusion Adapter}: Integration of semantic and style features through a bottleneck architecture
 \end{itemize}
 
-\section{Experiments}
-In this section, we describe the experimental setup, including hyperparameter tuning, training strategy, and evaluation protocol.
-\subsection{StyCLIP hyperparameters tuning and training}
-In our case the backbone used for the standard CLIP model is a ResNet-50 (RN50) architecture. The StyCLIP model is trained using a combination of style-aware features extracted from Gram matrices and the standard CLIP architecture.
+\subsubsection{Training Strategy}
+
 During training, the CLIP backbone remains frozen while only the style projection layers and fusion adapter are optimized. This approach:
 \begin{itemize}
     \item Preserves pre-trained semantic knowledge from CLIP
@@ -181,6 +141,7 @@ During training, the CLIP backbone remains frozen while only the style projectio
     \item Maintains stability in the learned representations
 \end{itemize}
 
+\subsection{StyCLIP hyperparameters tuning and training}
 
 StyCLIP hyperparameters are optimized using Optuna \cite{Optuna} with the following search space:
 
@@ -219,8 +180,8 @@ We conduct comprehensive experiments to evaluate StyCLIP against established few
 
 \begin{figure*}[t!]
     \centering
-    \includegraphics[width=\linewidth,height=0.5\textheight]{../img/episode_example.drawio.png}
-    \caption{Example of a 5-Way 4-Shot Episode with 10 query}
+    \includegraphics[width=\linewidth,height=0.12\textheight]{../img/episode_results.png}
+    \caption{Example of and episode using RN50 backbone}
 \end{figure*}
 
 \subsubsection{Experimental Protocol}
@@ -439,7 +400,7 @@ Tip\_Adapter & RN50 & 52.91 & 51.90 & 52.37 & 46.38 \\
 \bottomrule
 \end{tabular}
 \end{table}
-\clearpage
+
 \subsection{Statistical Analysis}
 
 
@@ -535,7 +496,7 @@ TIMO\_FSL4 & 18.81* & 18.13* & -30.46* & -3.73* & -11.74* & -32.11* & 1.65 & 0.0
 TIMO\_RN50 & 51.87* & 51.19* & 2.60* & 29.33* & 21.31* & 0.95 & 34.71* & 33.06* & 0.00 & 33.24* & 30.12* & -0.80 & 55.11* & 55.20* & 11.53* \\
 TIMO\_S\_FSL1 & 18.62* & 17.95* & -30.64* & -3.91* & -11.93* & -32.29* & 1.47 & -0.18 & -34.13* & 0.00 & -3.12* & -34.04* & 21.87* & 21.96* & -21.71* \\
 TIMO\_S\_FSL4 & 21.74* & 21.07* & -27.52* & -0.80 & -8.81* & -29.17* & 4.59* & 2.94* & -30.12* & 3.12 & 0.00 & -30.92* & 24.98* & 25.08* & -18.59* \\
-TIMO\_S\_RN50 & 52.66* & 51.99* & 3.39* & 30.12* & 22.11* & 1.74 & 35.50* & 33.85* & 0.76 & 34.04* & 30.92* & 0.00 & 55.90* & 55.99* & 12.32* \\
+TIMO\_S\_RN50 & 52.66* & 51.99* & 3.39* & 30.12* & 22.11* & 1.74 & 35.50* & 33.85* & 0.80 & 34.04* & 30.92* & 0.00 & 55.90* & 55.99* & 12.32* \\
 Tip\_FSL1 & -3.24* & -3.91* & -52.51* & -25.78* & -33.79* & -54.16* & -20.40* & -22.05* & -55.11* & -21.87* & -24.98* & -55.90* & 0.00 & 0.09 & -43.58* \\
 Tip\_FSL4 & -3.33* & -4.01* & -52.60* & -25.87* & -33.88* & -54.25* & -20.49* & -22.14* & -55.20* & -21.96* & -25.08* & -55.99* & -0.09 & 0.00 & -43.67* \\
 Tip\_RN50 & 40.34* & 39.66* & -8.93* & 17.80* & 9.79* & -10.58* & 23.18* & 21.53* & -11.53* & 21.71* & 18.59* & -12.32* & 43.58* & 43.67* & 0.00 \\
@@ -604,7 +565,7 @@ GDA\_RN50 & 66.33* & 65.08* & 10.89* & 31.87* & 19.69* & 0.00 & 36.06* & 29.79* 
 TIMO\_FSL1 & 25.29* & 23.12* & -27.46* & -3.61* & -16.33* & -32.97* & 0.00 & -7.74* & -34.62* & -1.53 & -10.24* & -34.43* & 28.93* & 29.27* & -17.80* \\
 TIMO\_FSL4 & 33.03* & 30.86* & -19.72* & 4.13* & -8.59* & -25.23* & 7.74* & 0.00 & -26.88* & 6.21* & -2.51 & -26.70* & 36.67* & 37.00* & -10.06* \\
 TIMO\_RN50 & 59.91* & 57.74* & 7.16* & 31.01* & 18.29* & 1.65 & 34.62* & 26.88* & 0.00 & 33.09* & 24.37* & 0.18 & 63.55* & 63.88* & 16.82* \\
-TIMO\_S\_FSL1 & 26.82* & 24.65* & -25.93* & -2.08 & -14.80* & -31.44* & 1.53 & -6.21* & -33.09* & 0.00 & -8.72* & -32.91* & 30.46* &  30.80* & -16.27* \\
+TIMO\_S\_FSL1 & 26.82* & 24.65* & -25.93* & -2.08 & -14.80* & -31.44* & 1.53 & -6.21* & -33.09* & 0.00 & -8.72* & -32.91* & 30.46* & 30.80* & -16.27* \\
 TIMO\_S\_FSL4 & 35.54* & 33.36* & -17.22* & 6.64* & -6.09* & -22.72* & 10.24* & 2.51 & -24.37* & 8.72* & 0.00 & -24.19* & 39.17* & 39.51* & -7.55* \\
 TIMO\_S\_RN50 & 59.72* & 57.55* & 6.97* & 30.83* & 18.10* & 1.47 & 34.43* & 26.70* & 0.09 & 34.25* & 24.71* & 0.00 & 70.83* & 71.68* & 20.55* \\
 Tip\_FSL1 & -4.10* & -5.35* & -59.54* & -38.56* & -50.73* & -70.43* & -34.37* & -40.64* & -70.73* & -36.57* & -46.12* & -70.83* & 0.00 & 0.86 & -50.28* \\
@@ -616,22 +577,17 @@ Tip\_RN50 & 46.18* & 44.92* & -9.27* & 11.71* & -0.46 & -20.15* & 15.90* & 9.63*
 \end{table}
 
 \FloatBarrier
-\clearpage
+
+
 
 \subsection{Discussion}
 
 
-Our comprehensive evaluation of StyCLIP reveals that integrating explicit style-aware features does not improve few-shot artist classification performance. 
+Our comprehensive evaluation reveals that integrating explicit style-aware features does not improve few-shot artist classification performance. Standard CLIP with RN50 backbone consistently outperforms StyCLIP variants across all configurations, achieving 73.46\% accuracy in 16-shot scenarios versus StyCLIP's best performance of 48.75\%—a statistically significant 25 percentage point difference.
 
-Standard CLIP with RN50 backbone consistently outperforms both StyCLIP variants across all shot configurations. In 16-shot scenarios, standard CLIP achieves 73.46\% accuracy while the best StyCLIP variant reaches only 48.75\%—a statistically significant 25 percentage point difference. Among few-shot methods, TIMO and TIMO\_S demonstrate superior performance, with no significant differences between them when using standard RN50.
+Key findings include: (1) TIMO and TIMO\_S demonstrate superior performance with no significant differences when using standard RN50, (2) accuracy improves substantially with more support examples (45.96\% to 73.46\% from 1-shot to 16-shot), and (3) StyCLIP variants consistently underperform across all conditions, suggesting that explicit Gram matrix-based style modeling interferes with pre-trained semantic representations rather than enhancing them.
 
-Classification accuracy improves substantially with more support examples (TIMO\_S: 45.96\% to 73.46\% from 1-shot to 16-shot). However, both StyCLIP variants consistently underperform across all conditions, suggesting that explicit Gram matrix-based style modeling may interfere with pre-trained semantic representations rather than enhance them.
-
-The experimental results reveal several key insights across different shot configurations. In 1-shot scenarios with extremely limited data, CLIP-based models with RN50 backbone (particularly TIMO and TIMO\_S) achieve significantly superior results compared to StyCLIP variants and other methods. The performance of approaches that explicitly integrate stylistic components remains substantially lower, suggesting that adding these features does not aid generalization under minimal data conditions.
-
-As the number of support examples increases to 2-shot and 4-shot, all models show performance improvements, but the gap between standard CLIP RN50 and StyCLIP versions remains pronounced. Standard models continue to dominate, while solutions with custom backbones struggle to exceed 25\% accuracy in lower-shot scenarios.
-
-In higher-shot configurations (8-shot and 16-shot), while performance differences between models decrease slightly, CLIP RN50 and TIMO\_S remain the most effective, achieving over 73\% accuracy in 16-shot cases. StyCLIP versions fail to bridge this performance gap, confirming that explicit integration of style information through Gram matrices does not provide concrete benefits for few-shot artist classification.
+The results indicate that CLIP's pre-trained features already capture sufficient stylistic information for artist classification, and that explicit style integration through architectural modifications may disrupt the learned semantic-visual alignment.
 
 
 
@@ -639,6 +595,7 @@ In higher-shot configurations (8-shot and 16-shot), while performance difference
 
 Our results indicate that CLIP's pre-trained features already capture sufficient stylistic information for artist classification. The negative results highlight the complexity of effectively integrating style transfer techniques into foundation models without disrupting learned semantic-visual alignment.
 Alternative approaches such as attention-based style integration or domain-specific fine-tuning without architectural modifications may prove more effective than explicit style modeling for artistic classification tasks.
+
 
 
 \clearpage
