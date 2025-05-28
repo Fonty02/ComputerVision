@@ -1,14 +1,16 @@
-This is BibTeX, Version 0.99d (TeX Live 2025/dev/Debian)
+This is BibTeX, Version 0.99d
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
-The top-level auxiliary file: pres.aux
+The top-level auxiliary file: presCV.aux
+Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: plain.bst
+Reallocating 'name_of_file' (item size: 1) to 5 items.
 Database file #1: bibo.bib
 Warning--entry type for "ArtGraph" isn't style-file defined
---line 58 of file bibo.bib
+--line 115 of file bibo.bib
 Warning--can't use both volume and number fields in TIMO
 You've used 9 entries,
             2118 wiz_defined-function locations,
-            561 strings with 6222 characters,
+            561 strings with 6226 characters,
 and the built_in function-call counts, 4677 in all, are:
 = -- 430
 > -- 310

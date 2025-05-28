@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  28 MAY 2025 18:13
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  28 MAY 2025 23:03
  system commands enabled.
  file:line:error style messages enabled.
 **c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/report
@@ -917,11 +917,11 @@ ftex.map}
 
 
 ]
-<../img/diagram.png, id=177, 5973.31625pt x 2409.0pt>
-File: ../img/diagram.png Graphic file (type png)
-<use ../img/diagram.png>
-Package luatex.def Info: ../img/diagram.png  used on input line 163.
-(luatex.def)             Requested size: 515.97383pt x 134.38846pt.
+<../img/StyCLIP.png, id=177, 5388.13pt x 2308.625pt>
+File: ../img/StyCLIP.png Graphic file (type png)
+<use ../img/StyCLIP.png>
+Package luatex.def Info: ../img/StyCLIP.png  used on input line 163.
+(luatex.def)             Requested size: 515.98848pt x 268.77998pt.
 
 
 <../img/episode_example.drawio.png, id=180, 3766.07pt x 1758.57pt>
@@ -940,25 +940,37 @@ Underfull \hbox (badness 2772) in paragraph at lines 230--231
 [2
 Missing character: There is no ∈ (U+2208) in font ec-lmr8!
 ]
+
+LaTeX Warning: Text page 3 contains only floats.
+
+
+Overfull \vbox (16.76346pt too high) has occurred while \output is active []
+
+
+
+
+LaTeX Warning: Text page 3 contains only floats.
+
+
+Overfull \vbox (16.76346pt too high) has occurred while \output is active []
+
+
+
+[3<../img/StyCLIP.png><../img/episode_example.drawio.png>]
 Underfull \hbox (badness 1460) in paragraph at lines 243--244
 []\T1/lmr/bx/n/8 Model Ini-tial-iza-tion Ef-fects: \T1/lmr/m/n/8 Stochas-tic com
 -po-nents in
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-
-
-Underfull \vbox (badness 6859) has occurred while \output is active []
-
-
-
-[3<../img/diagram.png><../img/episode_example.drawio.png>]
 Overfull \hbox (3.96938pt too wide) in paragraph at lines 301--322
  [][] 
  []
+
+
+Underfull \vbox (badness 2150) has occurred while \output is active []
+
+
 
 
 Overfull \hbox (3.96938pt too wide) in paragraph at lines 331--352
@@ -971,8 +983,6 @@ Overfull \hbox (3.96938pt too wide) in paragraph at lines 361--382
  []
 
 
-
-
 Overfull \hbox (3.96938pt too wide) in paragraph at lines 391--412
  [][] 
  []
@@ -981,6 +991,9 @@ Overfull \hbox (3.96938pt too wide) in paragraph at lines 391--412
 Overfull \hbox (3.96938pt too wide) in paragraph at lines 420--441
  [][] 
  []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
@@ -995,18 +1008,17 @@ Overfull \hbox (264.0524pt too wide) in paragraph at lines 487--510
  []
 
 
-Overfull \hbox (264.0524pt too wide) in paragraph at lines 522--545
- [][] 
- []
-
-
 
 
 
 [5
 
-
 ]
+Overfull \hbox (264.0524pt too wide) in paragraph at lines 522--545
+ [][] 
+ []
+
+
 Overfull \hbox (264.0524pt too wide) in paragraph at lines 558--581
  [][] 
  []
@@ -1093,11 +1105,11 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 
 Here is how much of LuaTeX's memory you used:
  21416 strings out of 475506
- 244181,953878 words of node,token memory allocated
+ 244174,953878 words of node,token memory allocated
  615 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 3 glue, 4 kern, 1 penalty, 1 glyph, 30 attribute, 5
 9 glue_spec, 16 attribute_list, 1 write, 3 pdf_action nodes
-   avail lists: 1:2,2:9239,3:653,4:104,5:1389,6:106,7:20868,8:101,9:3378,10:19,1
+   avail lists: 1:2,2:9572,3:653,4:132,5:1426,6:106,7:21681,8:101,9:3187,10:19,1
 1:1890
  43997 multiletter control sequences out of 65536+600000
  89 fonts using 6938151 bytes
@@ -1127,7 +1139,7 @@ X/fonts/type1/public/lm/lmri10.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX
 /fonts/type1/public/lm/lmri8.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/f
 onts/type1/public/lm/lmsy6.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/fon
 ts/type1/public/lm/lmsy8.pfb>
-Output written on main.pdf (8 pages, 8113751 bytes).
+Output written on main.pdf (8 pages, 8361055 bytes).
 
 PDF statistics: 318 PDF objects out of 1000 (max. 8388607)
  64 named destinations out of 1000 (max. 131072)
