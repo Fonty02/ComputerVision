@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  29 MAY 2025 16:37
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  29 MAY 2025 18:48
  system commands enabled.
  file:line:error style messages enabled.
 **c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/presen
@@ -1382,13 +1382,13 @@ Overfull \hbox (136.75854pt too wide) in paragraph at lines 156--156
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
-<../img/StyCLIP.png, id=325, 5388.13pt x 2308.625pt>
+<../img/StyCLIP.png, id=325, 5293.7775pt x 2737.22626pt>
 File: ../img/StyCLIP.png Graphic file (type png)
 <use ../img/StyCLIP.png>
 Package luatex.def Info: ../img/StyCLIP.png  used on input line 156.
-(luatex.def)             Requested size: 308.06387pt x 234.3987pt.
+(luatex.def)             Requested size: 308.00055pt x 234.39447pt.
 
-Overfull \vbox (43.42795pt too high) detected at line 156
+Overfull \vbox (43.42372pt too high) detected at line 156
  []
 
 
@@ -1615,7 +1615,7 @@ pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/fonta/AppD
 ata/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/fonta/AppDat
 a/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/fonta/AppData
 /Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb>
-Output written on presCV.pdf (18 pages, 3585601 bytes).
+Output written on presCV.pdf (18 pages, 3634808 bytes).
 
 PDF statistics: 849 PDF objects out of 1000 (max. 8388607)
  56 named destinations out of 1000 (max. 131072)
