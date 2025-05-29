@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  28 MAY 2025 23:03
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  29 MAY 2025 16:37
  system commands enabled.
  file:line:error style messages enabled.
 **c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/report
@@ -924,12 +924,12 @@ Package luatex.def Info: ../img/StyCLIP.png  used on input line 163.
 (luatex.def)             Requested size: 515.98848pt x 268.77998pt.
 
 
-<../img/episode_example.drawio.png, id=180, 3766.07pt x 1758.57pt>
+<../img/episode_example.drawio.png, id=180, 3694.80376pt x 1566.85374pt>
 File: ../img/episode_example.drawio.png Graphic file (type png)
 <use ../img/episode_example.drawio.png>
 Package luatex.def Info: ../img/episode_example.drawio.png  used on input line 
 222.
-(luatex.def)             Requested size: 515.98297pt x 335.98329pt.
+(luatex.def)             Requested size: 515.97232pt x 335.98239pt.
 
 Underfull \hbox (badness 2772) in paragraph at lines 230--231
 []\T1/lmr/bx/n/8 N-way Clas-si-fi-ca-tion: \T1/lmr/m/n/8 Each episode in-volves clas-si-fy-ing
@@ -944,7 +944,7 @@ Missing character: There is no ∈ (U+2208) in font ec-lmr8!
 LaTeX Warning: Text page 3 contains only floats.
 
 
-Overfull \vbox (16.76346pt too high) has occurred while \output is active []
+Overfull \vbox (16.76256pt too high) has occurred while \output is active []
 
 
 
@@ -952,7 +952,7 @@ Overfull \vbox (16.76346pt too high) has occurred while \output is active []
 LaTeX Warning: Text page 3 contains only floats.
 
 
-Overfull \vbox (16.76346pt too high) has occurred while \output is active []
+Overfull \vbox (16.76256pt too high) has occurred while \output is active []
 
 
 
@@ -1139,7 +1139,7 @@ X/fonts/type1/public/lm/lmri10.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX
 /fonts/type1/public/lm/lmri8.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/f
 onts/type1/public/lm/lmsy6.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/fon
 ts/type1/public/lm/lmsy8.pfb>
-Output written on main.pdf (8 pages, 8361055 bytes).
+Output written on main.pdf (8 pages, 3653631 bytes).
 
 PDF statistics: 318 PDF objects out of 1000 (max. 8388607)
  64 named destinations out of 1000 (max. 131072)
