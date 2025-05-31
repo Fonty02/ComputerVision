@@ -2,10 +2,10 @@ This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  31 M
  system commands enabled.
  file:line:error style messages enabled.
 **c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/presen
-tation/presCV
+tation/pres
 
 (c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/present
-ation/presCV.tex
+ation/pres.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 Lua module: luaotfload 2024-12-03 v3.29 Lua based OpenType font support
@@ -1072,8 +1072,8 @@ File: l3backend-luatex.def 2024-01-04 L3 backend support: PDF output (LuaTeX)
 \l__color_backend_stack_int=\count366
 Inserting `l3color' in `luaotfload.parse_color'.
 \l__pdf_internal_box=\box88
-) (./presCV.aux)
-\openout1 = presCV.aux
+) (./pres.aux)
+\openout1 = pres.aux
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
 LaTeX Font Info:    ... okay on input line 32.
@@ -1157,10 +1157,10 @@ fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 Package hyperref Info: Link coloring OFF on input line 32.
- (./presCV.out) (./presCV.out)
+ (./pres.out) (./pres.out)
 \@outlinefile=\write5
 
-\openout5 = presCV.out
+\openout5 = pres.out
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/lmr/m/n --> OT1/cmss/m/n on input line 32.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
@@ -1239,7 +1239,7 @@ nslations-basic-dictionary')
 )
 Package translations Info: loading dictionary `translations-basic-dictionary' f
 or `english'. on input line 32.
- (./presCV.nav)
+ (./pres.nav)
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 3
 2.
 
@@ -1356,16 +1356,17 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [4
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 145--145
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 125--125
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 145.
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 145.
+<../img/StyCLIP.png, id=266, 5292.77374pt x 2737.22626pt>
+File: ../img/StyCLIP.png Graphic file (type png)
+<use ../img/StyCLIP.png>
+Package luatex.def Info: ../img/StyCLIP.png  used on input line 125.
+(luatex.def)             Requested size: 308.02292pt x 208.37384pt.
 
-Overfull \vbox (0.74483pt too high) detected at line 145
+Overfull \vbox (46.73224pt too high) detected at line 125
  []
 
 
@@ -1377,20 +1378,19 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 
 [5
 
-]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 156--156
+<../img/StyCLIP.png>]
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 152--152
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
-<../img/StyCLIP.png, id=325, 5292.77374pt x 2737.22626pt>
-File: ../img/StyCLIP.png Graphic file (type png)
-<use ../img/StyCLIP.png>
-Package luatex.def Info: ../img/StyCLIP.png  used on input line 156.
-(luatex.def)             Requested size: 308.02292pt x 208.37384pt.
-
-Overfull \vbox (17.40309pt too high) detected at line 156
- []
-
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 152.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 152.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 152.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 152.
 
 
 
@@ -1400,19 +1400,15 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 
 [6
 
-<../img/StyCLIP.png>]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 183--183
+]
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 179--179
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 183.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 183.
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 183.
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 183.
+(Font)              <10.95> on input line 179.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 179.
 
 
 
@@ -1423,7 +1419,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [7
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 210--210
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 206--206
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1437,7 +1433,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [8
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 237--237
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 238--238
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1451,10 +1447,15 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [9
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 269--269
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 252--252
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
+<../img/episode_results.png, id=501, 1438.173pt x 298.9569pt>
+File: ../img/episode_results.png Graphic file (type png)
+<use ../img/episode_results.png>
+Package luatex.def Info: ../img/episode_results.png  used on input line 252.
+(luatex.def)             Requested size: 273.83733pt x 56.92099pt.
 
 
 
@@ -1464,17 +1465,11 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 
 [10
 
-]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 280--280
+<../img/episode_results.png>]
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 285--285
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
-<../img/episode_example.drawio.png, id=558, 3694.80376pt x 1566.85374pt>
-File: ../img/episode_example.drawio.png Graphic file (type png)
-<use ../img/episode_example.drawio.png>
-Package luatex.def Info: ../img/episode_example.drawio.png  used on input line 
-280.
-(luatex.def)             Requested size: 273.83733pt x 116.12228pt.
 
 
 
@@ -1484,8 +1479,8 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 
 [11
 
-<../img/episode_example.drawio.png>]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 313--313
+]
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 298--298
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1499,7 +1494,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [12
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 326--326
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 311--311
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1513,7 +1508,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [13
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 339--339
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 320--320
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1527,7 +1522,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [14
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 348--348
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 333--333
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1541,68 +1536,54 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [15
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 361--361
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 340--340
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
-
-
-
-Overfull \hbox (136.75854pt too wide) has occurred while \output is active
- [][]  \T1/lmss/m/n/6 ([])  
- []
+(./pres.bbl)
 
 [16
-
-]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 368--368
- [][]  \T1/lmss/m/n/6 ([])  
- []
-
-(./presCV.bbl)
-
-[17
 
 <C:/Users/fonta/AppData/Local/Programs/MiKTeX/tex/latex/beamer/beamericonarticle
 .pdf>]
 
-[18
+[17
 
 
 ]
 \tf@nav=\write6
 
-\openout6 = presCV.nav
+\openout6 = pres.nav
 \tf@toc=\write7
 
-\openout7 = presCV.toc
+\openout7 = pres.toc
 \tf@snm=\write8
 
-\openout8 = presCV.snm
- (./presCV.aux)
+\openout8 = pres.snm
+ (./pres.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-Package rerunfilecheck Info: File `presCV.out' has not changed.
-(rerunfilecheck)             Checksum: 768F0C72ADF66BCA30AB4D1950DA994E;1299.
+Package rerunfilecheck Info: File `pres.out' has not changed.
+(rerunfilecheck)             Checksum: BFC4BD5EEE11CDAE9B1168506CD2D112;1171.
 )
 
 Here is how much of LuaTeX's memory you used:
- 28829 strings out of 475506
+ 28804 strings out of 475506
  100000,1144653 words of node,token memory allocated
  7969 words of node memory still in use:
    67 hlist, 9 vlist, 14 rule, 39 disc, 8 local_par, 176 glue, 26 kern, 23 penal
 ty, 498 glyph, 327 attribute, 65 glue_spec, 165 attribute_list, 4 write, 40 pdf_
 literal, 2 pdf_dest, 60 pdf_colorstack nodes
    avail lists: 2:2095,3:804,4:310,5:372,6:86,7:5913,8:56,9:755,10:29,11:409
- 50942 multiletter control sequences out of 65536+600000
+ 50920 multiletter control sequences out of 65536+600000
  70 fonts using 4803743 bytes
- 128i,18n,116p,501b,943s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 128i,18n,116p,499b,943s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {C:/Users/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/U
-sers/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Us
-ers/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Use
-rs/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}<C:/Users/fo
+sers/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/
+fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/f
+onta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}<C:/Users/fo
 nta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi10.pfb><C:/Users/fon
 ta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss10.pfb><C:/Users/font
 a/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmss12.pfb><C:/Users/fonta
@@ -1615,9 +1596,9 @@ pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/fonta/AppD
 ata/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/fonta/AppDat
 a/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/fonta/AppData
 /Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb>
-Output written on presCV.pdf (18 pages, 3672711 bytes).
+Output written on pres.pdf (17 pages, 10682504 bytes).
 
-PDF statistics: 849 PDF objects out of 1000 (max. 8388607)
- 56 named destinations out of 1000 (max. 131072)
- 1096 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 793 PDF objects out of 1000 (max. 8388607)
+ 53 named destinations out of 1000 (max. 131072)
+ 968 words of extra memory for PDF output out of 10000 (max. 100000000)
 

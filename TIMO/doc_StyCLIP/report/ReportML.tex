@@ -122,7 +122,7 @@ The baseline CLIP model with ResNet-50 backbone consists of:
 Our StyCLIP architecture maintains the original CLIP backbone while introducing three key components for style-aware feature learning:
 \begin{figure*}[t!]
     \centering
-    \includegraphics[width=\linewidth,height=0.2\textheight]{../img/diagram.png}
+    \includegraphics[width=0.7\linewidth,height=0.2\textheight]{../img/StyCLIP.png}
     \caption{StyCLIP Architecture Overview}
 \end{figure*}
 \begin{itemize}
@@ -583,11 +583,17 @@ Tip\_RN50 & 46.18* & 44.92* & -9.27* & 11.71* & -0.46 & -20.15* & 15.90* & 9.63*
 \subsection{Discussion}
 
 
-Our comprehensive evaluation reveals that integrating explicit style-aware features does not improve few-shot artist classification performance. Standard CLIP with RN50 backbone consistently outperforms StyCLIP variants across all configurations, achieving 73.46\% accuracy in 16-shot scenarios versus StyCLIP's best performance of 48.75\%—a statistically significant 25 percentage point difference.
+Our comprehensive evaluation of StyCLIP reveals that integrating explicit style-aware features does not improve few-shot artist classification performance. 
 
-Key findings include: (1) TIMO and TIMO\_S demonstrate superior performance with no significant differences when using standard RN50, (2) accuracy improves substantially with more support examples (45.96\% to 73.46\% from 1-shot to 16-shot), and (3) StyCLIP variants consistently underperform across all conditions, suggesting that explicit Gram matrix-based style modeling interferes with pre-trained semantic representations rather than enhancing them.
+Standard CLIP with RN50 backbone consistently outperforms both StyCLIP variants across all shot configurations. In 16-shot scenarios, standard CLIP achieves 73.46\% accuracy while the best StyCLIP variant reaches only 48.75\%—a statistically significant 25 percentage point difference. Among few-shot methods, TIMO and TIMO\_S demonstrate superior performance, with no significant differences between them when using standard RN50.
 
-The results indicate that CLIP's pre-trained features already capture sufficient stylistic information for artist classification, and that explicit style integration through architectural modifications may disrupt the learned semantic-visual alignment.
+Classification accuracy improves substantially with more support examples (TIMO\_S: 45.96\% to 73.46\% from 1-shot to 16-shot). However, both StyCLIP variants consistently underperform across all conditions, suggesting that explicit Gram matrix-based style modeling may interfere with pre-trained semantic representations rather than enhance them.
+
+The experimental results reveal several key insights across different shot configurations. In 1-shot scenarios with extremely limited data, CLIP-based models with RN50 backbone (particularly TIMO and TIMO\_S) achieve significantly superior results compared to StyCLIP variants and other methods. The performance of approaches that explicitly integrate stylistic components remains substantially lower, suggesting that adding these features does not aid generalization under minimal data conditions.
+
+As the number of support examples increases to 2-shot and 4-shot, all models show performance improvements, but the gap between standard CLIP RN50 and StyCLIP versions remains pronounced. Standard models continue to dominate, while solutions with custom backbones struggle to exceed 25\% accuracy in lower-shot scenarios.
+
+In higher-shot configurations (8-shot and 16-shot), while performance differences between models decrease slightly, CLIP RN50 and TIMO\_S remain the most effective, achieving over 73\% accuracy in 16-shot cases. StyCLIP versions fail to bridge this performance gap, confirming that explicit integration of style information through Gram matrices does not provide concrete benefits for few-shot artist classification.
 
 
 

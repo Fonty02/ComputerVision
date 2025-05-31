@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  29 MAY 2025 18:53
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  31 MAY 2025 17:06
  system commands enabled.
  file:line:error style messages enabled.
 **c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/report
@@ -917,79 +917,71 @@ ftex.map}
 
 
 ]
-<../img/StyCLIP.png, id=177, 5293.7775pt x 2737.22626pt>
+<../img/StyCLIP.png, id=177, 5292.77374pt x 2737.22626pt>
 File: ../img/StyCLIP.png Graphic file (type png)
 <use ../img/StyCLIP.png>
 Package luatex.def Info: ../img/StyCLIP.png  used on input line 163.
-(luatex.def)             Requested size: 515.99988pt x 268.76843pt.
+(luatex.def)             Requested size: 515.9828pt x 268.76843pt.
 
 
-<../img/episode_example.drawio.png, id=180, 3694.80376pt x 1566.85374pt>
+
+
+[2]
+<../img/episode_example.drawio.png, id=196, 3694.80376pt x 1566.85374pt>
 File: ../img/episode_example.drawio.png Graphic file (type png)
 <use ../img/episode_example.drawio.png>
 Package luatex.def Info: ../img/episode_example.drawio.png  used on input line 
-222.
+262.
 (luatex.def)             Requested size: 515.97232pt x 235.18527pt.
 
-Underfull \hbox (badness 2772) in paragraph at lines 230--231
+
+
+Underfull \hbox (badness 2772) in paragraph at lines 270--271
 []\T1/lmr/bx/n/8 N-way Clas-si-fi-ca-tion: \T1/lmr/m/n/8 Each episode in-volves clas-si-fy-ing
  []
 
 
-
-[2
-Missing character: There is no ∈ (U+2208) in font ec-lmr8!
-]
-Underfull \hbox (badness 1460) in paragraph at lines 243--244
+Underfull \hbox (badness 1460) in paragraph at lines 283--284
 []\T1/lmr/bx/n/8 Model Ini-tial-iza-tion Ef-fects: \T1/lmr/m/n/8 Stochas-tic com
 -po-nents in
  []
 
 
 
-
-
-[3<../img/StyCLIP.png><../img/episode_example.drawio.png>]
-Overfull \hbox (3.96938pt too wide) in paragraph at lines 301--322
+[3
+Missing character: There is no ∈ (U+2208) in font ec-lmr8!
+<../img/StyCLIP.png>]
+Overfull \hbox (3.96938pt too wide) in paragraph at lines 341--362
  [][] 
  []
 
 
-Overfull \hbox (3.96938pt too wide) in paragraph at lines 331--352
+Underfull \vbox (badness 1924) has occurred while \output is active []
+
+
+
+
+Overfull \hbox (3.96938pt too wide) in paragraph at lines 371--392
  [][] 
  []
 
 
-Overfull \hbox (3.96938pt too wide) in paragraph at lines 361--382
+Overfull \hbox (3.96938pt too wide) in paragraph at lines 401--422
  [][] 
  []
 
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \hbox (3.96938pt too wide) in paragraph at lines 391--412
+
+[4<../img/episode_example.drawio.png>]
+Overfull \hbox (3.96938pt too wide) in paragraph at lines 431--452
  [][] 
  []
 
 
-Overfull \hbox (3.96938pt too wide) in paragraph at lines 420--441
- [][] 
- []
-
-
-
-[4]
-Overfull \hbox (264.04074pt too wide) in paragraph at lines 452--475
- [][] 
- []
-
-
-Overfull \hbox (264.0524pt too wide) in paragraph at lines 487--510
- [][] 
- []
-
-
-Overfull \hbox (264.0524pt too wide) in paragraph at lines 522--545
+Overfull \hbox (3.96938pt too wide) in paragraph at lines 460--481
  [][] 
  []
 
@@ -999,14 +991,18 @@ Overfull \hbox (264.0524pt too wide) in paragraph at lines 522--545
 
 [5
 
-
 ]
-Overfull \hbox (264.0524pt too wide) in paragraph at lines 558--581
+Overfull \hbox (264.04074pt too wide) in paragraph at lines 492--515
  [][] 
  []
 
 
-Overfull \hbox (264.0524pt too wide) in paragraph at lines 593--616
+Overfull \hbox (264.0524pt too wide) in paragraph at lines 527--550
+ [][] 
+ []
+
+
+Overfull \hbox (264.0524pt too wide) in paragraph at lines 562--585
  [][] 
  []
 
@@ -1018,10 +1014,27 @@ Overfull \hbox (264.0524pt too wide) in paragraph at lines 593--616
 
 
 ]
+Overfull \hbox (264.0524pt too wide) in paragraph at lines 596--619
+ [][] 
+ []
+
+
+Overfull \hbox (264.0524pt too wide) in paragraph at lines 631--654
+ [][] 
+ []
+
+
 
 
 
 [7
+
+
+]
+
+
+
+[8
 
 
 Missing character: There is no — (U+2014) in font ec-lmr8!
@@ -1080,7 +1093,7 @@ Pagestretch: 0.0pt
 FLUSHEND [output]: 197.05557pt
 FLUSHEND [leftcolumn badness]: 0
 FUSHEND [rightcolumn badness]: 10000
-[8
+[9
 
 ] (./main.aux)
  ***********
@@ -1096,16 +1109,16 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 21416 strings out of 475506
+ 21423 strings out of 475506
  244181,953878 words of node,token memory allocated
- 615 words of node memory still in use:
-   6 hlist, 2 vlist, 2 rule, 3 glue, 4 kern, 1 penalty, 1 glyph, 30 attribute, 5
-9 glue_spec, 16 attribute_list, 1 write, 3 pdf_action nodes
-   avail lists: 1:1,2:9371,3:626,4:116,5:1423,6:106,7:21175,8:101,9:3421,10:19,1
-1:1890
- 43997 multiletter control sequences out of 65536+600000
- 89 fonts using 6938151 bytes
- 72i,11n,75p,953b,1061s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 645 words of node memory still in use:
+   6 hlist, 2 vlist, 2 rule, 3 glue, 4 kern, 1 penalty, 1 glyph, 40 attribute, 5
+9 glue_spec, 21 attribute_list, 1 write, 3 pdf_action nodes
+   avail lists: 1:2,2:5870,3:626,4:92,5:1202,6:101,7:20868,8:101,9:2225,10:19,11
+:1890
+ 44000 multiletter control sequences out of 65536+600000
+ 92 fonts using 7186191 bytes
+ 72i,11n,75p,953b,1057s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {C:/Users/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/U
 sers/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/
 fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/f
@@ -1130,10 +1143,11 @@ KTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTe
 X/fonts/type1/public/lm/lmri10.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX
 /fonts/type1/public/lm/lmri8.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/f
 onts/type1/public/lm/lmsy6.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/fon
-ts/type1/public/lm/lmsy8.pfb>
-Output written on main.pdf (8 pages, 3702823 bytes).
+ts/type1/public/lm/lmsy8.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/fonts
+/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on main.pdf (9 pages, 3755484 bytes).
 
-PDF statistics: 319 PDF objects out of 1000 (max. 8388607)
- 64 named destinations out of 1000 (max. 131072)
+PDF statistics: 332 PDF objects out of 1000 (max. 8388607)
+ 68 named destinations out of 1000 (max. 131072)
  273 words of extra memory for PDF output out of 10000 (max. 100000000)
 

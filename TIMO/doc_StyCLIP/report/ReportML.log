@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  28 MAY 2025 17:05
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  31 MAY 2025 17:00
  system commands enabled.
  file:line:error style messages enabled.
 **c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/report
@@ -909,11 +909,11 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <8> on input line 93.
-<../img/diagram.png, id=132, 5973.31625pt x 2409.0pt>
-File: ../img/diagram.png Graphic file (type png)
-<use ../img/diagram.png>
-Package luatex.def Info: ../img/diagram.png  used on input line 125.
-(luatex.def)             Requested size: 515.97383pt x 134.38846pt.
+<../img/StyCLIP.png, id=132, 5292.77374pt x 2737.22626pt>
+File: ../img/StyCLIP.png Graphic file (type png)
+<use ../img/StyCLIP.png>
+Package luatex.def Info: ../img/StyCLIP.png  used on input line 125.
+(luatex.def)             Requested size: 361.16373pt x 134.36333pt.
 
 
 [1
@@ -943,7 +943,7 @@ Underfull \hbox (badness 1460) in paragraph at lines 204--205
 
 [2
 Missing character: There is no ∈ (U+2208) in font ec-lmr8!
-<../img/diagram.png>]
+<../img/StyCLIP.png>]
 Overfull \hbox (3.96938pt too wide) in paragraph at lines 262--283
  [][] 
  []
@@ -1014,7 +1014,6 @@ Overfull \hbox (264.0524pt too wide) in paragraph at lines 554--577
 
 
 Missing character: There is no — (U+2014) in font ec-lmr8!
-
 ] (./ReportML.bbl)
 
 ** Conference Paper **
@@ -1105,7 +1104,7 @@ ams/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/fonta/AppData/Local/Programs
 /MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/fonta/AppData/Local/Programs/
 MiKTeX/fonts/type1/public/lm/lmri8.pfb><C:/Users/fonta/AppData/Local/Programs/Mi
 KTeX/fonts/type1/public/lm/lmsy6.pfb>
-Output written on ReportML.pdf (6 pages, 10399376 bytes).
+Output written on ReportML.pdf (6 pages, 10734637 bytes).
 
 PDF statistics: 272 PDF objects out of 1000 (max. 8388607)
  58 named destinations out of 1000 (max. 131072)

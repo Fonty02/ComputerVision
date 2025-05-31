@@ -169,6 +169,46 @@ Our StyCLIP architecture maintains the original CLIP backbone while introducing 
     \item \textbf{Fusion Adapter}: Integration of semantic and style features through a bottleneck architecture
 \end{itemize}
 
+\paragraph{Gram Matrix Extraction Module}
+
+We extract style-specific correlations from intermediate visual encoder layers using forward hooks registered on ResNet-50 layers. For feature maps $F_l \in \mathbb{R}^{C_l \times H_l \times W_l}$ from layer $l$, we compute the Gram matrix $G_l \in \mathbb{R}^{C_l \times C_l}$ as:
+
+\[
+G_l^{(i,j)} = \frac{1}{H_l \times W_l} \sum_{h=1}^{H_l} \sum_{w=1}^{W_l} F_l^{(i,h,w)} \cdot F_l^{(j,h,w)}
+\]
+
+where $G_l^{(i,j)}$ represents channel correlations at layer $l$. We extract Gram matrices from multiple ResNet-50 blocks (specifically the second and third residual blocks, corresponding to `layer2` and `layer3` in the ResNet architecture) to capture style information at different abstraction levels. The upper triangular portion of each Gram matrix is vectorized to reduce redundancy.
+
+\paragraph{Style Feature Projection}
+
+Each Gram matrix $G_l$ is flattened and processed through dedicated MLPs with Xavier initialization:
+
+\[
+\mathbf{s}_l = \text{MLP}_l(\text{flatten}(\text{triu}(G_l)))
+\]
+
+where $\text{triu}(G_l)$ extracts the upper triangular portion to reduce redundancy. The MLP structure follows:
+
+\[
+\text{MLP}_l(\mathbf{x}) = \text{Linear}(\mathbf{x})
+\]
+
+The projection reduces dimensionality from the vectorized Gram matrix size to a fixed embedding dimension $d_{style}$ per layer, which is then distributed equally among all selected layers.
+
+\paragraph{Fusion Adapter}
+
+The fusion adapter combines semantic features $\mathbf{f}_{sem} \in \mathbb{R}^{d_{clip}}$ from CLIP with style features $\mathbf{s}_{concat} = [\mathbf{s}_{l_1}, ..., \mathbf{s}_{l_k}]$ from Gram matrices through a bottleneck architecture:
+
+\[
+\mathbf{f}_{fused} = \mathbf{W}_{down} \cdot [\mathbf{f}_{sem}; \mathbf{s}_{concat}]
+\]
+
+\[
+\mathbf{f}_{output} = \alpha \cdot \mathbf{W}_{up}(\text{ReLU}(\mathbf{f}_{fused})) + \mathbf{f}_{sem}
+\]
+
+where $\alpha$ is a learned scaling factor and the residual connection preserves semantic information while incorporating style-aware features.
+
 \section{Experiments}
 In this section, we describe the experimental setup, including hyperparameter tuning, training strategy, and evaluation protocol.
 \subsection{StyCLIP hyperparameters tuning and training}
@@ -439,9 +479,9 @@ Tip\_Adapter & RN50 & 52.91 & 51.90 & 52.37 & 46.38 \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-\subsection{Statistical Analysis}
 \clearpage
+\subsection{Statistical Analysis}
+
 
 \begin{table}[H]
 \centering
@@ -545,8 +585,6 @@ Tip\_RN50 & 40.34* & 39.66* & -8.93* & 17.80* & 9.79* & -10.58* & 23.18* & 21.53
 \end{table}
 
 \FloatBarrier
-
-
 \clearpage
 
 \begin{table}[H]
