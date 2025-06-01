@@ -83,6 +83,38 @@
   \nocite{StyleTransfer,ProtoNet,CLIP,TipAdapter,APE,GDA_CLIP,TIMO} % Cite them so they appear
 \end{frame}
 
+
+\section{Background: TIMO}
+\begin{frame}
+  \frametitle{Background: TIMO (Text-Image Mutual Guidance Optimization)}
+  \textbf{TIMO} (Text-Image Mutual Guidance Optimization) improves training-free Few-Shot Learning with CLIP by addressing:  
+  \begin{block}{Two Main Branches}
+    \begin{columns}[T]
+    \begin{column}{0.5\textwidth}
+      \textbf{Text-Guided Image (TGI):}
+      \begin{itemize}
+        \item Uses textual representations to guide visual features
+        \item Computes similarity weights between prompts and visual prototypes
+        \item Enriches visual features with weighted textual information
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \textbf{Image-Guided Text (IGT):}
+      \begin{itemize}
+        \item Improves textual prompt quality using visual guidance
+        \item Finds optimal weights for textual prompts
+        \item Creates rectified textual prototypes
+      \end{itemize}
+    \end{column}
+    \end{columns}
+  \end{block}
+  
+  \begin{block}{Final Combination}
+    $\text{logits}_{\text{TIMO}} = \text{logits}_{\text{TGI}} + \alpha \cdot \text{logits}_{\text{IGT}}$
+  \end{block}
+\end{frame}
+
+
 % --- Dataset ---
 \section{Dataset}
 \begin{frame}
@@ -114,35 +146,7 @@
 \end{frame}
 
 
-\section{Background: TIMO}
-\begin{frame}
-  \frametitle{Background: TIMO (Text-Image Mutual Guidance Optimization)}
-  \textbf{TIMO} (Text-Image Mutual Guidance Optimization) improves training-free Few-Shot Learning with CLIP by addressing:  
-  \begin{block}{Two Main Branches}
-    \begin{columns}[T]
-    \begin{column}{0.5\textwidth}
-      \textbf{Text-Guided Image (TGI):}
-      \begin{itemize}
-        \item Uses textual representations to guide visual features
-        \item Computes similarity weights between prompts and visual prototypes
-        \item Enriches visual features with weighted textual information
-      \end{itemize}
-    \end{column}
-    \begin{column}{0.5\textwidth}
-      \textbf{Image-Guided Text (IGT):}
-      \begin{itemize}
-        \item Improves textual prompt quality using visual guidance
-        \item Finds optimal weights for textual prompts
-        \item Creates rectified textual prototypes
-      \end{itemize}
-    \end{column}
-    \end{columns}
-  \end{block}
-  
-  \begin{block}{Final Combination}
-    $\text{logits}_{\text{TIMO}} = \text{logits}_{\text{TGI}} + \alpha \cdot \text{logits}_{\text{IGT}}$
-  \end{block}
-\end{frame}
+
 
 
 % --- Proposed Method: StyCLIP ---

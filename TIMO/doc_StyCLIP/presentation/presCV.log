@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  31 MAY 2025 16:59
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  1 JUN 2025 11:33
  system commands enabled.
  file:line:error style messages enabled.
 **c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/presen
@@ -1342,8 +1342,16 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [3
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 114--114
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 115--115
  [][]  \T1/lmss/m/n/6 ([])  
+ []
+
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10.95> on input line 115.
+LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 115.
+
+Overfull \vbox (0.74483pt too high) detected at line 115
  []
 
 
@@ -1356,16 +1364,8 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [4
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 145--145
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 146--146
  [][]  \T1/lmss/m/n/6 ([])  
- []
-
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 145.
-LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 145.
-
-Overfull \vbox (0.74483pt too high) detected at line 145
  []
 
 
@@ -1378,17 +1378,17 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [5
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 156--156
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 160--160
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
 <../img/StyCLIP.png, id=325, 5292.77374pt x 2737.22626pt>
 File: ../img/StyCLIP.png Graphic file (type png)
 <use ../img/StyCLIP.png>
-Package luatex.def Info: ../img/StyCLIP.png  used on input line 156.
+Package luatex.def Info: ../img/StyCLIP.png  used on input line 160.
 (luatex.def)             Requested size: 308.02292pt x 208.37384pt.
 
-Overfull \vbox (17.40309pt too high) detected at line 156
+Overfull \vbox (17.40309pt too high) detected at line 160
  []
 
 
@@ -1401,18 +1401,18 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [6
 
 <../img/StyCLIP.png>]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 183--183
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 187--187
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 183.
+(Font)              <10> on input line 187.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 183.
+(Font)              <7> on input line 187.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <10> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 183.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 187.
 LaTeX Font Info:    Font shape `T1/lmss/m/it' in size <7> not available
-(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 183.
+(Font)              Font shape `T1/lmss/m/sl' tried instead on input line 187.
 
 
 
@@ -1423,7 +1423,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [7
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 210--210
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 214--214
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1437,7 +1437,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [8
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 237--237
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 241--241
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1451,7 +1451,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [9
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 269--269
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 273--273
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1465,7 +1465,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [10
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 280--280
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 284--284
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1473,7 +1473,7 @@ Overfull \hbox (136.75854pt too wide) in paragraph at lines 280--280
 File: ../img/episode_example.drawio.png Graphic file (type png)
 <use ../img/episode_example.drawio.png>
 Package luatex.def Info: ../img/episode_example.drawio.png  used on input line 
-280.
+284.
 (luatex.def)             Requested size: 273.83733pt x 116.12228pt.
 
 
@@ -1485,7 +1485,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [11
 
 <../img/episode_example.drawio.png>]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 313--313
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 317--317
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1499,7 +1499,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [12
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 326--326
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 330--330
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1513,7 +1513,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [13
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 339--339
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 343--343
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1527,7 +1527,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [14
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 348--348
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 352--352
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1541,7 +1541,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [15
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 361--361
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 365--365
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1555,7 +1555,7 @@ Overfull \hbox (136.75854pt too wide) has occurred while \output is active
 [16
 
 ]
-Overfull \hbox (136.75854pt too wide) in paragraph at lines 368--368
+Overfull \hbox (136.75854pt too wide) in paragraph at lines 372--372
  [][]  \T1/lmss/m/n/6 ([])  
  []
 
@@ -1585,7 +1585,7 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `presCV.out' has not changed.
-(rerunfilecheck)             Checksum: 768F0C72ADF66BCA30AB4D1950DA994E;1299.
+(rerunfilecheck)             Checksum: 68C2E98BFD5E760A0DD47A9F69175B5A;1299.
 )
 
 Here is how much of LuaTeX's memory you used:
@@ -1615,7 +1615,7 @@ pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/fonta/AppD
 ata/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/fonta/AppDat
 a/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/fonta/AppData
 /Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt8.pfb>
-Output written on presCV.pdf (18 pages, 3672711 bytes).
+Output written on presCV.pdf (18 pages, 3672752 bytes).
 
 PDF statistics: 849 PDF objects out of 1000 (max. 8388607)
  56 named destinations out of 1000 (max. 131072)

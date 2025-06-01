@@ -80,25 +80,6 @@ Methods like TIP-Adapter \cite{TipAdapter} incorporate few-shot examples through
 
 
 Our work investigates integrating Gram matrix-based style representations into CLIP architectures to enhance few-shot artist classification performance.
-
-\section{Data}
-
-We utilize a subset of the ArtGraph dataset \cite{ArtGraph}, a comprehensive art knowledge graph containing over 100,000 paintings with metadata. We created two non-overlapping subsets: one for few-shot evaluation and another for StyCLIP training.
-
-\subsection{ArtGraph Few-Shot Subset}
-
-Our few-shot dataset follows a systematic two-stage selection process:
-
-\begin{itemize}
-    \item \textbf{Style Selection:} Top 10 artistic styles by artwork count
-    \item \textbf{Artist Filtering:} Artists with 30-50 artworks per style (up to 10 artists per style)
-\end{itemize}
-
-\textbf{Data Splits:} 80\% support set, 10\% validation, 10\% query set to accommodate varying portfolio sizes.
-
-\subsection{ArtGraph StyCLIP Subset}
-
-For style-aware training, we use complementary artists (16-50 artworks) excluded from the few-shot subset, ensuring no data leakage between training and evaluation phases.
 \section{Background: TIMO}
 
 TIMO (Text-Image Mutual Guidance Optimization) is a method proposed to improve training-free Few-Shot Learning with CLIP, specifically designed to address the problems of anomalous visual misalignment and variable quality of textual prompts resulting from independent modality modeling. TIMO introduces a mutual guidance mechanism between text and image, composed of two main branches that work synergistically:
@@ -138,6 +119,25 @@ The logits obtained from the two guided branches, $logits_{\text{TGI}}$ and $log
 \text{logits}_{\text{TIMO}} = \text{logits}_{\text{TGI}} + \alpha \cdot \text{logits}_{\text{IGT}}
 \]
 The hyperparameter $\alpha$ balances the contribution of the two guided branches and is typically determined through a grid search on a validation set. This combination mechanism allows TIMO to leverage the strengths of both modalities, guiding each other to improve few-shot classification performance.
+
+\section{Data}
+
+We utilize a subset of the ArtGraph dataset \cite{ArtGraph}, a comprehensive art knowledge graph containing over 100,000 paintings with metadata. We created two non-overlapping subsets: one for few-shot evaluation and another for StyCLIP training.
+
+\subsection{ArtGraph Few-Shot Subset}
+
+Our few-shot dataset follows a systematic two-stage selection process:
+
+\begin{itemize}
+    \item \textbf{Style Selection:} Top 10 artistic styles by artwork count
+    \item \textbf{Artist Filtering:} Artists with 30-50 artworks per style (up to 10 artists per style)
+\end{itemize}
+
+\textbf{Data Splits:} 80\% support set, 10\% validation, 10\% query set to accommodate varying portfolio sizes.
+
+\subsection{ArtGraph StyCLIP Subset}
+
+For style-aware training, we use complementary artists (16-50 artworks) excluded from the few-shot subset, ensuring no data leakage between training and evaluation phases.
 \section{Our Approach: StyCLIP}
 
 In this section, we describe our approach

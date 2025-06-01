@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  31 MAY 2025 17:06
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  1 JUN 2025 11:33
  system commands enabled.
  file:line:error style messages enabled.
 **c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/report
@@ -908,7 +908,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 93.
+(Font)              <8> on input line 90.
 
 
 [1
@@ -917,7 +917,7 @@ ftex.map}
 
 
 ]
-<../img/StyCLIP.png, id=177, 5292.77374pt x 2737.22626pt>
+<../img/StyCLIP.png, id=176, 5292.77374pt x 2737.22626pt>
 File: ../img/StyCLIP.png Graphic file (type png)
 <use ../img/StyCLIP.png>
 Package luatex.def Info: ../img/StyCLIP.png  used on input line 163.
@@ -1105,25 +1105,25 @@ L3 programming layer <2025-01-18>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 775A79602D7677D79FA7FBD7BBD369D8;5425.
+(rerunfilecheck)             Checksum: A5DE16CDEE492C350172B2461EDCDBFD;5425.
 )
 
 Here is how much of LuaTeX's memory you used:
  21423 strings out of 475506
- 244181,953878 words of node,token memory allocated
+ 244174,953878 words of node,token memory allocated
  645 words of node memory still in use:
    6 hlist, 2 vlist, 2 rule, 3 glue, 4 kern, 1 penalty, 1 glyph, 40 attribute, 5
 9 glue_spec, 21 attribute_list, 1 write, 3 pdf_action nodes
-   avail lists: 1:2,2:5870,3:626,4:92,5:1202,6:101,7:20868,8:101,9:2225,10:19,11
+   avail lists: 1:1,2:5870,3:626,4:92,5:1210,6:105,7:20868,8:101,9:2225,10:19,11
 :1890
  44000 multiletter control sequences out of 65536+600000
  92 fonts using 7186191 bytes
  72i,11n,75p,953b,1057s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {C:/Users/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/U
 sers/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/
-fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/f
-onta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/fo
-nta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}<C:/Users/fon
+fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/f
+onta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/fo
+nta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}<C:/Users/fon
 ta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx5.pfb><C:/Users/fonta
 /AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/fonta/A
 ppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx9.pfb><C:/Users/fonta/App
@@ -1145,7 +1145,7 @@ X/fonts/type1/public/lm/lmri10.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX
 onts/type1/public/lm/lmsy6.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/fon
 ts/type1/public/lm/lmsy8.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/fonts
 /type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (9 pages, 3755484 bytes).
+Output written on main.pdf (9 pages, 3755508 bytes).
 
 PDF statistics: 332 PDF objects out of 1000 (max. 8388607)
  68 named destinations out of 1000 (max. 131072)
