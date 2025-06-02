@@ -19,7 +19,7 @@
 \author{Emanuele Fontana}
 \institute{Università degli Studi di Bari Aldo Moro \\ \nolinkurl{e.fontana7@studenti.uniba.it}} % \nolinkurl and manual break if needed
 
-% Define some commands from the original paper if needed for consistency
+% Define commands from the original paper
 \newcommand{\Ft}{\mathbf{F}_\text{t}}      % Text features
 \newcommand{\Fv}{\mathbf{F}_\text{v}}      % Visual features (support)
 \newcommand{\Wt}{\mathbf{W}_\text{t}}      % Text prototypes
@@ -30,11 +30,11 @@
 \newcommand{\R}{\mathbb{R}}
 
 \begin{document}
+
 % --- Title Slide ---
 \begin{frame}
   \titlepage
 \end{frame}
-
 
 % --- Introduction ---
 \section{Introduction}
@@ -100,8 +100,7 @@
           \item \textbf{Splits:} 80\% support, 10\% validation, 10\% query.
         \end{itemize}
       \end{block}
-    \end{column}
-    \begin{column}{0.5\textwidth}
+    \end{column}    \begin{column}{0.5\textwidth}
       \begin{block}{ArtGraph StyCLIP Subset (Training)}
         \begin{itemize}
           \item Complementary artists (16--50 artworks).
@@ -113,15 +112,29 @@
   \tiny \nocite{ArtGraph}
 \end{frame}
 
+
+
 % --- Proposed Method: StyCLIP ---
-\section{Proposed Method: StyCLIP}
+\section{Our Approach: StyCLIP}
 \begin{frame}
   \frametitle{StyCLIP: Architecture Overview}
-  Extends standard CLIP (RN50 backbone) by integrating explicit style representations.
   \begin{figure}
     \includegraphics[width=0.9\linewidth,height=0.8\textheight]{../img/StyCLIP.png} % Adjust path if needed
-    \caption{StyCLIP Architecture Overview (from paper)}
+    \caption{StyCLIP Architecture Overview}
   \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{StyCLIP: Key Components}
+  \begin{itemize}
+    \item \textbf{Core Idea:} Extend CLIP with explicit style-aware features via Gram matrices
+    \item \textbf{Three Key Components:}
+      \begin{enumerate}
+        \item \textbf{Gram Matrix Extraction:} Capture style correlations from intermediate visual layers (ResNet-50 blocks)
+        \item \textbf{Style Feature Projection:} Reduce dimensionality of Gram matrix representations
+        \item \textbf{Fusion Adapter:} Integrate semantic (CLIP) and style features through bottleneck architecture
+      \end{enumerate}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -243,12 +256,9 @@
 \begin{frame}
   \frametitle{Example Episode for RN50}
   \begin{figure}
-    \includegraphics[width=0.8\linewidth]{../img/episode_results.png} % Adjust path if needed
-    \caption{Example episode for CLIP RN50 backbone}
+    \includegraphics[width=0.8\linewidth]{../img/episode_example.drawio.png} % Adjust path if needed
+    \caption{Example episode: 5-Way, 4-Shots ,10 query examples}
   \end{figure}
-  \begin{itemize}
-    \item N=2 artists, K=2 support examples, Q=1 query examples.
-  \end{itemize}
   \end{frame}
 
 

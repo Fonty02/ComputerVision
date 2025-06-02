@@ -3,9 +3,9 @@
 \beamer@sectionintoc {2}{Related Work}{3}{0}{2}
 \beamer@sectionintoc {3}{Background: TIMO}{4}{0}{3}
 \beamer@sectionintoc {4}{Dataset}{5}{0}{4}
-\beamer@sectionintoc {5}{Proposed Method: StyCLIP}{6}{0}{5}
-\beamer@sectionintoc {6}{Experimental Setup}{8}{0}{6}
-\beamer@sectionintoc {7}{Results}{10}{0}{7}
-\beamer@sectionintoc {8}{Example Episode for RN50}{11}{0}{8}
-\beamer@sectionintoc {9}{Conclusion \& Discussion}{14}{0}{9}
-\beamer@sectionintoc {10}{Acknowledgments \& Code}{15}{0}{10}
+\beamer@sectionintoc {5}{Our Approach: StyCLIP}{6}{0}{5}
+\beamer@sectionintoc {6}{Experimental Setup}{9}{0}{6}
+\beamer@sectionintoc {7}{Results}{11}{0}{7}
+\beamer@sectionintoc {8}{Example Episode for RN50}{12}{0}{8}
+\beamer@sectionintoc {9}{Conclusion \& Discussion}{15}{0}{9}
+\beamer@sectionintoc {10}{Acknowledgments \& Code}{16}{0}{10}
