@@ -134,7 +134,6 @@ def create_comparison_matrix(comparison_df, shots=None, metric='ACC'):
     )
     
     # Combine difference values with significance markers
-    # Creo un nuovo DataFrame di tipo object per evitare avvisi di incompatibilità di tipi
     formatted_matrix = pd.DataFrame(index=latex_models, columns=latex_models, dtype=object)
     
     for i in range(n_models):
@@ -144,7 +143,6 @@ def create_comparison_matrix(comparison_df, shots=None, metric='ACC'):
             else:
                 formatted_matrix.iloc[i, j] = f"{diff_matrix[i, j]:.2f}"
     
-    # Mantieni i nomi originali dei modelli come reference
     result = {
         'model_names': models,
         'latex_model_names': latex_models,
@@ -186,32 +184,17 @@ def generate_latex_tables(comparison_df, shots_list=[1, 2, 4, 8, 16], metric='AC
             n_data_cols = len(matrix_df.columns)
             n_total_latex_cols = n_data_cols + 1
             
-            # Colonne dati: 'c' (centrate) o 'r' (destra) sono buone per i numeri.
-            # La prima colonna per le etichette: 'l' (sinistra).
+
             column_format_str = 'l|' + 'c' * n_data_cols
             
-            # --- MODIFICA PER INTESTAZIONI RUOTATE ---
+
             rotated_column_headers = []
-            for col_label in matrix_df.columns:
-                # Assicurati che col_label sia una stringa e già LaTeX-escaped
-                # \rotatebox{angle}{text}. 60-75 gradi è spesso un buon compromesso.
-                # Usiamo \scriptsize per coerenza con il resto della tabella e \bfseries per grassetto
-                # Il contenuto di col_label dovrebbe essere già escapato per LaTeX (es. APE\_CustomRN50)
-                # Usiamo \strut per garantire un'altezza minima uniforme, utile per l'allineamento
-                # e \centering all'interno del parbox se il testo ruotato dovesse andare a capo
-                # (improbabile per nomi di modello ma buona pratica).
-                # Un'alternativa è usare un \parbox per controllare la larghezza del testo ruotato.
-                # Per nomi semplici, \rotatebox{70}{\scriptsize\bfseries\strut NAME} è sufficiente.
-                # Per intestazioni molto lunghe, potresti volerle spezzare o usare \tiny
-                escaped_col_label = str(col_label) # Già escapato da create_comparison_matrix
-                # Aggiustare l'angolo (es. 70 o 60) e il font size (\tiny, \scriptsize, \footnotesize)
-                # se necessario per far entrare tutto.
-                # \bfseries per il grassetto
+            for col_label in matrix_df.columns:  
+                escaped_col_label = str(col_label) 
                 rotated_column_headers.append(f"\\rotatebox{{70}}{{\\scriptsize\\bfseries\\strut {escaped_col_label}}}")
 
             header_labels = [""] + rotated_column_headers 
             header_tex_string = " & ".join(header_labels) + " \\\\"
-            # --- FINE MODIFICA INTESTAZIONI ---
 
             caption_metric_name = metric.replace('_', '\\_')
             label_shots_str = str(shots)
@@ -237,8 +220,6 @@ def generate_latex_tables(comparison_df, shots_list=[1, 2, 4, 8, 16], metric='AC
                 "% \\usepackage{longtable}, \\usepackage{booktabs}, \\usepackage{caption}, \\usepackage{array}",
                 "% !!! AGGIUNGI ANCHE: \\usepackage{graphicx} per \\rotatebox !!!",
                 "\n",
-                # Riduciamo ulteriormente la dimensione se necessario. \scriptsize è già lì.
-                # Potresti provare con \tiny se \scriptsize non è abbastanza.
                 "\\begin{scriptsize}", 
                 f"\\begin{{longtable}}{{{column_format_str}}}",
                 

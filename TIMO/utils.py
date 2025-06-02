@@ -246,27 +246,27 @@ def save_log(cfg, metric:dict):
 
 def calculate_metrics(outputs, targets):
     """
-    Calcola accuratezza, precision, recall e F1 score (macro average)
+    Calculates accuracy, precision, recall and F1 score (macro average)
     
     Args:
-        outputs: tensore di logits predetti [num_samples, num_classes]
-        targets: tensore di etichette [num_samples]
+        outputs: tensor of predicted logits [num_samples, num_classes]
+        targets: tensor of labels [num_samples]
     
     Returns:
-        dict: dizionario con le metriche calcolate
+        dict: dictionary with calculated metrics
     """
     import torch
     from sklearn.metrics import precision_score, recall_score, f1_score
     
-    # Convertiamo le predizioni in classi
+
     _, preds = outputs.topk(1, 1, True, True)
     preds = preds.squeeze().cpu().numpy()
     targets = targets.cpu().numpy()
     
-    # Calcoliamo l'accuratezza
+
     accuracy = (preds == targets).mean() * 100.0
     
-    # Calcoliamo precision, recall e F1 (macro)
+
     precision_macro = precision_score(targets, preds, average='macro', zero_division=0) * 100.0
     recall_macro = recall_score(targets, preds, average='macro', zero_division=0) * 100.0
     f1_macro = f1_score(targets, preds, average='macro', zero_division=0) * 100.0
@@ -278,15 +278,15 @@ def calculate_metrics(outputs, targets):
         'f1_macro': f1_macro
     }
 
-# Versione originale modificata di cls_acc per restituire sia l'accuratezza che le predizioni
+
 def cls_acc_with_preds(output, target, topk=1):
     """
-    Calcola l'accuratezza e restituisce anche le predizioni
+    Computes the accuracy of the model's predictions.
     """
     _, pred = output.topk(topk, 1, True, True)
     pred = pred.t()
     correct = pred.eq(target.view(1, -1).expand_as(pred))
     acc = correct[0].float().sum().item() / target.size(0) * 100.0
     
-    # Restituisce sia l'accuratezza che l'output completo per il calcolo di altre metriche
+
     return acc, output

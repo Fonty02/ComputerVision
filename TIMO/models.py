@@ -207,7 +207,6 @@ def GDA_CLIP(cfg, val_features, val_labels, test_features, test_labels, clip_wei
         notune_acc = cls_acc(test_logits, test_labels)    
         print("training-free acc:", notune_acc)
     
-    # Calcola e restituisci tutte le metriche
     metrics = calculate_metrics(test_logits, test_labels)
     return metrics
 
@@ -279,6 +278,5 @@ def TIMO(cfg, val_features, val_labels, test_features, test_labels,
         print("training-free acc:", acc)
         print()
     
-    # Calcola e restituisci tutte le metriche
     metrics = calculate_metrics(test_logits, test_labels)
     return metrics

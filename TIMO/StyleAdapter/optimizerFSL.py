@@ -15,35 +15,35 @@ import json
 from datetime import datetime
 import matplotlib.pyplot as plt
 import seaborn as sns
-import pandas as pd # Aggiunto per save_optuna_visualizations
+import pandas as pd # Added for save_optuna_visualizations
 from tqdm import tqdm
 from typing import List, Tuple, Dict, Iterator
 import random
-# Importa dal file StyleAdapter.py
+# Import from StyleAdapter.py file
 from StyleAdapterFLS import CLIPWithStyleAdapter, find_artgraph_path, ArtgraphDataset
 
-# --- Parametri Fissi per Meta-Learning ---
-# Questi potrebbero essere resi argomenti del parser o iperparametri di Optuna
-N_WAY = 10  # Numero di classi per task
-K_SHOT = 1  # Numero di esempi di supporto per classe per N_WAY > 1
-Q_QUERIES = 3 # Numero di esempi di query per classe
+# --- Fixed Parameters for Meta-Learning ---
+# These could be made parser arguments or Optuna hyperparameters
+N_WAY = 10  # Number of classes per task
+K_SHOT = 1  # Number of support examples per class for N_WAY > 1
+Q_QUERIES = 3 # Number of query examples per class
 
 
 
-# --- Sampler Episodico ---
+# --- Episodic Sampler ---
 class EpisodicBatchSampler(Sampler[List[int]]):
     def __init__(self, dataset_labels_by_class: Dict[int, List[int]],
                  n_way: int, k_shot: int, q_queries: int, num_episodes: int):
         """
         Args:
-            dataset_labels_by_class: Dizionario {class_idx_globale: [idx_campione_1, idx_campione_2, ...]}
-                                     gli idx_campione sono indici nel dataset piatto.
-            n_way: Numero di classi per episodio.
-            k_shot: Numero di campioni di supporto per classe.
-            q_queries: Numero di campioni di query per classe.
-            num_episodes: Numero di episodi da generare per epoca.
+            dataset_labels_by_class: Dictionary {global_class_idx: [sample_idx_1, sample_idx_2, ...]}
+                                     the sample_idx are indices in the flat dataset.
+            n_way: Number of classes per episode.
+            k_shot: Number of support samples per class.
+            q_queries: Number of query samples per class.
+            num_episodes: Number of episodes to generate per epoch.
         """
-        super().__init__(None) # data_source non è usato direttamente
+        super().__init__(None) # data_source is not used directly
         self.dataset_labels_by_class = dataset_labels_by_class
         self.n_way = n_way
         self.k_shot = k_shot
@@ -52,18 +52,18 @@ class EpisodicBatchSampler(Sampler[List[int]]):
 
         self.available_classes = list(self.dataset_labels_by_class.keys())
         
-        # Filtra classi con campioni insufficienti
+        # Filter classes with insufficient samples
         self.valid_classes = [
             cls_idx for cls_idx, samples in self.dataset_labels_by_class.items()
             if len(samples) >= self.k_shot + self.q_queries
         ]
         if len(self.valid_classes) < self.n_way:
             raise ValueError(
-                f"Non ci sono abbastanza classi ({len(self.valid_classes)}) con campioni sufficienti "
-                f"({self.k_shot + self.q_queries} richiesti) per formare episodi {self.n_way}-way. "
-                "Riduci N_WAY, K_SHOT, Q_QUERIES o aumenta il dataset."
+                f"Not enough classes ({len(self.valid_classes)}) with sufficient samples "
+                f"({self.k_shot + self.q_queries} required) to form {self.n_way}-way episodes. "
+                "Reduce N_WAY, K_SHOT, Q_QUERIES or increase the dataset."
             )
-        print(f"EpisodicSampler: {len(self.valid_classes)} classi valide per episodi {self.n_way}-way {self.k_shot}-shot {self.q_queries}-query.")
+        print(f"EpisodicSampler: {len(self.valid_classes)} valid classes for {self.n_way}-way {self.k_shot}-shot {self.q_queries}-query episodes.")
 
 
     def __len__(self) -> int:
@@ -71,15 +71,15 @@ class EpisodicBatchSampler(Sampler[List[int]]):
 
     def __iter__(self) -> Iterator[List[int]]:
         for _ in range(self.num_episodes):
-            # Campiona N classi senza rimpiazzo dalle classi valide
+            # Sample N classes without replacement from valid classes
             selected_class_indices_global = random.sample(self.valid_classes, self.n_way)
             
             episode_sample_indices: List[int] = []
-            # Le etichette relative al task (0...N-1) sono implicite nell'ordine
+            # Task-relative labels (0...N-1) are implicit in the order
 
             for class_idx_global in selected_class_indices_global:
                 samples_for_class = self.dataset_labels_by_class[class_idx_global]
-                # Campiona K+Q campioni senza rimpiazzo da questa classe
+                # Sample K+Q samples without replacement from this class
                 selected_samples_for_class_indices = random.sample(
                     samples_for_class, self.k_shot + self.q_queries
                 )
@@ -88,41 +88,38 @@ class EpisodicBatchSampler(Sampler[List[int]]):
             yield episode_sample_indices
 
 
-# --- Collate Function Episodica ---
+# --- Episodic Collate Function ---
 def episodic_collate_fn(batch_samples: List[Tuple[torch.Tensor, int]],
                         n_way: int, k_shot: int, q_queries: int
                        ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, List[int]]:
     """
-    Organizza un batch di campioni (da un episodio) in support e query set.
+    Organizes a batch of samples (from an episode) into support and query sets.
     Args:
-        batch_samples: Lista di (immagine_tensor, label_globale) fornita da DataLoader.
-                       La lunghezza di questa lista è N_WAY * (K_SHOT + Q_QUERIES).
-                       L'ordine è determinato dal EpisodicBatchSampler.
+        batch_samples: List of (image_tensor, global_label) provided by DataLoader.
+                       The length of this list is N_WAY * (K_SHOT + Q_QUERIES).
+                       The order is determined by EpisodicBatchSampler.
     Returns:
         support_images, support_labels_relative, query_images, query_labels_relative, global_class_ids_in_episode
     """
     all_images = torch.stack([s[0] for s in batch_samples])
-    all_global_labels = torch.tensor([s[1] for s in batch_samples]) # Etichette globali
+    all_global_labels = torch.tensor([s[1] for s in batch_samples]) # Global labels
 
     support_images_list: List[torch.Tensor] = []
     query_images_list: List[torch.Tensor] = []
     support_labels_relative_list: List[torch.Tensor] = []
     query_labels_relative_list: List[torch.Tensor] = []
     
-    global_class_ids_in_episode: List[int] = [] # Mantiene traccia delle classi globali nell'episodio
+    global_class_ids_in_episode: List[int] = [] # Keeps track of global classes in the episode
     
-    # Il batch_samples è già ordinato per classe dal sampler:
-    # [class0_s1..sk, class0_q1..qq, class1_s1..sk, class1_q1..qq, ...]
-    # No, il sampler fornisce solo una lista piatta di indici. Il collate_fn riceve i campioni in quell'ordine.
-    # Dobbiamo ricostruire. Assumiamo che il sampler dia N*(K+Q) indici, raggruppati per classe.
+
 
     current_pos = 0
-    for i_way in range(n_way): # Per ogni classe nell'episodio
-        # Estrai le immagini per la classe corrente
+    for i_way in range(n_way): # For each class in the episode
+        # Extract images for current class
         class_support_imgs = all_images[current_pos : current_pos + k_shot]
         class_query_imgs = all_images[current_pos + k_shot : current_pos + k_shot + q_queries]
         
-        # Etichetta relativa al task (0 to N-1)
+        # Task-relative label (0 to N-1)
         relative_label = torch.tensor(i_way, dtype=torch.long)
         
         support_images_list.append(class_support_imgs)
@@ -130,12 +127,12 @@ def episodic_collate_fn(batch_samples: List[Tuple[torch.Tensor, int]],
         support_labels_relative_list.extend([relative_label] * k_shot)
         query_labels_relative_list.extend([relative_label] * q_queries)
         
-        # Prendi l'ID globale della classe (assumendo che tutti i campioni di supporto per una classe abbiano la stessa label globale)
+        # Take global class ID (assuming all support samples for a class have the same global label)
         global_class_ids_in_episode.append(all_global_labels[current_pos].item())
 
         current_pos += (k_shot + q_queries)
 
-    # Concatena tutte le immagini di supporto e query
+    # Concatenate all support and query images
     # Support: (N*K, C, H, W), Query: (N*Q, C, H, W)
     s_images = torch.cat(support_images_list, dim=0)
     q_images = torch.cat(query_images_list, dim=0)
@@ -145,9 +142,7 @@ def episodic_collate_fn(batch_samples: List[Tuple[torch.Tensor, int]],
     return s_images, s_labels_rel, q_images, q_labels_rel, global_class_ids_in_episode
 
 
-# --- Funzioni di Meta-Training e Validazione per Prototypical Networks ---
-# 1. Modifica il calcolo dei logits in meta_train_epoch e meta_validate_epoch
-# Cerca il calcolo delle distanze e sostituisci con:
+
 
 def meta_train_epoch(model: CLIPWithStyleAdapter,
                      train_loader_episodic: data.DataLoader,
@@ -172,36 +167,35 @@ def meta_train_epoch(model: CLIPWithStyleAdapter,
         query_images = query_images.to(device)
         query_labels_rel = query_labels_rel.to(device)
 
-        # Stampa diagnostica per verificare il flusso dei gradienti
+        # Diagnostic print to verify gradient flow
         if batch_idx == 0 and epoch_num == 0:
-            print("Verifica parametri trainabili:")
+            print("Verifying trainable parameters:")
             total_params = 0
             for name, param in model.named_parameters():
                 if param.requires_grad:
-                    print(f"Parametro trainabile: {name}, shape: {param.shape}")
+                    print(f"Trainable parameter: {name}, shape: {param.shape}")
                     total_params += param.numel()
-            print(f"Totale parametri trainabili: {total_params}")
+            print(f"Total trainable parameters: {total_params}")
 
         optimizer.zero_grad()
 
-        # Estrazione feature
+        # Feature extraction
         support_embeddings = model.encode_image_with_style_adapter(support_images)
         support_embeddings_reshaped = support_embeddings.view(n_way, k_shot, -1)
         prototypes = support_embeddings_reshaped.mean(dim=1)
         query_embeddings = model.encode_image_with_style_adapter(query_images)
         
-        # MODIFICA: Calcolo di similarità coseno invece di distanze euclidee
-        # Normalizzazione L2 per prototipi e query embeddings
+        
         prototypes = nn.functional.normalize(prototypes, p=2, dim=-1)
         query_embeddings = nn.functional.normalize(query_embeddings, p=2, dim=-1)
         
-        # Similarità coseno (valori più alti = più simili)
+       
         similarity = torch.mm(query_embeddings, prototypes.t())
         
-        # Usa direttamente la similarità coseno come logits
-        logits = similarity * 20.0  # Scala la similarità (temperatura)
+
+        logits = similarity * 20.0  # Scale similarity (temperature)
         
-        # Stampa diagnostica
+        # Diagnostic print
         if batch_idx == 0:
             print(f"Epoch {epoch_num+1} - Batch 0 logits stats: mean={logits.mean().item():.4f}, std={logits.std().item():.4f}")
             print(f"Logits range: min={logits.min().item():.4f}, max={logits.max().item():.4f}")
@@ -209,30 +203,30 @@ def meta_train_epoch(model: CLIPWithStyleAdapter,
         loss = criterion(logits, query_labels_rel)
         
         if torch.isnan(loss) or torch.isinf(loss):
-            print(f"AVVISO: NaN/Inf nella loss, episodio {batch_idx} saltato")
+            print(f"WARNING: NaN/Inf in loss, episode {batch_idx} skipped")
             continue
             
         loss.backward()
         
-        # Verifica i gradienti nel primo batch della prima epoca
+
         if batch_idx == 0 and epoch_num == 0:
-            print("Verifica gradienti:")
+            print("Verifying gradients:")
             for name, param in model.named_parameters():
                 if param.requires_grad:
                     if param.grad is None:
-                        print(f"PROBLEMA: {name} ha grad=None!")
+                        print(f"PROBLEM: {name} has grad=None!")
                     elif param.grad.abs().sum().item() == 0:
-                        print(f"PROBLEMA: {name} ha gradienti tutti zero!")
+                        print(f"PROBLEM: {name} has all zero gradients!")
                     else:
                         print(f"{name}: grad norm = {param.grad.norm().item():.6f}")
         
-        # Clip gradienti per stabilità
+
         torch.nn.utils.clip_grad_norm_((p for group in optimizer.param_groups for p in group['params'] if p.requires_grad), max_norm=1.0)
         optimizer.step()
         if scheduler:
              scheduler.step()
 
-        # Statistiche
+
         total_epoch_loss += loss.item()
         
         preds = logits.argmax(dim=1)
@@ -245,7 +239,7 @@ def meta_train_epoch(model: CLIPWithStyleAdapter,
     return avg_loss, avg_acc
 
 
-# 2. Modifica anche la funzione di validazione in modo analogo
+
 @torch.no_grad()
 def meta_validate_epoch(model: CLIPWithStyleAdapter,
                         val_loader_episodic: data.DataLoader,
@@ -271,15 +265,15 @@ def meta_validate_epoch(model: CLIPWithStyleAdapter,
         prototypes = support_embeddings_reshaped.mean(dim=1)
         query_embeddings = model.encode_image_with_style_adapter(query_images)
         
-        # MODIFICA: Usa similarità coseno come nella funzione di training
+
         prototypes = nn.functional.normalize(prototypes, p=2, dim=-1)
         query_embeddings = nn.functional.normalize(query_embeddings, p=2, dim=-1)
         
         similarity = torch.mm(query_embeddings, prototypes.t())
-        logits = similarity * 20.0  # Stessa temperatura usata nel training
+        logits = similarity * 20.0  
         
         if torch.isnan(logits).any() or torch.isinf(logits).any():
-            print(f"AVVISO: NaN/Inf nei logits di validazione, episodio {batch_idx} saltato")
+            print(f"WARNING: NaN/Inf in validation logits, episode {batch_idx} skipped")
             continue
 
         preds = logits.argmax(dim=1)
@@ -291,19 +285,19 @@ def meta_validate_epoch(model: CLIPWithStyleAdapter,
 
 
 
-# --- Funzione per Optuna ---
+
 def define_model_and_train_meta(trial: optuna.Trial, args: argparse.Namespace, device: torch.device,
                                 meta_train_loader: data.DataLoader, meta_val_loader: data.DataLoader):
-    # Parametri da ottimizzare
+    # Parameters to optimize
     fusion_bottleneck_dim = trial.suggest_categorical("fusion_bottleneck_dim", [64, 128, 256])
-    lr = trial.suggest_float("lr", 1e-5, 1e-3, log=True) # Aumentato limite superiore per meta-learning
-    dropout_rate_adapter = trial.suggest_float("dropout_rate_adapter", 0.0, 0.5, step=0.1) # Aumentato limite
-    weight_decay = trial.suggest_float("weight_decay", 1e-6, 1e-3, log=True) # Aumentato limite
+    lr = trial.suggest_float("lr", 1e-5, 1e-3, log=True) # Increased upper limit for meta-learning
+    dropout_rate_adapter = trial.suggest_float("dropout_rate_adapter", 0.0, 0.5, step=0.1) # Increased limit
+    weight_decay = trial.suggest_float("weight_decay", 1e-6, 1e-3, log=True) # Increased limit
     
-    # K_SHOT per il training (può essere un iperparametro, ma per ora fisso)
+    # K_SHOT for training (can be a hyperparameter, but fixed for now)
     current_k_shot = args.k_shot_train 
-    if args.n_way == 1 and args.k_shot_train > 1 : # Per 1-way, K-shot è più come # campioni per batch
-        print("N_WAY è 1, k_shot nel sampler sarà 1 per il prototipo, il resto per la query.")
+    if args.n_way == 1 and args.k_shot_train > 1 : # For 1-way, K-shot is more like # samples per batch
+        print("N_WAY is 1, k_shot in sampler will be 1 for prototype, rest for query.")
     
     print(f"Trial {trial.number}: fusion_bottleneck={fusion_bottleneck_dim}, lr={lr:.2e}, dropout={dropout_rate_adapter:.2f}, wd={weight_decay:.2e}")
 
@@ -318,8 +312,8 @@ def define_model_and_train_meta(trial: optuna.Trial, args: argparse.Namespace, d
             device=device
         ).to(device)
     except Exception as e:
-        print(f"Errore nella creazione del modello nel trial {trial.number}: {e}")
-        model._remove_gram_hooks() # Assicurati che gli hook siano rimossi
+        print(f"Error creating model in trial {trial.number}: {e}")
+        model._remove_gram_hooks() # Ensure hooks are removed
         raise optuna.exceptions.TrialPruned()
 
     trainable_params = []
@@ -329,30 +323,28 @@ def define_model_and_train_meta(trial: optuna.Trial, args: argparse.Namespace, d
         trainable_params.extend(list(model.fusion_adapter.parameters()))
     
     if not trainable_params:
-        print("Nessun parametro addestrabile trovato nel modello.")
+        print("No trainable parameters found in the model.")
         model._remove_gram_hooks()
         raise optuna.exceptions.TrialPruned()
     
     optimizer = optim.AdamW(trainable_params, lr=lr, weight_decay=weight_decay)
     criterion = nn.CrossEntropyLoss()
     
-    # Scheduler LR (opzionale per meta-learning, ma può aiutare)
+    # LR Scheduler (optional for meta-learning, but can help)
     num_train_steps_per_epoch = len(meta_train_loader)
     total_train_steps = args.epochs * num_train_steps_per_epoch
     
     def lr_lambda(current_step):
         if args.warmup_steps > 0 and current_step < args.warmup_steps:
             return float(current_step) / float(max(1, args.warmup_steps))
-        # Opzionale: decadimento dopo warmup
-        # return max(0.0, 0.5 * (1.0 + math.cos(math.pi * (current_step - args.warmup_steps) / (total_train_steps - args.warmup_steps))))
-        return 1.0 # Nessun decadimento dopo warmup per ora
+        return 1.0 # No decay after warmup for now
     
     scheduler = LambdaLR(optimizer, lr_lambda) if args.warmup_steps > 0 else None
 
     best_val_acc_trial = 0.0
     no_improvement_count = 0
     
-    # Salvataggio dei moduli addestrabili migliori per questo trial
+
     best_gram_projections_state_dict = None
     best_fusion_adapter_state_dict = None
     
@@ -364,7 +356,7 @@ def define_model_and_train_meta(trial: optuna.Trial, args: argparse.Namespace, d
         
         val_acc = meta_validate_epoch(
             model, meta_val_loader, criterion, device,
-            epoch, args.epochs, args.n_way, args.k_shot_val, args.q_queries # Usa k_shot_val per la validazione
+            epoch, args.epochs, args.n_way, args.k_shot_val, args.q_queries # Use k_shot_val for validation
         )
         
         print(f"Trial {trial.number} - Epoch {epoch+1}: Train Loss={train_loss:.4f}, Train Acc={train_acc:.4f}, Val Acc={val_acc:.4f}")
@@ -380,7 +372,7 @@ def define_model_and_train_meta(trial: optuna.Trial, args: argparse.Namespace, d
             best_val_acc_trial = val_acc
             no_improvement_count = 0
             
-            # Salva lo stato dei moduli addestrabili del modello
+            # Save state of trainable model modules
             if hasattr(model, 'gram_layer_projections') and model.gram_layer_projections:
                 best_gram_projections_state_dict = {
                     k: v.cpu().clone() for k, v in model.gram_layer_projections.state_dict().items()
@@ -390,7 +382,7 @@ def define_model_and_train_meta(trial: optuna.Trial, args: argparse.Namespace, d
                     k: v.cpu().clone() for k, v in model.fusion_adapter.state_dict().items()
                 }
             
-            # Salva i checkpoint del trial corrente
+            # Save current trial checkpoints
             trial_checkpoint = {
                 'trial': trial.number,
                 'epoch': epoch,
@@ -402,37 +394,32 @@ def define_model_and_train_meta(trial: optuna.Trial, args: argparse.Namespace, d
                 'hyperparams': trial.params
             }
             
-            # Salva il checkpoint del miglior modello per questo trial
+            # Save best model checkpoint for this trial
             torch.save(trial_checkpoint, os.path.join(args.study_dir, f"best_model_trial_{trial.number}.pt"))
-            print(f"Salvato miglior modello per trial {trial.number} con val_acc {val_acc:.4f}")
+            print(f"Saved best model for trial {trial.number} with val_acc {val_acc:.4f}")
         else:
             no_improvement_count += 1
             
         if no_improvement_count >= args.early_stopping_patience:
-            print(f'Early stopping attivato per il trial {trial.number} dopo {epoch+1} epoche.')
+            print(f'Early stopping activated for trial {trial.number} after {epoch+1} epochs.')
             break
     
-    # Aggiorna lo studio con informazioni aggiuntive sul miglior trial
+    # Update study with additional information about best trial
     trial.set_user_attr('best_val_acc', best_val_acc_trial)
     
-    model._remove_gram_hooks() # Rimuovi hook prima di eliminare il modello
+    model._remove_gram_hooks() # Remove hooks before deleting model
     del model
-    torch.cuda.empty_cache() # Libera memoria GPU
+    torch.cuda.empty_cache() # Free GPU memory
     
     return best_val_acc_trial
 
 
 def objective(trial: optuna.Trial, args: argparse.Namespace, device: torch.device,
               meta_train_dataset_full: ArtgraphDataset, meta_val_dataset_full: ArtgraphDataset,
-              preprocess_fn # Funzione di preprocessamento da CLIP
+              preprocess_fn # Preprocessing function from CLIP
              ) -> float:
     try:
-        # Creazione dei DataLoader episodici all'interno di ogni trial per gestire k_shot variabile
-        # (se k_shot fosse un iperparametro di optuna)
-        # Per ora k_shot è fisso dagli args
-
-        # --- Sampler e DataLoader per Meta-Training ---
-        # Mappa: class_idx_globale -> lista di indici di campioni per quella classe nel dataset piatto
+       
         train_labels_by_class = {
             cls_idx: [i for i, (_, lab) in enumerate(meta_train_dataset_full.flat_samples) if lab == cls_idx]
             for cls_idx in meta_train_dataset_full.class_to_idx.values()
@@ -440,16 +427,15 @@ def objective(trial: optuna.Trial, args: argparse.Namespace, device: torch.devic
         train_sampler = EpisodicBatchSampler(
             train_labels_by_class, args.n_way, args.k_shot_train, args.q_queries, args.num_episodes_train_epoch
         )
-        # Il DataLoader ora prende il dataset completo. Il sampler sceglie gli indici.
         meta_train_loader = data.DataLoader(
             meta_train_dataset_full,
-            batch_sampler=train_sampler, # NOTA: batch_sampler, non sampler. shuffle, batch_size, drop_last sono ignorati.
+            batch_sampler=train_sampler, # NOTE: batch_sampler, not sampler. shuffle, batch_size, drop_last are ignored.
             num_workers=args.num_workers,
             pin_memory=True,
             collate_fn=lambda batch: episodic_collate_fn(batch, args.n_way, args.k_shot_train, args.q_queries)
         )
 
-        # --- Sampler e DataLoader per Meta-Validazione ---
+        # --- Sampler and DataLoader for Meta-Validation ---
         val_labels_by_class = {
             cls_idx: [i for i, (_, lab) in enumerate(meta_val_dataset_full.flat_samples) if lab == cls_idx]
             for cls_idx in meta_val_dataset_full.class_to_idx.values()
@@ -469,7 +455,7 @@ def objective(trial: optuna.Trial, args: argparse.Namespace, device: torch.devic
         
         current_best_acc_overall = trial.study.user_attrs.get("best_val_acc_overall", float('-inf'))
         if val_acc > current_best_acc_overall:
-            trial.study.set_user_attr("best_val_acc_overall", val_acc) # Salva nello studio
+            trial.study.set_user_attr("best_val_acc_overall", val_acc) # Save in study
             best_params_trial = {
                 'trial_number': trial.number,
                 'fusion_bottleneck_dim': trial.params['fusion_bottleneck_dim'],
@@ -480,14 +466,14 @@ def objective(trial: optuna.Trial, args: argparse.Namespace, device: torch.devic
             }
             with open(os.path.join(args.study_dir, "best_params_overall.json"), 'w') as f:
                 json.dump(best_params_trial, f, indent=4)
-            print(f"Nuovi migliori parametri GLOBALI trovati con accuratezza {val_acc:.4f}: {best_params_trial}")
+            print(f"New GLOBAL best parameters found with accuracy {val_acc:.4f}: {best_params_trial}")
             
         return val_acc
         
     except optuna.exceptions.TrialPruned:
-        raise # Rialza per Optuna
+        raise # Re-raise for Optuna
     except Exception as e:
-        print(f"Errore grave durante il trial {trial.number if trial else 'N/A'}: {e}")
+        print(f"Serious error during trial {trial.number if trial else 'N/A'}: {e}")
         import traceback
         traceback.print_exc()
         return float('-inf')
@@ -513,11 +499,11 @@ def save_optuna_visualizations(study: optuna.Study, study_dir: str):
             fig = plot_func(study)
             fig.write_image(os.path.join(viz_dir, f"{name}.png"))
         except (ValueError, RuntimeError, TypeError) as e: # Catch more specific errors
-            print(f"Errore nel salvataggio del plot '{name}': {e}")
+            print(f"Error saving plot '{name}': {e}")
         except Exception as e:
-            print(f"Errore generico nel salvataggio del plot '{name}': {e}")
+            print(f"Generic error saving plot '{name}': {e}")
             
-    # Scatter matrix personalizzato
+    # Custom scatter matrix
     try:
         completed_trials = [t for t in study.trials if t.state == TrialState.COMPLETE and t.value is not None]
         if completed_trials:
@@ -527,59 +513,59 @@ def save_optuna_visualizations(study: optuna.Study, study_dir: str):
             
             df = pd.DataFrame(data_for_df)
             if not df.empty:
-                plt.figure(figsize=(12, 12)) # Aumentato figsize per leggibilità
-                sns.pairplot(df, diag_kind='kde', corner=True) # Aggiunto corner=True
-                plt.suptitle("Scatter Matrix dei Parametri vs Accuratezza", y=1.02)
+                plt.figure(figsize=(12, 12)) # Increased figsize for readability
+                sns.pairplot(df, diag_kind='kde', corner=True) # Added corner=True
+                plt.suptitle("Parameters vs Accuracy Scatter Matrix", y=1.02)
                 plt.tight_layout()
                 plt.savefig(os.path.join(viz_dir, "parameter_relationships_scatter_matrix.png"))
                 plt.close()
             else:
-                print("DataFrame vuoto per scatter matrix, skipping.")
+                print("Empty DataFrame for scatter matrix, skipping.")
         else:
-            print("Nessun trial completato per scatter matrix.")
+            print("No completed trials for scatter matrix.")
             
     except ImportError:
-        print("Seaborn o Pandas non installati, impossibile generare scatter matrix.")
+        print("Seaborn or Pandas not installed, cannot generate scatter matrix.")
     except Exception as e:
-        print(f"Errore nel salvataggio dello scatter matrix: {e}")
+        print(f"Error saving scatter matrix: {e}")
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Ottimizzazione iperparametri Meta-Learning Prototipico per StyleAdapter')
+    parser = argparse.ArgumentParser(description='Prototypical Meta-Learning Hyperparameter Optimization for StyleAdapter')
     
     # Optuna HPO
-    parser.add_argument('--n_trials', type=int, default=15, help='Numero di trial per Optuna')
+    parser.add_argument('--n_trials', type=int, default=15, help='Number of trials for Optuna')
     parser.add_argument('--study_name_prefix', type=str, default="styleadapter_proto_hpo")
-    parser.add_argument('--study_dir_root', type=str, default="optuna_studies_meta", help='Directory radice per salvare i risultati degli studi')
-    parser.add_argument('--storage', type=str, default=None, help='URL di storage Optuna (es. sqlite:///mystudy.db)')
-    parser.add_argument('--pruning', action='store_true', help='Abilita pruning Optuna')
+    parser.add_argument('--study_dir_root', type=str, default="optuna_studies_meta", help='Root directory to save study results')
+    parser.add_argument('--storage', type=str, default=None, help='Optuna storage URL (e.g. sqlite:///mystudy.db)')
+    parser.add_argument('--pruning', action='store_true', help='Enable Optuna pruning')
     
-    # Modello
+    # Model
     parser.add_argument('--clip_model_name', type=str, default='RN50')
     parser.add_argument('--gram_style_projection_dim', type=int, default=256)
     parser.add_argument('--layers_for_gram_rn50', type=str, nargs='+', default=['layer2', 'layer3'])
     parser.add_argument('--use_layernorm_adapter', type=bool, default=True)
     
     # Meta-Learning Training
-    parser.add_argument('--epochs', type=int, default=100, help='Max epoche per trial Optuna') # Ridotto per trial veloci
+    parser.add_argument('--epochs', type=int, default=100, help='Max epochs per Optuna trial') # Reduced for fast trials
     parser.add_argument('--num_workers', type=int, default=0)
-    parser.add_argument('--warmup_steps', type=int, default=100) # Relativo agli step totali del trial
+    parser.add_argument('--warmup_steps', type=int, default=100) # Relative to total trial steps
     parser.add_argument('--early_stopping_patience', type=int, default=10)
     parser.add_argument('--early_stopping_min_delta', type=float, default=0.001)
     parser.add_argument('--seed', type=int, default=42)
 
-    # Parametri Episodici (Fissi per ora, potrebbero diventare iperparametri)
+    # Episodic Parameters (Fixed for now, could become hyperparameters)
     parser.add_argument('--n_way', type=int, default=N_WAY)
     parser.add_argument('--k_shot_train', type=int, default=K_SHOT)
-    parser.add_argument('--k_shot_val', type=int, default=4) # Più shot per una validazione più stabile
+    parser.add_argument('--k_shot_val', type=int, default=4) # More shots for more stable validation
     parser.add_argument('--q_queries', type=int, default=Q_QUERIES)
-    parser.add_argument('--num_episodes_train_epoch', type=int, default=50, help="Numero di episodi per epoca di meta-training")
-    parser.add_argument('--num_episodes_val', type=int, default=25, help="Numero di episodi per la meta-validazione")
-    parser.add_argument('--meta_val_split_ratio', type=float, default=0.3, help="Percentuale di artisti per meta-validazione")
+    parser.add_argument('--num_episodes_train_epoch', type=int, default=50, help="Number of episodes per meta-training epoch")
+    parser.add_argument('--num_episodes_val', type=int, default=25, help="Number of episodes for meta-validation")
+    parser.add_argument('--meta_val_split_ratio', type=float, default=0.3, help="Percentage of artists for meta-validation")
     
     args = parser.parse_args()
 
-    # Configurazione dinamica nome studio e directory
+    # Dynamic study name and directory configuration
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     args.study_name = f"{args.study_name_prefix}_{timestamp}"
     args.study_dir = os.path.join(args.study_dir_root, args.study_name)
@@ -594,33 +580,32 @@ def main():
     device = "cuda" if torch.cuda.is_available() else "cpu"
     if device == "cuda":
         torch.cuda.manual_seed_all(args.seed)
-        torch.backends.cudnn.benchmark = False # Per riproducibilità, può rallentare
+        torch.backends.cudnn.benchmark = False # For reproducibility, may slow down
         torch.backends.cudnn.deterministic = True
-    print(f"Utilizzo device: {device}")
+    print(f"Using device: {device}")
     
-    # --- Preparazione Dataset per Meta-Learning ---
+    # --- Dataset Preparation for Meta-Learning ---
     try:
         dataset_root_path = find_artgraph_path()
-        # Carica tutti gli artisti disponibili per dividerli
+        # Load all available artists to split them
         temp_images_dir = os.path.join(dataset_root_path, 'images')
         all_artists = sorted([d for d in os.listdir(temp_images_dir) if os.path.isdir(os.path.join(temp_images_dir, d))])
-        random.shuffle(all_artists) # Shuffle per divisione casuale
+        random.shuffle(all_artists) # Shuffle for random split
         
         num_val_artists = int(len(all_artists) * args.meta_val_split_ratio)
         meta_val_artists = all_artists[:num_val_artists]
         meta_train_artists = all_artists[num_val_artists:]
 
         if not meta_train_artists or not meta_val_artists:
-            raise ValueError("Divisione artisti in meta-train/meta-val ha prodotto set vuoti. Controlla meta_val_split_ratio e il numero di artisti.")
+            raise ValueError("Artist split into meta-train/meta-val produced empty sets. Check meta_val_split_ratio and number of artists.")
 
-        print(f"Artisti totali: {len(all_artists)}")
-        print(f"Artisti Meta-Train ({len(meta_train_artists)}): {meta_train_artists[:5]}...")
-        print(f"Artisti Meta-Val ({len(meta_val_artists)}): {meta_val_artists[:5]}...")
+        print(f"Total artists: {len(all_artists)}")
+        print(f"Meta-Train artists ({len(meta_train_artists)}): {meta_train_artists[:5]}...")
+        print(f"Meta-Val artists ({len(meta_val_artists)}): {meta_val_artists[:5]}...")
 
-        # Preprocessing da un modello CLIP (non serve il modello intero qui, solo preprocess)
-        # Carica il preprocess associato al modello CLIP specificato
+       
         model_name_to_load_clip = "RN50" if args.clip_model_name == "CustomRN50" else args.clip_model_name
-        _, preprocess_fn = clip.load(model_name_to_load_clip, device=device) # Carica su CPU o GPU, non importa per solo preprocess
+        _, preprocess_fn = clip.load(model_name_to_load_clip, device=device) # Load on CPU or GPU, doesn't matter for preprocess only
         
         meta_train_dataset_full = ArtgraphDataset(
             dataset_root_path, transform=preprocess_fn, seed=args.seed, artist_subset=meta_train_artists
@@ -629,7 +614,7 @@ def main():
             dataset_root_path, transform=preprocess_fn, seed=args.seed, artist_subset=meta_val_artists
         )
     except Exception as e:
-        print(f"Errore nella preparazione del dataset per meta-learning: {e}")
+        print(f"Error in dataset preparation for meta-learning: {e}")
         import traceback
         traceback.print_exc()
         return
@@ -639,47 +624,47 @@ def main():
     
     study = optuna.create_study(
         study_name=args.study_name, storage=storage, direction="maximize",
-        pruner=pruner, load_if_exists=True # Permette di riprendere studi interrotti
+        pruner=pruner, load_if_exists=True # Allows resuming interrupted studies
     )
-    study.set_user_attr("best_val_acc_overall", float('-inf')) # Inizializza attributo utente
+    study.set_user_attr("best_val_acc_overall", float('-inf')) # Initialize user attribute
 
     try:
         study.optimize(
             lambda trial: objective(trial, args, device, meta_train_dataset_full, meta_val_dataset_full, preprocess_fn),
-            n_trials=args.n_trials, timeout=None # Nessun timeout globale
+            n_trials=args.n_trials, timeout=None # No global timeout
         )
     except KeyboardInterrupt:
-        print("Ottimizzazione interrotta dall'utente.")
+        print("Optimization interrupted by user.")
     except Exception as e:
-        print(f"Errore imprevisto durante study.optimize: {e}")
+        print(f"Unexpected error during study.optimize: {e}")
         import traceback
         traceback.print_exc()
     
     joblib.dump(study, os.path.join(args.study_dir, "study_results.pkl"))
     
-    print("\nOttimizzazione Completata!")
-    if study.trials: # Controlla se ci sono trials prima di accedere a best_trial
+    print("\nOptimization Completed!")
+    if study.trials: # Check if there are trials before accessing best_trial
         best_trial_overall = None
-        try: # Prova a trovare il miglior trial in base al valore effettivo, non solo l'ultimo
+        try: # Try to find best trial based on actual value, not just the last one
             best_trial_overall = study.best_trial
-            print(f"Miglior accuratezza di meta-validazione nel trial #{best_trial_overall.number}: {best_trial_overall.value:.4f}")
-            print(f"Migliori parametri del trial: {best_trial_overall.params}")
+            print(f"Best meta-validation accuracy in trial #{best_trial_overall.number}: {best_trial_overall.value:.4f}")
+            print(f"Best trial parameters: {best_trial_overall.params}")
             
-            # Salva i parametri del miglior trial dello studio
+            # Save best trial parameters from study
             with open(os.path.join(args.study_dir, "final_best_trial_params.json"), 'w') as f:
                 json.dump({**best_trial_overall.params, "val_accuracy": best_trial_overall.value}, f, indent=4)
 
-            # Salva il miglior modello complessivo per poterlo utilizzare in altri file
+            # Save overall best model for use in other files
             best_model_path = os.path.join(args.study_dir, f"best_model_trial_{best_trial_overall.number}.pt")
             if os.path.exists(best_model_path):
-                # Carica il checkpoint del miglior trial
+                # Load best trial checkpoint
                 best_checkpoint = torch.load(best_model_path, map_location="cpu")
                 
-                # Salva il miglior modello nella directory principale per facile accesso
+                # Save best model in main directory for easy access
                 main_project_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
                 best_model_final_path = os.path.join(main_project_dir, "best_style_adapted_clip_artgraph.pt")
                 
-                # Utilizza una copia del checkpoint per evitare modifiche accidentali
+                # Use a copy of checkpoint to avoid accidental modifications
                 final_checkpoint = {
                     'epoch': best_checkpoint.get('epoch', 0),
                     'val_acc': best_checkpoint.get('val_acc', 0.0),
@@ -694,41 +679,41 @@ def main():
                     'args': args
                 }
                 
-                # Salva il checkpoint finale
+                # Save final checkpoint
                 torch.save(final_checkpoint, best_model_final_path)
-                print(f"\nMiglior modello salvato in: {best_model_final_path}")
-                print("Questo modello può essere utilizzato in altri script tramite il nome 'CustomRN50' in clip.load()")
+                print(f"\nBest model saved in: {best_model_final_path}")
+                print("This model can be used in other scripts via the name 'CustomRN50' in clip.load()")
                 
-                # Crea una copia anche nella directory del codice per essere sicuri
+                # Create a copy also in code directory to be sure
                 alternative_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "best_adapted_clip_artgraph.pt")
                 torch.save(final_checkpoint, alternative_path)
-                print(f"Copia di backup salvata in: {alternative_path}")
+                print(f"Backup copy saved in: {alternative_path}")
             else:
-                print(f"ATTENZIONE: File del miglior modello {best_model_path} non trovato!")
+                print(f"WARNING: Best model file {best_model_path} not found!")
 
-        except ValueError: # Può succedere se nessun trial è stato completato con successo
-            print("Nessun trial completato con successo trovato nello studio.")
+        except ValueError: # Can happen if no trial was completed successfully
+            print("No successfully completed trials found in study.")
         except Exception as e:
-            print(f"Errore nell'ottenere il miglior trial: {e}")
+            print(f"Error getting best trial: {e}")
 
-        # Controlla anche i parametri salvati in best_params_overall.json (aggiornati durante i trial)
+        # Also check parameters saved in best_params_overall.json (updated during trials)
         best_params_file = os.path.join(args.study_dir, "best_params_overall.json")
         if os.path.exists(best_params_file):
             with open(best_params_file, 'r') as f:
                 overall_best = json.load(f)
-            print(f"\nMigliori parametri registrati durante la ricerca (da best_params_overall.json):")
-            print(f"Accuratezza: {overall_best.get('val_accuracy', 'N/A'):.4f}")
-            print(f"Parametri: {overall_best}")
+            print(f"\nBest parameters recorded during search (from best_params_overall.json):")
+            print(f"Accuracy: {overall_best.get('val_accuracy', 'N/A'):.4f}")
+            print(f"Parameters: {overall_best}")
 
     else:
-        print("Nessun trial eseguito nello studio.")
+        print("No trials executed in study.")
         
-    print(f"Risultati dettagliati e log salvati in: {args.study_dir}")
+    print(f"Detailed results and logs saved in: {args.study_dir}")
     
     try:
         save_optuna_visualizations(study, args.study_dir)
     except Exception as e:
-        print(f"Errore nella generazione delle visualizzazioni finali: {e}")
+        print(f"Error generating final visualizations: {e}")
 
 if __name__ == "__main__":
     main()
