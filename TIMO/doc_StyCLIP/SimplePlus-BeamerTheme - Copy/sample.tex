@@ -1,0 +1,344 @@
+%----------------------------------------------------------------------------------------
+%    PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass[aspectratio=169,xcolor=dvipsnames]{beamer}
+\usetheme{SimplePlus}
+
+\usepackage{hyperref}
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{amsmath, amssymb, mathtools}
+\usepackage{xurl} % For better URL line breaking
+\usepackage{siunitx}  % For number formatting in tables
+\usepackage{emoji}
+%----------------------------------------------------------------------------------------
+%    TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title{StyCLIP: StyleTransfer in Few-Shot Learning}
+\author{Emanuele Fontana}
+\institute{Università degli Studi di Bari Aldo Moro \\ \nolinkurl{e.fontana7@studenti.uniba.it}} % \nolinkurl and manual break if needed
+\date{} % Date, can be changed to a custom date
+
+% Define commands from the original paper
+\newcommand{\Ft}{\mathbf{F}_\text{t}}      % Text features
+\newcommand{\Fv}{\mathbf{F}_\text{v}}      % Visual features (support)
+\newcommand{\Wt}{\mathbf{W}_\text{t}}      % Text prototypes
+\newcommand{\Wv}{\mathbf{W}_\text{v}}      % Visual prototypes (support)
+\newcommand{\fv}{\mathbf{f}_\text{v}}      % Query visual feature
+\newcommand{\Figt}{\mathbf{F}_\text{IGT}}  % IGT features
+\newcommand{\Ftgi}{\mathbf{F}_\text{TGI}}  % TGI features
+\newcommand{\R}{\mathbb{R}}
+
+%----------------------------------------------------------------------------------------
+%    PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+% --- Title Slide ---
+\begin{frame}
+  \titlepage
+\end{frame}
+
+
+
+% --- Introduction ---
+\section{Introduction}
+\begin{frame}
+  \frametitle{Introduction \& Motivation}
+  \begin{itemize}
+    \item \textbf{Context:} Rapid digitization of art collections demands automated artist classification systems for large-scale analysis.
+    
+    \item \textbf{Challenge:} Few-shot visual artist classification -- identifying artistic styles with limited labeled examples per artist.
+    
+    \item \textbf{Problem:} 
+      \begin{itemize}
+        \item Artistic style relies on subtle visual cues (brushstrokes, color palettes, composition)
+        \item CLIP-based methods excel at semantics but may miss fine-grained stylistic nuances
+      \end{itemize}
+      
+    \item \textbf{Hypothesis:} Explicitly integrating style representations (Gram matrices) into CLIP could enhance artist-specific pattern recognition.
+    
+    \item \textbf{Contribution:} StyCLIP -- a CLIP extension incorporating dedicated style-aware features for improved few-shot artist classification.
+  \end{itemize}
+\end{frame}
+
+% --- Related Work ---
+\section{Related Work}
+\begin{frame}
+  \frametitle{Related Work}
+  \begin{block}{Style Transfer}
+    \begin{itemize}
+        \item Gatys et al. \cite{StyleTransfer}: Deep networks encode style in intermediate layers; Gram matrices capture style.
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Few-Shot Learning (FSL) \& Meta-Learning}
+    \begin{itemize}
+        \item Prototypical Networks \cite{ProtoNet}: Learn to learn from small samples.
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Contrastive Language-Image Pretraining (CLIP)}
+    \begin{itemize}
+        \item CLIP \cite{CLIP}: Shared embedding space for images and text.
+        \item TIP-Adapter \cite{TipAdapter}: Non-parametric cache model for FSL.
+        \item APE \cite{APE}: Adaptive prior refinement of CLIP features.
+        \item GDA-CLIP \cite{GDA_CLIP}: Gradient-based adaptation.
+        \item TIMO \cite{TIMO}: Mutual guidance between text/image modalities.
+    \end{itemize}
+  \end{block}
+  \tiny
+  % \bibliographystyle{plain} % Use a simple style for beamer - Handled globally at the end
+  \nocite{StyleTransfer,ProtoNet,CLIP,TipAdapter,APE,GDA_CLIP,TIMO} % Cite them so they appear
+\end{frame}
+
+% --- Background: TIMO ---
+\section{Background: TIMO}
+\begin{frame}
+  \frametitle{Background: TIMO (Text-Image Mutual Guidance Optimization)}
+  \begin{block}{Two Main Branches}
+      \textbf{Text-Guided Image (TGI):}Uses textual representations to guide visual features      
+      \textbf{Image-Guided Text (IGT):}Finds optimal weights for textual prompts
+  \end{block}
+   \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.8\textwidth ,height=0.4\textheight]{../img/TIMO.png}
+      \caption{TIMO Architecture Overview}
+    \end{figure}
+\end{frame}
+
+
+% --- Dataset ---
+\section{Dataset}
+\begin{frame}
+  \frametitle{Dataset}
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth ,height=0.75\textheight]{../img/datasets.png}
+    \caption{ArtGraph Datasets Overview}
+  \end{figure}
+  \tiny \nocite{ArtGraph}
+\end{frame}
+
+
+
+% --- Proposed Method: StyCLIP ---
+\section{Our Approach: StyCLIP}
+\begin{frame}
+  \frametitle{StyCLIP: Architecture Overview}
+  \begin{figure}
+    \includegraphics[width=\linewidth,height=0.9\textheight,keepaspectratio]{../img/StyCLIP.png} % Adjusted path
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{StyCLIP: Key Components}
+  \begin{itemize}
+    \item \textbf{Core Idea:} Extend CLIP with explicit style-aware features via Gram matrices
+    \item \textbf{Three Key Components:}
+      \begin{enumerate}
+        \item \textbf{Gram Matrix Extraction:} Capture style correlations from intermediate visual layers (ResNet-50 blocks)
+        \item \textbf{Style Feature Projection:} Reduce dimensionality of Gram matrix representations
+        \item \textbf{Fusion Adapter:} Integrate semantic (CLIP) and style features through bottleneck architecture
+      \end{enumerate}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{StyCLIP: Training Strategy}
+  \begin{itemize}
+    \item \textbf{Frozen Backbone:} Original CLIP (RN50) visual and text encoders are frozen.
+    \item \textbf{Trainable Components:} Only the new style projection layers and fusion adapter are optimized.
+    \item \textbf{Rationale:}
+      \begin{itemize}
+        \item Preserve pre-trained semantic knowledge from CLIP.
+        \item Reduce computational cost.
+        \item Enable efficient fine-tuning on artistic datasets.
+      \end{itemize}
+  \end{itemize}
+
+  \begin{block}{Hyperparameter Tuning}
+    \begin{itemize}
+        \item Optuna \cite{Optuna} used for:
+        \begin{itemize}
+            \item Fusion bottleneck dimension \{64, 128, 256\}
+            \item Dropout rate [0.0, 0.5]
+            \item Learning rate log-uniform [$10^{-5}, 10^{-3}$]
+            \item Weight decay log-uniform [$10^{-6}, 10^{-3}$]
+        \end{itemize}
+    \end{itemize}
+  \end{block}
+  \tiny \nocite{Optuna}
+\end{frame}
+
+% --- Experimental Setup ---
+\section{Experimental Setup}
+\begin{frame}
+  \frametitle{Experimental Setup}
+  \begin{block}{Meta-Learning Training for StyCLIP}
+    \begin{itemize}
+      \item Prototypical network approach.
+      \item Episodic training: 10-way (N=10 artists), K-shot (K=1, 4) classification, 3-query (Q=3)
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Evaluation Protocol}
+    \begin{itemize}
+      \item \textbf{Method:} Using every CLIP-based method (e.g., TIMO, TIP-Adapter) with every backbone.
+      \item N-way classification (all available artists in the test subset).
+      \item Tested across K $\in \{1, 2, 4, 8, 16\}$ shots for support set.
+      \item \textbf{Statistical Robustness:} 10 different random seeds.
+      \item \textbf{Metrics:} Accuracy, Macro-Precision, Macro-Recall, Macro-F1.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+
+% --- Results ---
+\section{Results}
+
+\begin{frame}
+  \frametitle{Episode Example for FSL}
+  \begin{figure}
+    \includegraphics[width=0.8\linewidth,height=0.7\textheight,keepaspectratio]{../img/episode_example.drawio.png} % Adjusted path
+    \caption{Example episode: 5-Way, 4-Shots ,10 query examples}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Key Evaluation Results}
+  \textbf{Main Finding:} Integrating explicit style-aware features (StyCLIP) \textit{consistently underperforms} standard CLIP variants.
+
+  \begin{itemize}
+    \item Standard CLIP with RN50 backbone is the best performing backbone.
+    \item StyCLIP backbones (Custom\_FSL1\_RN50, Custom\_FSL4\_RN50) significantly degrade performance for all FSL methods.
+    \item TIMO and TIMO-S (our adaptation logic) are the best FSL methods when using the standard RN50 backbone.
+  \end{itemize}
+
+  \begin{block}{Example: 16-Shot Classification Accuracy (\%)}
+    \centering
+    \tiny
+    \begin{tabular}{@{}lcc@{}}
+      \toprule
+      \textbf{Model} & \textbf{Backbone} & \textbf{ACC (\%)} \\
+      \midrule
+      TIMO           & Custom\_FSL1\_RN50 & 37.00 \\
+      TIMO           & Custom\_FSL4\_RN50 & 43.27 \\
+      \textbf{TIMO}  & \textbf{RN50}      & \textbf{73.36} \\
+      \midrule
+      TIMO\_S  & Custom\_FSL1\_RN50 & 39.20 \\
+      TIMO\_S  & Custom\_FSL4\_RN50 & 48.75 \\
+      \textbf{TIMO\_S } & \textbf{RN50}      & \textbf{73.46} \\
+      \bottomrule
+    \end{tabular}
+    \normalsize
+  \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Statistical Analysis Summary}
+    \begin{itemize}
+        \item Paired t-tests confirmed the significance of performance differences.
+        \item \textbf{Key Observation:} Standard CLIP (RN50) significantly outperforms StyCLIP-trained backbones across nearly all configurations and few-shot methods.
+        \item Example: For 16-shot with TIMO\_S:
+        \begin{itemize}
+            \item RN50 (73.46\%) vs Custom\_FSL4\_RN50 (48.75\%) $\rightarrow$ $\approx$ 25 percentage point difference, statistically significant.
+        \end{itemize}
+    \end{itemize}
+    $\implies$ The architectural changes in StyCLIP for explicit style modeling did not yield benefits and often hindered performance.
+\end{frame}
+
+
+% --- Conclusion ---
+\section{Conclusion \& Discussion}
+\begin{frame}
+  \frametitle{Conclusion \& Discussion}
+  \begin{itemize}
+    \item \textbf{Main Finding:} Integrating explicit style-aware features via Gram matrices (StyCLIP) did \textbf{not improve} few-shot artist classification performance.
+    \item \textbf{Performance:} Standard CLIP (RN50 backbone) consistently outperformed StyCLIP variants.
+    \item \textbf{Implication:} Explicit Gram matrix-based style modeling might interfere with CLIP's pre-trained semantic representations rather than enhance them for this task.
+    \item \textbf{Future Directions:} Alternative approaches like attention-based style integration or domain-specific fine-tuning (without architectural changes) might be more fruitful.
+  \end{itemize}
+\end{frame}
+
+% --- Acknowledgments & Code ---
+\section{Acknowledgments \& Code}
+\begin{frame}
+  \frametitle{Acknowledgments}
+  \begin{itemize}
+    \item This work was proposed by PhD student \textbf{Nicola Fanelli} and \textbf{Prof. Giovanna Castellano} at the University of Bari.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Code Availability}
+  The code for this project is available on GitHub:
+  \begin{center}
+    \url{https://github.com/Fonty02/ComputerVision/tree/main/TIMO}
+  \end{center}
+  \vspace{2em} % Use \vspace for vertical spacing in Beamer
+  \begin{center}
+    \Large Thank You! \emoji{rocket}
+  \end{center}
+\end{frame}
+
+%-------------------------------------------------
+%    APPENDIX
+%-------------------------------------------------
+\appendix
+\section{Appendix}
+
+\begin{frame}
+  \frametitle{Appendix: Hyperparameter Optimization Highlights}
+  \begin{columns}[T] % Use T for top alignment if preferred, or c for center
+    \begin{column}{0.5\textwidth}
+      \begin{block}{StyCLIP FLS1 (1-shot trained)}
+        \begin{itemize}
+          \item Bottleneck: 64
+          \item LR: $6.01 \times 10^{-5}$
+          \item Dropout: 0.0
+          \item Weight Decay: $4.83 \times 10^{-4}$
+          \item Valid Acc: 57.07\%
+        \end{itemize}
+      \end{block}
+    \end{column}
+    \begin{column}{0.5\textwidth}
+      \begin{block}{StyCLIP FLS4 (4-shot trained)}
+        \begin{itemize}
+          \item Bottleneck: 128
+          \item LR: $1.02 \times 10^{-5}$
+          \item Dropout: 0.1
+          \item Weight Decay: $1.03 \times 10^{-6}$
+          \item Valid Acc: 60.53\%
+        \end{itemize}
+      \end{block}
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
+%------------------------------------------------
+%    REFERENCES
+%------------------------------------------------
+\begin{frame}[allowframebreaks]
+    \frametitle{References}
+    \footnotesize % SimplePlus theme might handle this, but can be kept
+    \bibliography{bibo}
+    \bibliographystyle{plain} % Changed from apalike to plain as in presCV.tex
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%    THE END
+%----------------------------------------------------------------------------------------
+\begin{frame}
+    \Huge{\centerline{\textbf{The End}}}
+\end{frame}
+
+\end{document}
