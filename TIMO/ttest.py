@@ -37,7 +37,7 @@ def perform_ttest(df, model1, model2, backbone1=None, backbone2=None, shots=None
     if len(model1_data) == 0 or len(model2_data) == 0:
         return None  # Return None if no data found for either model/backbone
     
-    t_stat, p_value = stats.ttest_ind(model1_data, model2_data, equal_var=False)
+    t_stat, p_value = stats.ttest_rel(model1_data, model2_data)
     
     result = {
         'Model 1': f"{model1}_{backbone1}" if backbone1 else model1,

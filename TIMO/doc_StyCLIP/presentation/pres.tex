@@ -175,8 +175,8 @@
       \item K support examples, Q=3 query examples per artist per episode.
       \item Two StyCLIP training configurations:
         \begin{itemize}
-          \item \textbf{StyCLIP FLS1}: Trained with K=1 support shot.
-          \item \textbf{StyCLIP FLS4}: Trained with K=4 support shots.
+          \item \textbf{StyCLIP FSL1}: Trained with K=1 support shot.
+          \item \textbf{StyCLIP FSL4}: Trained with K=4 support shots.
         \end{itemize}
     \end{itemize}
   \end{block}
@@ -209,8 +209,8 @@
     \begin{block}{Backbones Compared}
       \begin{itemize}
         \item \textbf{CLIP RN50}: Standard CLIP ResNet-50.
-        \item \textbf{StyCLIP FLS1}: Our custom backbone, trained with 1-shot.
-        \item \textbf{StyCLIP FLS4}: Our custom backbone, trained with 4-shots.
+        \item \textbf{StyCLIP FSL1}: Our custom backbone, trained with 1-shot.
+        \item \textbf{StyCLIP FSL4}: Our custom backbone, trained with 4-shots.
       \end{itemize}
     \end{block}
   \end{column}
@@ -226,7 +226,7 @@
   \frametitle{Hyperparameter Optimization Highlights}
   \begin{columns}[T]
     \begin{column}{0.5\textwidth}
-      \begin{block}{StyCLIP FLS1 (1-shot trained)}
+      \begin{block}{StyCLIP FSL1 (1-shot trained)}
         \begin{itemize}
           \item Bottleneck: 64
           \item LR: $6.01 \times 10^{-5}$
@@ -237,7 +237,7 @@
       \end{block}
     \end{column}
     \begin{column}{0.5\textwidth}
-      \begin{block}{StyCLIP FLS4 (4-shot trained)}
+      \begin{block}{StyCLIP FSL4 (4-shot trained)}
         \begin{itemize}
           \item Bottleneck: 128
           \item LR: $1.02 \times 10^{-5}$
@@ -269,7 +269,7 @@
 
   \begin{itemize}
     \item Standard CLIP with RN50 backbone is the best performing backbone.
-    \item StyCLIP backbones (Custom\_FSL1\_RN50, Custom\_FSL4\_RN50) significantly degrade performance for all FSL methods.
+    \item StyCLIP backbones (StyCLIP\_FSL1, StyCLIP\_FSL4) significantly degrade performance for all FSL methods.
     \item TIMO and TIMO-S (our adaptation logic) are the best FSL methods when using the standard RN50 backbone.
   \end{itemize}
 
@@ -280,12 +280,12 @@
       \toprule
       \textbf{Model} & \textbf{Backbone} & \textbf{ACC (\%)} \\
       \midrule
-      TIMO           & Custom\_FSL1\_RN50 & 37.00 \\
-      TIMO           & Custom\_FSL4\_RN50 & 43.27 \\
+      TIMO           & StyCLIP\_FSL1 & 37.00 \\
+      TIMO           & StyCLIP\_FSL4 & 43.27 \\
       \textbf{TIMO}  & \textbf{RN50}      & \textbf{73.36} \\
       \midrule
-      TIMO\_S  & Custom\_FSL1\_RN50 & 39.20 \\
-      TIMO\_S  & Custom\_FSL4\_RN50 & 48.75 \\
+      TIMO\_S  & StyCLIP\_FSL1 & 39.20 \\
+      TIMO\_S  & StyCLIP\_FSL4 & 48.75 \\
       \textbf{TIMO\_S } & \textbf{RN50}      & \textbf{73.46} \\
       \bottomrule
     \end{tabular}
@@ -301,7 +301,7 @@
         \item \textbf{Key Observation:} Standard CLIP (RN50) significantly outperforms StyCLIP-trained backbones across nearly all configurations and few-shot methods.
         \item Example: For 16-shot with TIMO\_S:
         \begin{itemize}
-            \item RN50 (73.46\%) vs Custom\_FSL4\_RN50 (48.75\%) $\rightarrow$ $\approx$ 25 percentage point difference, statistically significant.
+            \item RN50 (73.46\%) vs StyCLIP\_FSL4 (48.75\%) $\rightarrow$ $\approx$ 25 percentage point difference, statistically significant.
         \end{itemize}
     \end{itemize}
     $\implies$ The architectural changes in StyCLIP for explicit style modeling did not yield benefits and often hindered performance.
