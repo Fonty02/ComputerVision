@@ -54,16 +54,10 @@
   \begin{itemize}
     \item \textbf{Context:} Rapid digitization of art collections demands automated artist classification systems for large-scale analysis.
     
-    \item \textbf{Challenge:} Few-shot visual artist classification -- identifying artistic styles with limited labeled examples per artist.
+    \item \textbf{Challenge:} Few-shot visual artist classification -- identifying artist by their style with limited labeled examples per artist.
     
-    \item \textbf{Problem:} 
-      \begin{itemize}
-        \item Artistic style relies on subtle visual cues (brushstrokes, color palettes, composition)
-        \item CLIP-based methods excel at semantics but may miss fine-grained stylistic nuances
-      \end{itemize}
-      
+    \item \textbf{Problem:}  Current image classifiers are based on semantic features, not style (e.g., CLIP).
     \item \textbf{Hypothesis:} Explicitly integrating style representations (Gram matrices) into CLIP could enhance artist-specific pattern recognition.
-    
     \item \textbf{Contribution:} StyCLIP -- a CLIP extension incorporating dedicated style-aware features for improved few-shot artist classification.
   \end{itemize}
 \end{frame}
@@ -103,12 +97,13 @@
 \begin{frame}
   \frametitle{Background: TIMO (Text-Image Mutual Guidance Optimization)}
   \begin{block}{Two Main Branches}
-      \textbf{Text-Guided Image (TGI):}Uses textual representations to guide visual features      
-      \textbf{Image-Guided Text (IGT):}Finds optimal weights for textual prompts
+      \textbf{Text-Guided Image (TGI):} Uses textual representations to refine and guide visual features
+      
+      \textbf{Image-Guided Text (IGT):} Finds optimal weights for textual prompts using support visual features, dynamically adapting textual descriptions to image
   \end{block}
    \begin{figure}[H]
       \centering
-      \includegraphics[width=0.8\textwidth ,height=0.4\textheight]{../img/TIMO.png}
+      \includegraphics[width=0.8\textwidth ,height=0.35\textheight]{../img/TIMO.png}
       \caption{TIMO Architecture Overview}
     \end{figure}
 \end{frame}
@@ -218,8 +213,8 @@
 
   \begin{itemize}
     \item Standard CLIP with RN50 backbone is the best performing backbone.
-    \item StyCLIP backbones (Custom\_FSL1\_RN50, Custom\_FSL4\_RN50) significantly degrade performance for all FSL methods.
-    \item TIMO and TIMO-S (our adaptation logic) are the best FSL methods when using the standard RN50 backbone.
+    \item StyCLIP backbones (StyCLIP\_FSL1, StyCLIP\_FSL4) significantly degrade performance for all FSL methods.
+    \item TIMO and TIMO-S are the best FSL methods when using the standard RN50 backbone.
   \end{itemize}
 
   \begin{block}{Example: 16-Shot Classification Accuracy (\%)}
@@ -229,12 +224,12 @@
       \toprule
       \textbf{Model} & \textbf{Backbone} & \textbf{ACC (\%)} \\
       \midrule
-      TIMO           & Custom\_FSL1\_RN50 & 37.00 \\
-      TIMO           & Custom\_FSL4\_RN50 & 43.27 \\
+      TIMO           & StyCLIP\_FSL1 & 37.00 \\
+      TIMO           & StyCLIP\_FSL4 & 43.27 \\
       \textbf{TIMO}  & \textbf{RN50}      & \textbf{73.36} \\
       \midrule
-      TIMO\_S  & Custom\_FSL1\_RN50 & 39.20 \\
-      TIMO\_S  & Custom\_FSL4\_RN50 & 48.75 \\
+      TIMO\_S  & StyCLIP\_FSL1 & 39.20 \\
+      TIMO\_S  & StyCLIP\_FSL4 & 48.75 \\
       \textbf{TIMO\_S } & \textbf{RN50}      & \textbf{73.46} \\
       \bottomrule
     \end{tabular}
@@ -249,7 +244,7 @@
         \item \textbf{Key Observation:} Standard CLIP (RN50) significantly outperforms StyCLIP-trained backbones across nearly all configurations and few-shot methods.
         \item Example: For 16-shot with TIMO\_S:
         \begin{itemize}
-            \item RN50 (73.46\%) vs Custom\_FSL4\_RN50 (48.75\%) $\rightarrow$ $\approx$ 25 percentage point difference, statistically significant.
+            \item RN50 (73.46\%) vs StyCLIP\_FSL4 (48.75\%) $\rightarrow$ $\approx$ 25 percentage point difference, statistically significant.
         \end{itemize}
     \end{itemize}
     $\implies$ The architectural changes in StyCLIP for explicit style modeling did not yield benefits and often hindered performance.
@@ -299,7 +294,7 @@
   \frametitle{Appendix: Hyperparameter Optimization Highlights}
   \begin{columns}[T] % Use T for top alignment if preferred, or c for center
     \begin{column}{0.5\textwidth}
-      \begin{block}{StyCLIP FLS1 (1-shot trained)}
+      \begin{block}{StyCLIP FSL1 (1-shot trained)}
         \begin{itemize}
           \item Bottleneck: 64
           \item LR: $6.01 \times 10^{-5}$
@@ -310,7 +305,7 @@
       \end{block}
     \end{column}
     \begin{column}{0.5\textwidth}
-      \begin{block}{StyCLIP FLS4 (4-shot trained)}
+      \begin{block}{StyCLIP FSL4 (4-shot trained)}
         \begin{itemize}
           \item Bottleneck: 128
           \item LR: $1.02 \times 10^{-5}$

@@ -1,11 +1,11 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.29)  5 JUN 2025 10:42
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.29)  7 JUN 2025 15:26
  system commands enabled.
  file:line:error style messages enabled.
-**c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/SimplePlus-Be
-amerTheme/sample
+**"c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/SimplePlus-B
+eamerTheme - Copy/sample"
 
-(c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/SimplePlus-Bea
-merTheme/sample.tex
+("c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/SimplePlus-Be
+amerTheme - Copy/sample.tex"
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 Lua module: luaotfload 2024-12-03 v3.29 Lua based OpenType font support
@@ -1341,17 +1341,9 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <5> not available
 
 {C:/Users/fonta/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10.95> on input line 69.
+(Font)              <10.95> on input line 63.
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 69.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 69.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 69.
-LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 69.
-LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <7> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 69.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 63.
 
 
 [2
@@ -1364,8 +1356,12 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <7> not available
 <../img/TIMO.png, id=95, 966.61125pt x 413.29407pt>
 File: ../img/TIMO.png Graphic file (type png)
 <use ../img/TIMO.png>
-Package luatex.def Info: ../img/TIMO.png  used on input line 114.
-(luatex.def)             Requested size: 329.1597pt x 97.46466pt.
+Package luatex.def Info: ../img/TIMO.png  used on input line 109.
+(luatex.def)             Requested size: 329.1597pt x 85.2871pt.
+
+Overfull \vbox (13.28242pt too high) detected at line 109
+ []
+
 
 
 [4
@@ -1374,10 +1370,10 @@ Package luatex.def Info: ../img/TIMO.png  used on input line 114.
 <../img/datasets.png, id=103, 1390.19376pt x 464.73625pt>
 File: ../img/datasets.png Graphic file (type png)
 <use ../img/datasets.png>
-Package luatex.def Info: ../img/datasets.png  used on input line 127.
+Package luatex.def Info: ../img/datasets.png  used on input line 122.
 (luatex.def)             Requested size: 411.44pt x 182.74976pt.
 
-Overfull \vbox (11.62637pt too high) detected at line 127
+Overfull \vbox (11.62637pt too high) detected at line 122
  []
 
 
@@ -1388,10 +1384,10 @@ Overfull \vbox (11.62637pt too high) detected at line 127
 <../img/StyCLIP.png, id=110, 5292.77374pt x 2737.22626pt>
 File: ../img/StyCLIP.png Graphic file (type png)
 <use ../img/StyCLIP.png>
-Package luatex.def Info: ../img/StyCLIP.png  used on input line 138.
+Package luatex.def Info: ../img/StyCLIP.png  used on input line 133.
 (luatex.def)             Requested size: 411.39716pt x 212.75934pt.
 
-Overfull \vbox (12.18195pt too high) detected at line 138
+Overfull \vbox (12.18195pt too high) detected at line 133
  []
 
 
@@ -1403,6 +1399,15 @@ Overfull \vbox (12.18195pt too high) detected at line 138
 [7
 
 ]
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 173.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 173.
+LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10> not available
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 173.
+LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <7> not available
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 173.
+
 
 [8
 
@@ -1415,7 +1420,7 @@ Overfull \vbox (12.18195pt too high) detected at line 138
 File: ../img/episode_example.drawio.png Graphic file (type png)
 <use ../img/episode_example.drawio.png>
 Package luatex.def Info: ../img/episode_example.drawio.png  used on input line 
-213.
+208.
 (luatex.def)             Requested size: 329.13531pt x 139.57625pt.
 
 
@@ -1495,7 +1500,7 @@ Here is how much of LuaTeX's memory you used:
    avail lists: 2:1782,3:591,4:274,5:236,6:58,7:4731,8:56,9:550,10:29,11:330
  57331 multiletter control sequences out of 65536+600000
  78 fonts using 47511967 bytes
- 128i,11n,116p,484b,933s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 128i,11n,116p,493b,933s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/users/fonta/appdata/local/programs/miktex/fonts/opentype/public/lm/lmsans9-o
 blique.otf>{C:/Users/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-m
 athsy.enc}<C:/windows/Fonts/seguiemj.ttf><c:/users/fonta/appdata/local/programs/
@@ -1515,7 +1520,7 @@ ms/MiKTeX/fonts/type1/public/lm/lmss10.pfb><C:/Users/fonta/AppData/Local/Program
 s/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/fonta/AppData/Local/Programs
 /MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/fonta/AppData/Local/Programs/M
 iKTeX/fonts/type1/public/lm/lmsy8.pfb>
-Output written on sample.pdf (20 pages, 3635317 bytes).
+Output written on sample.pdf (20 pages, 3635260 bytes).
 
 PDF statistics: 295 PDF objects out of 1000 (max. 8388607)
  61 named destinations out of 1000 (max. 131072)
