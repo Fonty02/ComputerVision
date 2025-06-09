@@ -119,12 +119,29 @@
 \begin{frame}
   \frametitle{StyCLIP: Key Components}
   \begin{itemize}
-    \item \textbf{Core Idea:} Extend CLIP with explicit style-aware features via Gram matrices
-    \item \textbf{Three Key Components:}
+    \item \textbf{Core Idea:} Extend CLIP with explicit style-aware features via Gram matrices to capture artist-specific patterns
+    \item \textbf{Three-Stage Architecture:}
       \begin{enumerate}
-        \item \textbf{Gram Matrix Extraction:} Capture style correlations from intermediate visual layers (ResNet-50 blocks)
-        \item \textbf{Style Feature Projection:} Reduce dimensionality of Gram matrix representations
-        \item \textbf{Fusion Adapter:} Integrate semantic (CLIP) and style features through bottleneck architecture
+ \item \textbf{Gram Matrix Extraction:} Extract style correlations from ResNet-50 intermediate layers
+        \begin{equation*}
+          G_{i,j}^{(l)} = \frac{1}{H \times W} \sum_{k=1}^{H \times W} F_{i,k}^{(l)} \cdot F_{j,k}^{(l)}
+        \end{equation*}
+        \footnotesize{
+        \begin{itemize}
+          \item $F^{(l)} \in \R^{C \times H \times W}$: feature maps from layer $l$ (reshaped to $C \times HW$)
+          \item $G_{i,j}^{(l)}$: correlation between channels $i$ and $j$ (captures style patterns)
+          \item Normalization by $H \times W$ ensures scale-invariance across image sizes
+        \end{itemize}
+        }
+        \item \textbf{Style Projection:} Compress high-dimensional Gram matrices into compact representations
+        \begin{equation*}
+          \mathbf{s} = \text{MLP}(\text{vec}(\text{triu}(G^{(l)}))) \in \R^{d_s}
+        \end{equation*}
+        
+        \item \textbf{Adaptive Fusion:} Integrate semantic and style features via bottleneck adapter
+        \begin{equation*}
+          \mathbf{f}_{\text{fused}} = \alpha \cdot \text{Adapter}([\Fv; \mathbf{s}]) + \Fv
+        \end{equation*}
       \end{enumerate}
   \end{itemize}
 \end{frame}
