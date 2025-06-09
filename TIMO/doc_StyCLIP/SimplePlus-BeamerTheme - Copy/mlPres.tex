@@ -133,14 +133,14 @@
           \item Normalization by $H \times W$ ensures scale-invariance across image sizes
         \end{itemize}
         }
-        \item \textbf{Style Projection:} Compress high-dimensional Gram matrices into compact representations
+                \item \textbf{Style Projection:} Compress high-dimensional Gram matrices into compact representations
         \begin{equation*}
-          \mathbf{s} = \text{MLP}(\text{vec}(\text{triu}(G^{(l)}))) \in \R^{d_s}
+          \mathbf{s} = \text{MLP}(\text{concat}[\text{vec}(\text{triu}(G^{(2)})), \text{vec}(\text{triu}(G^{(3)}))])
         \end{equation*}
         
         \item \textbf{Adaptive Fusion:} Integrate semantic and style features via bottleneck adapter
         \begin{equation*}
-          \mathbf{f}_{\text{fused}} = \alpha \cdot \text{Adapter}([\Fv; \mathbf{s}]) + \Fv
+          \mathbf{f}_{\text{fused}} =\text{Adapter}([\Fv; \mathbf{s}])
         \end{equation*}
       \end{enumerate}
   \end{itemize}
