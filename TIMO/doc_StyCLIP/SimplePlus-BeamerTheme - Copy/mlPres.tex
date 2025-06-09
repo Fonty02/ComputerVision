@@ -119,7 +119,6 @@
 \begin{frame}
   \frametitle{StyCLIP: Key Components}
   \begin{itemize}
-    \item \textbf{Core Idea:} Extend CLIP with explicit style-aware features via Gram matrices to capture artist-specific patterns
     \item \textbf{Three-Stage Architecture:}
       \begin{enumerate}
  \item \textbf{Gram Matrix Extraction:} Extract style correlations from ResNet-50 intermediate layers
@@ -143,6 +142,13 @@
           \mathbf{f}_{\text{fused}} =\text{Adapter}([\Fv; \mathbf{s}])
         \end{equation*}
       \end{enumerate}
+      \footnotesize{
+        \begin{itemize}
+          \item $[\Fv; \mathbf{s}]$: concatenation of CLIP features (512d) and style features (256d)
+          \item $\text{Adapter}$: bottleneck MLP ($768 \rightarrow 64\text{-}256 \rightarrow 512$ dimensions)
+          \item $\alpha \cdot (\cdot) + \Fv$: residual connection preserves original CLIP semantics
+        \end{itemize}
+        }
   \end{itemize}
 \end{frame}
 
