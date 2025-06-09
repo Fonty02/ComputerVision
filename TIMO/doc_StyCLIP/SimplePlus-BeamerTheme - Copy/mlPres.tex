@@ -145,8 +145,7 @@
       \footnotesize{
         \begin{itemize}
           \item $[\Fv; \mathbf{s}]$: concatenation of CLIP features (512d) and style features (256d)
-          \item $\text{Adapter}$: bottleneck MLP ($768 \rightarrow 64\text{-}256 \rightarrow 512$ dimensions)
-          \item $\alpha \cdot (\cdot) + \Fv$: residual connection preserves original CLIP semantics
+          \item $\text{Adapter}$: bottleneck MLP ($768 \rightarrow (hyperParamDim) \rightarrow 512$ dimensions)
         \end{itemize}
         }
   \end{itemize}

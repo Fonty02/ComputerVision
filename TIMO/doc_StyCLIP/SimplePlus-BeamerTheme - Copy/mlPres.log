@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.29)  9 JUN 2025 12:25
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.29)  9 JUN 2025 12:27
  system commands enabled.
  file:line:error style messages enabled.
 **"c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/SimplePlus-B
@@ -1382,36 +1382,36 @@ Overfull \vbox (12.18195pt too high) detected at line 117
 
 <../img/StyCLIP.png>]
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 153.
+(Font)              <10> on input line 152.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 153.
+(Font)              <7> on input line 152.
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 153.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 152.
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <7> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 153.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 152.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 153.
+(Font)              <9> on input line 152.
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <9> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 153.
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 152.
 LaTeX Font Info:    Font shape `TU/lmss/b/n' in size <9> not available
-(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 153.
+(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 152.
 LaTeX Font Info:    Font shape `TU/lmss/b/n' in size <6> not available
-(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 153.
+(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 152.
 LaTeX Font Info:    Font shape `TU/lmss/b/n' in size <5> not available
-(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 153.
+(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 152.
 LaTeX Font Info:    Font shape `TU/lmss/b/n' in size <10> not available
-(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 153.
+(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 152.
 LaTeX Font Info:    Font shape `TU/lmss/b/n' in size <7> not available
-(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 153.
+(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 152.
 
 
 [6
 
 ]
 LaTeX Font Info:    Font shape `TU/lmss/b/n' in size <10.95> not available
-(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 180.
+(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 179.
 LaTeX Font Info:    Font shape `TU/lmss/b/n' in size <8> not available
-(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 180.
+(Font)              Font shape `TU/lmss/bx/n' tried instead on input line 179.
 
 
 [7
@@ -1425,7 +1425,7 @@ LaTeX Font Info:    Font shape `TU/lmss/b/n' in size <8> not available
 File: ../img/episode_example.drawio.png Graphic file (type png)
 <use ../img/episode_example.drawio.png>
 Package luatex.def Info: ../img/episode_example.drawio.png  used on input line 
-215.
+214.
 (luatex.def)             Requested size: 329.13531pt x 139.57625pt.
 
 
@@ -1499,7 +1499,7 @@ Here is how much of LuaTeX's memory you used:
  947 words of node memory still in use:
    12 hlist, 6 vlist, 2 rule, 13 glue, 5 kern, 7 penalty, 7 glyph, 53 attribute,
  65 glue_spec, 28 attribute_list, 4 write, 4 pdf_colorstack nodes
-   avail lists: 2:1782,3:591,4:274,5:319,6:58,7:4731,8:56,9:550,10:29,11:330
+   avail lists: 2:1782,3:591,4:274,5:310,6:58,7:4731,8:56,9:550,10:29,11:330
  57373 multiletter control sequences out of 65536+600000
  87 fonts using 48373207 bytes
  128i,11n,116p,493b,933s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -1533,7 +1533,7 @@ KTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/fonta/AppData/Local/Programs/MiKT
 eX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX
 /fonts/type1/public/lm/lmsy9.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/f
 onts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on mlPres.pdf (19 pages, 3554949 bytes).
+Output written on mlPres.pdf (19 pages, 3554704 bytes).
 
 PDF statistics: 328 PDF objects out of 1000 (max. 8388607)
  58 named destinations out of 1000 (max. 131072)
