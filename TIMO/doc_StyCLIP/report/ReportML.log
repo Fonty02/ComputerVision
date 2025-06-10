@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.29)  9 JUN 2025 10:18
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.29)  10 JUN 2025 11:43
  system commands enabled.
  file:line:error style messages enabled.
 **c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/Report
@@ -906,14 +906,10 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 53.
 (C:/Users/fonta/AppData/Local/Programs/MiKTeX/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 93.
-<../img/StyCLIP.png, id=132, 5292.77374pt x 2737.22626pt>
-File: ../img/StyCLIP.png Graphic file (type png)
-<use ../img/StyCLIP.png>
-Package luatex.def Info: ../img/StyCLIP.png  used on input line 125.
-(luatex.def)             Requested size: 309.55737pt x 100.78293pt.
+(Font)              <8> on input line 74.
+
+
 
 
 [1
@@ -922,20 +918,26 @@ ftex.map}
 
 
 ]
+<../img/StyCLIP.png, id=163, 5292.77374pt x 2737.22626pt>
+File: ../img/StyCLIP.png Graphic file (type png)
+<use ../img/StyCLIP.png>
+Package luatex.def Info: ../img/StyCLIP.png  used on input line 145.
+(luatex.def)             Requested size: 309.55737pt x 100.78293pt.
 
-<../img/episode_example.drawio.png, id=160, 3694.80376pt x 1566.85374pt>
+
+<../img/episode_example.drawio.png, id=166, 3694.80376pt x 1566.85374pt>
 File: ../img/episode_example.drawio.png Graphic file (type png)
 <use ../img/episode_example.drawio.png>
 Package luatex.def Info: ../img/episode_example.drawio.png  used on input line 
-183.
+205.
 (luatex.def)             Requested size: 309.57211pt x 100.7732pt.
 
-Underfull \hbox (badness 2772) in paragraph at lines 191--192
+Underfull \hbox (badness 2772) in paragraph at lines 213--214
 []\T1/lmr/bx/n/8 N-way Clas-si-fi-ca-tion: \T1/lmr/m/n/8 Each episode in-volves clas-si-fy-ing
  []
 
 
-Underfull \hbox (badness 1460) in paragraph at lines 204--205
+Underfull \hbox (badness 1460) in paragraph at lines 226--227
 []\T1/lmr/bx/n/8 Model Ini-tial-iza-tion Ef-fects: \T1/lmr/m/n/8 Stochas-tic com
 -po-nents in
  []
@@ -943,1093 +945,34 @@ Underfull \hbox (badness 1460) in paragraph at lines 204--205
 
 
 [2
+Missing character: There is no → (U+2192) in font ec-lmr8!
+Missing character: There is no → (U+2192) in font ec-lmr8!
 Missing character: There is no ∈ (U+2208) in font ec-lmr8!
-<../img/StyCLIP.png>]
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:266: Missing $ inserted.
-<inserted text> 
-                $
-l.266 APE & StyCLIP_
-                    FSL1 & 2.05 & 0.93 & 2.05 & 0.87 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:266: Missing $ inserted.
-<inserted text> 
-                $
-l.266 APE & StyCLIP_FSL1 &
-                           2.05 & 0.93 & 2.05 & 0.87 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:267: Missing $ inserted.
-<inserted text> 
-                $
-l.267 APE & StyCLIP_
-                    FSL4 & 2.48 & 0.81 & 2.44 & 0.84 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:267: Missing $ inserted.
-<inserted text> 
-                $
-l.267 APE & StyCLIP_FSL4 &
-                           2.48 & 0.81 & 2.44 & 0.84 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:269: Missing $ inserted.
-<inserted text> 
-                $
-l.269 GDA\_CLIP & StyCLIP_
-                          FSL1 & 13.49 & 13.88 & 13.23 & 11.98 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:269: Missing $ inserted.
-<inserted text> 
-                $
-l.269 GDA\_CLIP & StyCLIP_FSL1 &
-                                 13.49 & 13.88 & 13.23 & 11.98 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:270: Missing $ inserted.
-<inserted text> 
-                $
-l.270 GDA\_CLIP & StyCLIP_
-                          FSL4 & 16.33 & 17.48 & 16.08 & 14.62 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:270: Missing $ inserted.
-<inserted text> 
-                $
-l.270 GDA\_CLIP & StyCLIP_FSL4 &
-                                 16.33 & 17.48 & 16.08 & 14.62 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:272: Missing $ inserted.
-<inserted text> 
-                $
-l.272 TIMO & StyCLIP_
-                     FSL1 & 6.97 & 6.88 & 6.81 & 6.13 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:272: Missing $ inserted.
-<inserted text> 
-                $
-l.272 TIMO & StyCLIP_FSL1 &
-                            6.97 & 6.88 & 6.81 & 6.13 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:273: Missing $ inserted.
-<inserted text> 
-                $
-l.273 TIMO & StyCLIP_
-                     FSL4 & 7.37 & 7.57 & 7.17 & 6.69 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:273: Missing $ inserted.
-<inserted text> 
-                $
-l.273 TIMO & StyCLIP_FSL4 &
-                            7.37 & 7.57 & 7.17 & 6.69 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:275: Missing $ inserted.
-<inserted text> 
-                $
-l.275 TIMO\_S & StyCLIP_
-                        FSL1 & 7.28 & 7.27 & 7.11 & 6.38 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:275: Missing $ inserted.
-<inserted text> 
-                $
-l.275 TIMO\_S & StyCLIP_FSL1 &
-                               7.28 & 7.27 & 7.11 & 6.38 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:276: Missing $ inserted.
-<inserted text> 
-                $
-l.276 TIMO\_S & StyCLIP_
-                        FSL4 & 7.31 & 7.56 & 7.13 & 6.63 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:276: Missing $ inserted.
-<inserted text> 
-                $
-l.276 TIMO\_S & StyCLIP_FSL4 &
-                               7.31 & 7.56 & 7.13 & 6.63 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:278: Missing $ inserted.
-<inserted text> 
-                $
-l.278 Tip\_Adapter & StyCLIP_
-                             FSL1 & 1.31 & 0.03 & 1.34 & 0.06 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:278: Missing $ inserted.
-<inserted text> 
-                $
-l.278 Tip\_Adapter & StyCLIP_FSL1 &
-                                    1.31 & 0.03 & 1.34 & 0.06 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:279: Missing $ inserted.
-<inserted text> 
-                $
-l.279 Tip\_Adapter & StyCLIP_
-                             FSL4 & 1.13 & 0.01 & 1.02 & 0.03 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:279: Missing $ inserted.
-<inserted text> 
-                $
-l.279 Tip\_Adapter & StyCLIP_FSL4 &
-                                    1.13 & 0.01 & 1.02 & 0.03 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:296: Missing $ inserted.
-<inserted text> 
-                $
-l.296 APE & StyCLIP_
-                    FSL1 & 3.55 & 1.51 & 3.51 & 1.51 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:296: Missing $ inserted.
-<inserted text> 
-                $
-l.296 APE & StyCLIP_FSL1 &
-                           3.55 & 1.51 & 3.51 & 1.51 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:297: Missing $ inserted.
-<inserted text> 
-                $
-l.297 APE & StyCLIP_
-                    FSL4 & 3.39 & 2.03 & 3.38 & 1.71 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:297: Missing $ inserted.
-<inserted text> 
-                $
-l.297 APE & StyCLIP_FSL4 &
-                           3.39 & 2.03 & 3.38 & 1.71 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:299: Missing $ inserted.
-<inserted text> 
-                $
-l.299 GDA\_CLIP & StyCLIP_
-                          FSL1 & 20.95 & 21.79 & 20.59 & 19.40 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:299: Missing $ inserted.
-<inserted text> 
-                $
-l.299 GDA\_CLIP & StyCLIP_FSL1 &
-                                 20.95 & 21.79 & 20.59 & 19.40 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:300: Missing $ inserted.
-<inserted text> 
-                $
-l.300 GDA\_CLIP & StyCLIP_
-                          FSL4 & 25.96 & 27.35 & 25.48 & 24.22 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:300: Missing $ inserted.
-<inserted text> 
-                $
-l.300 GDA\_CLIP & StyCLIP_FSL4 &
-                                 25.96 & 27.35 & 25.48 & 24.22 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:302: Missing $ inserted.
-<inserted text> 
-                $
-l.302 TIMO & StyCLIP_
-                     FSL1 & 12.14 & 11.82 & 11.87 & 10.78 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:302: Missing $ inserted.
-<inserted text> 
-                $
-l.302 TIMO & StyCLIP_FSL1 &
-                            12.14 & 11.82 & 11.87 & 10.78 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:303: Missing $ inserted.
-<inserted text> 
-                $
-l.303 TIMO & StyCLIP_
-                     FSL4 & 13.55 & 13.67 & 13.21 & 12.16 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:303: Missing $ inserted.
-<inserted text> 
-                $
-l.303 TIMO & StyCLIP_FSL4 &
-                            13.55 & 13.67 & 13.21 & 12.16 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:305: Missing $ inserted.
-<inserted text> 
-                $
-l.305 TIMO\_S & StyCLIP_
-                        FSL1 & 13.76 & 13.84 & 13.45 & 12.44 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:305: Missing $ inserted.
-<inserted text> 
-                $
-l.305 TIMO\_S & StyCLIP_FSL1 &
-                               13.76 & 13.84 & 13.45 & 12.44 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:306: Missing $ inserted.
-<inserted text> 
-                $
-l.306 TIMO\_S & StyCLIP_
-                        FSL4 & 15.38 & 15.69 & 15.02 & 13.92 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:306: Missing $ inserted.
-<inserted text> 
-                $
-l.306 TIMO\_S & StyCLIP_FSL4 &
-                               15.38 & 15.69 & 15.02 & 13.92 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:308: Missing $ inserted.
-<inserted text> 
-                $
-l.308 Tip\_Adapter & StyCLIP_
-                             FSL1 & 1.19 & 0.02 & 1.19 & 0.04 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:308: Missing $ inserted.
-<inserted text> 
-                $
-l.308 Tip\_Adapter & StyCLIP_FSL1 &
-                                    1.19 & 0.02 & 1.19 & 0.04 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:309: Missing $ inserted.
-<inserted text> 
-                $
-l.309 Tip\_Adapter & StyCLIP_
-                             FSL4 & 1.19 & 0.02 & 1.08 & 0.03 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:309: Missing $ inserted.
-<inserted text> 
-                $
-l.309 Tip\_Adapter & StyCLIP_FSL4 &
-                                    1.19 & 0.02 & 1.08 & 0.03 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:326: Missing $ inserted.
-<inserted text> 
-                $
-l.326 APE & StyCLIP_
-                    FSL1 & 4.62 & 2.09 & 4.42 & 2.17 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:326: Missing $ inserted.
-<inserted text> 
-                $
-l.326 APE & StyCLIP_FSL1 &
-                           4.62 & 2.09 & 4.42 & 2.17 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:327: Missing $ inserted.
-<inserted text> 
-                $
-l.327 APE & StyCLIP_
-                    FSL4 & 5.29 & 2.75 & 5.12 & 2.62 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:327: Missing $ inserted.
-<inserted text> 
-                $
-l.327 APE & StyCLIP_FSL4 &
-                           5.29 & 2.75 & 5.12 & 2.62 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:329: Missing $ inserted.
-<inserted text> 
-                $
-l.329 GDA\_CLIP & StyCLIP_
-                          FSL1 & 27.16 & 28.56 & 26.84 & 25.48 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:329: Missing $ inserted.
-<inserted text> 
-                $
-l.329 GDA\_CLIP & StyCLIP_FSL1 &
-                                 27.16 & 28.56 & 26.84 & 25.48 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:330: Missing $ inserted.
-<inserted text> 
-                $
-l.330 GDA\_CLIP & StyCLIP_
-                          FSL4 & 35.17 & 38.35 & 34.79 & 33.74 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:330: Missing $ inserted.
-<inserted text> 
-                $
-l.330 GDA\_CLIP & StyCLIP_FSL4 &
-                                 35.17 & 38.35 & 34.79 & 33.74 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:332: Missing $ inserted.
-<inserted text> 
-                $
-l.332 TIMO & StyCLIP_
-                     FSL1 & 21.77 & 21.38 & 21.35 & 19.75 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:332: Missing $ inserted.
-<inserted text> 
-                $
-l.332 TIMO & StyCLIP_FSL1 &
-                            21.77 & 21.38 & 21.35 & 19.75 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:333: Missing $ inserted.
-<inserted text> 
-                $
-l.333 TIMO & StyCLIP_
-                     FSL4 & 23.43 & 25.00 & 23.06 & 22.13 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:333: Missing $ inserted.
-<inserted text> 
-                $
-l.333 TIMO & StyCLIP_FSL4 &
-                            23.43 & 25.00 & 23.06 & 22.13 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:335: Missing $ inserted.
-<inserted text> 
-                $
-l.335 TIMO\_S & StyCLIP_
-                        FSL1 & 23.24 & 23.04 & 22.81 & 21.19 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:335: Missing $ inserted.
-<inserted text> 
-                $
-l.335 TIMO\_S & StyCLIP_FSL1 &
-                               23.24 & 23.04 & 22.81 & 21.19 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:336: Missing $ inserted.
-<inserted text> 
-                $
-l.336 TIMO\_S & StyCLIP_
-                        FSL4 & 26.36 & 28.69 & 25.97 & 25.27 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:336: Missing $ inserted.
-<inserted text> 
-                $
-l.336 TIMO\_S & StyCLIP_FSL4 &
-                               26.36 & 28.69 & 25.97 & 25.27 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:338: Missing $ inserted.
-<inserted text> 
-                $
-l.338 Tip\_Adapter & StyCLIP_
-                             FSL1 & 1.38 & 0.04 & 1.40 & 0.08 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:338: Missing $ inserted.
-<inserted text> 
-                $
-l.338 Tip\_Adapter & StyCLIP_FSL1 &
-                                    1.38 & 0.04 & 1.40 & 0.08 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:339: Missing $ inserted.
-<inserted text> 
-                $
-l.339 Tip\_Adapter & StyCLIP_
-                             FSL4 & 1.28 & 0.02 & 1.19 & 0.04 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:339: Missing $ inserted.
-<inserted text> 
-                $
-l.339 Tip\_Adapter & StyCLIP_FSL4 &
-                                    1.28 & 0.02 & 1.19 & 0.04 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:356: Missing $ inserted.
-<inserted text> 
-                $
-l.356 APE & StyCLIP_
-                    FSL1 & 5.35 & 2.57 & 5.27 & 2.57 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:356: Missing $ inserted.
-<inserted text> 
-                $
-l.356 APE & StyCLIP_FSL1 &
-                           5.35 & 2.57 & 5.27 & 2.57 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:357: Missing $ inserted.
-<inserted text> 
-                $
-l.357 APE & StyCLIP_
-                    FSL4 & 7.52 & 4.71 & 7.35 & 4.42 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:357: Missing $ inserted.
-<inserted text> 
-                $
-l.357 APE & StyCLIP_FSL4 &
-                           7.52 & 4.71 & 7.35 & 4.42 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:359: Missing $ inserted.
-<inserted text> 
-                $
-l.359 GDA\_CLIP & StyCLIP_
-                          FSL1 & 34.25 & 35.76 & 33.93 & 32.55 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:359: Missing $ inserted.
-<inserted text> 
-                $
-l.359 GDA\_CLIP & StyCLIP_FSL1 &
-                                 34.25 & 35.76 & 33.93 & 32.55 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:360: Missing $ inserted.
-<inserted text> 
-                $
-l.360 GDA\_CLIP & StyCLIP_
-                          FSL4 & 46.97 & 50.15 & 46.42 & 45.55 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:360: Missing $ inserted.
-<inserted text> 
-                $
-l.360 GDA\_CLIP & StyCLIP_FSL4 &
-                                 46.97 & 50.15 & 46.42 & 45.55 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:362: Missing $ inserted.
-<inserted text> 
-                $
-l.362 TIMO & StyCLIP_
-                     FSL1 & 30.64 & 30.61 & 30.49 & 28.71 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:362: Missing $ inserted.
-<inserted text> 
-                $
-l.362 TIMO & StyCLIP_FSL1 &
-                            30.64 & 30.61 & 30.49 & 28.71 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:363: Missing $ inserted.
-<inserted text> 
-                $
-l.363 TIMO & StyCLIP_
-                     FSL4 & 38.38 & 40.46 & 37.90 & 36.52 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:363: Missing $ inserted.
-<inserted text> 
-                $
-l.363 TIMO & StyCLIP_FSL4 &
-                            38.38 & 40.46 & 37.90 & 36.52 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:365: Missing $ inserted.
-<inserted text> 
-                $
-l.365 TIMO\_S & StyCLIP_
-                        FSL1 & 32.17 & 33.14 & 31.92 & 30.49 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:365: Missing $ inserted.
-<inserted text> 
-                $
-l.365 TIMO\_S & StyCLIP_FSL1 &
-                               32.17 & 33.14 & 31.92 & 30.49 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:366: Missing $ inserted.
-<inserted text> 
-                $
-l.366 TIMO\_S & StyCLIP_
-                        FSL4 & 40.89 & 43.57 & 40.41 & 39.13 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:366: Missing $ inserted.
-<inserted text> 
-                $
-l.366 TIMO\_S & StyCLIP_FSL4 &
-                               40.89 & 43.57 & 40.41 & 39.13 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:368: Missing $ inserted.
-<inserted text> 
-                $
-l.368 Tip\_Adapter & StyCLIP_
-                             FSL1 & 1.71 & 0.21 & 1.72 & 0.24 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:368: Missing $ inserted.
-<inserted text> 
-                $
-l.368 Tip\_Adapter & StyCLIP_FSL1 &
-                                    1.71 & 0.21 & 1.72 & 0.24 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:369: Missing $ inserted.
-<inserted text> 
-                $
-l.369 Tip\_Adapter & StyCLIP_
-                             FSL4 & 1.38 & 0.03 & 1.28 & 0.06 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:369: Missing $ inserted.
-<inserted text> 
-                $
-l.369 Tip\_Adapter & StyCLIP_FSL4 &
-                                    1.38 & 0.03 & 1.28 & 0.06 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:385: Missing $ inserted.
-<inserted text> 
-                $
-l.385 APE & StyCLIP_
-                    FSL1 & 6.73 & 3.35 & 6.55 & 3.37 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:385: Missing $ inserted.
-<inserted text> 
-                $
-l.385 APE & StyCLIP_FSL1 &
-                           6.73 & 3.35 & 6.55 & 3.37 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:386: Missing $ inserted.
-<inserted text> 
-                $
-l.386 APE & StyCLIP_
-                    FSL4 & 7.98 & 5.63 & 7.87 & 5.13 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:386: Missing $ inserted.
-<inserted text> 
-                $
-l.386 APE & StyCLIP_FSL4 &
-                           7.98 & 5.63 & 7.87 & 5.13 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:388: Missing $ inserted.
-<inserted text> 
-                $
-l.388 GDA\_CLIP & StyCLIP_
-                          FSL1 & 41.19 & 42.45 & 41.00 & 39.13 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:388: Missing $ inserted.
-<inserted text> 
-                $
-l.388 GDA\_CLIP & StyCLIP_FSL1 &
-                                 41.19 & 42.45 & 41.00 & 39.13 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:389: Missing $ inserted.
-<inserted text> 
-                $
-l.389 GDA\_CLIP & StyCLIP_
-                          FSL4 & 53.36 & 55.25 & 52.86 & 51.64 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:389: Missing $ inserted.
-<inserted text> 
-                $
-l.389 GDA\_CLIP & StyCLIP_FSL4 &
-                                 53.36 & 55.25 & 52.86 & 51.64 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:391: Missing $ inserted.
-<inserted text> 
-                $
-l.391 TIMO & StyCLIP_
-                     FSL1 & 37.00 & 37.83 & 36.87 & 34.90 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:391: Missing $ inserted.
-<inserted text> 
-                $
-l.391 TIMO & StyCLIP_FSL1 &
-                            37.00 & 37.83 & 36.87 & 34.90 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:392: Missing $ inserted.
-<inserted text> 
-                $
-l.392 TIMO & StyCLIP_
-                     FSL4 & 43.27 & 45.16 & 42.80 & 41.36 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:392: Missing $ inserted.
-<inserted text> 
-                $
-l.392 TIMO & StyCLIP_FSL4 &
-                            43.27 & 45.16 & 42.80 & 41.36 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:394: Missing $ inserted.
-<inserted text> 
-                $
-l.394 TIMO\_S & StyCLIP_
-                        FSL1 & 39.20 & 40.52 & 39.01 & 37.22 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:394: Missing $ inserted.
-<inserted text> 
-                $
-l.394 TIMO\_S & StyCLIP_FSL1 &
-                               39.20 & 40.52 & 39.01 & 37.22 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:395: Missing $ inserted.
-<inserted text> 
-                $
-l.395 TIMO\_S & StyCLIP_
-                        FSL4 & 48.75 & 50.58 & 48.27 & 46.90 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:395: Missing $ inserted.
-<inserted text> 
-                $
-l.395 TIMO\_S & StyCLIP_FSL4 &
-                               48.75 & 50.58 & 48.27 & 46.90 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:397: Missing $ inserted.
-<inserted text> 
-                $
-l.397 Tip\_Adapter & StyCLIP_
-                             FSL1 & 2.63 & 0.70 & 2.60 & 0.74 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:397: Missing $ inserted.
-<inserted text> 
-                $
-l.397 Tip\_Adapter & StyCLIP_FSL1 &
-                                    2.63 & 0.70 & 2.60 & 0.74 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:398: Missing $ inserted.
-<inserted text> 
-                $
-l.398 Tip\_Adapter & StyCLIP_
-                             FSL4 & 1.77 & 0.07 & 1.69 & 0.13 \\
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportML.
-tex:398: Missing $ inserted.
-<inserted text> 
-                $
-l.398 Tip\_Adapter & StyCLIP_FSL4 &
-                                    1.77 & 0.07 & 1.69 & 0.13 \\
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-Overfull \hbox (264.04074pt too wide) in paragraph at lines 413--436
- [][] 
- []
+]
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-[3<../img/episode_example.drawio.png>]
-Overfull \hbox (264.0524pt too wide) in paragraph at lines 448--471
- [][] 
- []
-
-
-Overfull \hbox (264.0524pt too wide) in paragraph at lines 483--506
- [][] 
- []
-
-
+[3<../img/StyCLIP.png><../img/episode_example.drawio.png>]
 
 
 
 [4
 
 ]
-Overfull \hbox (264.0524pt too wide) in paragraph at lines 519--542
+Overfull \hbox (264.04074pt too wide) in paragraph at lines 436--459
  [][] 
  []
 
 
-Overfull \hbox (264.0524pt too wide) in paragraph at lines 554--577
+Overfull \hbox (264.0524pt too wide) in paragraph at lines 471--494
+ [][] 
+ []
+
+
+Overfull \hbox (264.0524pt too wide) in paragraph at lines 506--529
  [][] 
  []
 
@@ -2038,6 +981,23 @@ Overfull \hbox (264.0524pt too wide) in paragraph at lines 554--577
 
 
 [5
+
+
+]
+Overfull \hbox (264.0524pt too wide) in paragraph at lines 542--565
+ [][] 
+ []
+
+
+Overfull \hbox (264.0524pt too wide) in paragraph at lines 577--600
+ [][] 
+ []
+
+
+
+
+
+[6
 
 
 Missing character: There is no — (U+2014) in font ec-lmr8!
@@ -2058,65 +1018,43 @@ Before submitting the final camera ready copy, remember to:
 
 
 
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
-[leftcolumn badness]: 1000000 on 62.56633pt
-[rightcolumn badness]: 1000000 on 62.56633pt
+[leftcolumn badness]: 1000000 on 17.56633pt
+[rightcolumn badness]: 1000000 on 17.56633pt
+[leftcolumn badness]: 1000000 on 17.56633pt
+[rightcolumn badness]: 1000000 on 17.56633pt
+[leftcolumn badness]: 1000000 on 17.56633pt
+[rightcolumn badness]: 1000000 on 17.56633pt
+[leftcolumn badness]: 1000000 on 17.56633pt
+[rightcolumn badness]: 1000000 on 17.56633pt
+[leftcolumn badness]: 1000000 on 17.56633pt
+[rightcolumn badness]: 1000000 on 17.56633pt
+[leftcolumn badness]: 1000000 on 17.56633pt
+[rightcolumn badness]: 1000000 on 17.56633pt
+[leftcolumn badness]: 1000000 on 17.56633pt
+[rightcolumn badness]: 1000000 on 17.56633pt
+[leftcolumn badness]: 1000000 on 17.56633pt
+[rightcolumn badness]: 1000000 on 17.56633pt
+[leftcolumn badness]: 1000000 on 17.56633pt
+[rightcolumn badness]: 1000000 on 17.56633pt
+[leftcolumn badness]: 1000000 on 17.56633pt
+[rightcolumn badness]: 1000000 on 17.56633pt
+[leftcolumn badness]: 1000000 on 17.56633pt
+[rightcolumn badness]: 1000000 on 17.56633pt
+[leftcolumn badness]: 1000000 on 17.56633pt
+[rightcolumn badness]: 1000000 on 17.56633pt
 - LAST -
-Extra skip:26.98917pt
-Left:298.43367pt/1.5555pt
-Right:273.0pt/0.0pt
-Split: 307.21683pt
-Output:307.21683pt
+Extra skip:0.0pt
+Left:298.43367pt/2.0pt
+Right:318.0pt/0.0pt
+Split: 318.71683pt
+Output:318.71683pt
 Pageshrink: 0.0pt
 Pagestretch: 0.0pt
 @colht:672.0pt
-FLUSHEND [output]: 307.21683pt
-FLUSHEND [leftcolumn badness]: 2
-FUSHEND [rightcolumn badness]: 10000
-[6
+FLUSHEND [output]: 318.71683pt
+FLUSHEND [leftcolumn badness]: 25
+FUSHEND [rightcolumn badness]: 1
+[7
 
 ] (./ReportML.aux)
  ***********
@@ -2132,39 +1070,45 @@ Package rerunfilecheck Info: File `ReportML.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 21402 strings out of 475506
- 305233,953878 words of node,token memory allocated
- 585 words of node memory still in use:
-   6 hlist, 2 vlist, 2 rule, 3 glue, 4 kern, 1 penalty, 1 glyph, 20 attribute, 5
-9 glue_spec, 11 attribute_list, 1 write, 3 pdf_action nodes
-   avail lists: 2:11090,3:713,4:116,5:1566,6:113,7:22487,8:101,9:3945,10:19,11:1
-960
- 43989 multiletter control sequences out of 65536+600000
+ 21405 strings out of 475506
+ 244177,953878 words of node,token memory allocated
+ 597 words of node memory still in use:
+   6 hlist, 2 vlist, 2 rule, 3 glue, 4 kern, 1 penalty, 1 glyph, 24 attribute, 5
+9 glue_spec, 13 attribute_list, 1 write, 3 pdf_action nodes
+   avail lists: 2:6185,3:725,4:120,5:1278,6:112,7:22517,8:101,9:2225,10:20,11:21
+90
+ 43991 multiletter control sequences out of 65536+600000
  89 fonts using 6938151 bytes
  72i,11n,75p,950b,1057s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {C:/Users/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/U
 sers/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/
-fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/f
-onta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}<C:/Users/fo
-nta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx5.pfb><C:/Users/font
-a/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/fonta/
-AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx9.pfb><C:/Users/fonta/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/fonta/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.pfb><C:/Users/fonta/Ap
-pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi5.pfb><C:/Users/fonta/AppD
-ata/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/fonta/AppDat
-a/Local/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/fonta/AppData/
-Local/Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb><C:/Users/fonta/AppData/Lo
-cal/Programs/MiKTeX/fonts/type1/public/lm/lmr5.pfb><C:/Users/fonta/AppData/Local
-/Programs/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/fonta/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/Users/fonta/AppData/Local/Progr
-ams/MiKTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/fonta/AppData/Local/Programs
-/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/fonta/AppData/Local/Programs/
-MiKTeX/fonts/type1/public/lm/lmri8.pfb><C:/Users/fonta/AppData/Local/Programs/Mi
-KTeX/fonts/type1/public/lm/lmsy6.pfb>
-Output written on ReportML.pdf (6 pages, 3711940 bytes).
+fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/f
+onta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/fo
+nta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}<C:/Users/fon
+ta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx5.pfb><C:/Users/fonta
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx8.pfb><C:/Users/fonta/A
+ppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx9.pfb><C:/Users/fonta/App
+Data/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbxi10.pfb><C:/Users/fonta/App
+Data/Local/Programs/MiKTeX/fonts/type1/public/lm/lmcsc10.pfb><C:/Users/fonta/App
+Data/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><C:/Users/fonta/AppD
+ata/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi5.pfb><C:/Users/fonta/AppDat
+a/Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi6.pfb><C:/Users/fonta/AppData/
+Local/Programs/MiKTeX/fonts/type1/public/lm/lmmi8.pfb><C:/Users/fonta/AppData/Lo
+cal/Programs/MiKTeX/fonts/type1/public/lm/lmr10.pfb><C:/Users/fonta/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/public/lm/lmr12.pfb><C:/Users/fonta/AppData/Local/
+Programs/MiKTeX/fonts/type1/public/lm/lmr17.pfb><C:/Users/fonta/AppData/Local/Pr
+ograms/MiKTeX/fonts/type1/public/lm/lmr5.pfb><C:/Users/fonta/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/lm/lmr6.pfb><C:/Users/fonta/AppData/Local/Programs
+/MiKTeX/fonts/type1/public/lm/lmr7.pfb><C:/Users/fonta/AppData/Local/Programs/Mi
+KTeX/fonts/type1/public/lm/lmr8.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTe
+X/fonts/type1/public/lm/lmri10.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX
+/fonts/type1/public/lm/lmri8.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/f
+onts/type1/public/lm/lmsy6.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/fon
+ts/type1/public/lm/lmsy8.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/fonts
+/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on ReportML.pdf (7 pages, 3735990 bytes).
 
-PDF statistics: 272 PDF objects out of 1000 (max. 8388607)
- 58 named destinations out of 1000 (max. 131072)
+PDF statistics: 302 PDF objects out of 1000 (max. 8388607)
+ 59 named destinations out of 1000 (max. 131072)
  241 words of extra memory for PDF output out of 10000 (max. 100000000)
 

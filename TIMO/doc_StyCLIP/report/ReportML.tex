@@ -67,17 +67,37 @@ While CLIP-based few-shot methods excel at semantic understanding, they may over
 
 \subsection{Style Transfer}
 
-Style transfer techniques, pioneered by Gatys et al. \cite{StyleTransfer}, revealed that deep neural networks implicitly encode stylistic information in their intermediate layers. Their seminal work showed that the correlations between feature activations, captured through Gram matrices, effectively represent artistic style independently of content. While originally developed for style transfer applications, Gram matrix representations offer valuable insights into modeling artistic style for classification tasks.
+Style transfer techniques, pioneered by Gatys et al. \cite{StyleTransfer}, revealed that deep neural networks implicitly encode stylistic information in their intermediate layers. Their seminal work showed that the correlations between feature activations, captured through Gram matrices, effectively represent artistic style independently of content.
+
+The fundamental insight behind neural style transfer lies in the separation of content and style representations within convolutional neural networks. Content information, which describes the structural and semantic aspects of an image, is primarily captured by the spatial arrangement of feature activations in deeper layers. Style information, representing textural patterns, color distributions, and artistic characteristics, is encoded in the correlations between feature maps across different channels.
+
+Gram matrices serve as the mathematical foundation for capturing these style correlations. Given a feature map $F^l \in \mathbb{R}^{C_l \times H_l \times W_l}$ from layer $l$ with $C_l$ channels and spatial dimensions $H_l \times W_l$, the Gram matrix $G^l \in \mathbb{R}^{C_l \times C_l}$ is computed as:
+
+\[
+G^l_{i,j} = \sum_{k=1}^{H_l} \sum_{m=1}^{W_l} F^l_{i,k,m} \cdot F^l_{j,k,m}
+\]
+
+This computation measures the inner product between vectorized feature maps of channels $i$ and $j$, effectively capturing how often different visual patterns co-occur spatially. The resulting Gram matrix encodes second-order statistics that are invariant to spatial location but sensitive to the distribution and correlation of visual features.
+
+The normalization of Gram matrices is typically performed by dividing by the total number of spatial locations $(H_l \times W_l)$ to ensure scale invariance:
+
+\[
+G^l_{i,j} = \frac{1}{H_l \times W_l} \sum_{k=1}^{H_l} \sum_{m=1}^{W_l} F^l_{i,k,m} \cdot F^l_{j,k,m}
+\]
+
+This normalization allows style representations to be independent of image size and enables consistent style transfer across images of different resolutions.
+
+While originally developed for style transfer applications, Gram matrix representations offer valuable insights into modeling artistic style for classification tasks. The ability to capture style information independently of content makes them particularly suitable for artist identification, where stylistic consistency across diverse subjects is a key discriminative factor.
 
 \subsection{Few-Shot Learning and Meta-Learning}
 Few-shot learning (FSL) methodologies aim to develop models that can generalize from limited examples, making them particularly relevant for artistic domains where comprehensive datasets are rare. Meta-learning approaches Prototypical Networks \cite{ProtoNet}  fundamentally changed the FSL landscape by learning to learn from small samples.
 
 \subsection{Contrastive Language-Image Pretraining}
-The emergence of large-scale vision-language models like CLIP \cite{CLIP} has opened new possibilities for few-shot artistic recognition by leveraging textual descriptions of artistic styles. These models project images and text into a shared embedding space where semantically related concepts are positioned closer together. 
+The emergence of large-scale vision-language models like CLIP \cite{CLIP} has revolutionized few-shot artistic recognition by leveraging textual descriptions of artistic styles. CLIP learns multimodal representations by maximizing cosine similarity between correct image-text pairs while minimizing similarity for incorrect pairs through contrastive learning.
 
+The CLIP architecture consists of visual and text encoders that project inputs into a shared embedding space. The visual encoder can be Vision Transformer (ViT) or ResNet-based (like RN50), while the text encoder uses Transformer architecture with self-attention mechanisms. Both encoders map to a common D-dimensional space (typically 512 or 1024 dimensions), enabling zero-shot classification through embedding similarity comparison.
 
 Methods like TIP-Adapter \cite{TipAdapter} incorporate few-shot examples through a non-parametric cache model that complements zero-shot predictions. Other approaches like APE \cite{APE} enhance performance by selectively refining CLIP's features based on adaptive prior refinement, while GDA-CLIP \cite{GDA_CLIP} introduces a novel gradient-based adaptation technique to optimize decision boundaries. More sophisticated approaches like TIMO \cite{TIMO} leverage mutual guidance between text and image modalities to improve low-shot performance.
-
 
 Our work investigates integrating Gram matrix-based style representations into CLIP architectures to enhance few-shot artist classification performance.
 
@@ -126,9 +146,11 @@ Our StyCLIP architecture maintains the original CLIP backbone while introducing 
     \caption{StyCLIP Architecture Overview}
 \end{figure*}
 \begin{itemize}
-    \item \textbf{Gram Matrix Extraction Module}: Captures style-specific correlations from intermediate visual features
-    \item \textbf{Style Feature Projection Layers}: Dimensionality reduction for Gram matrix representations
-    \item \textbf{Fusion Adapter}: Integration of semantic and style features through a bottleneck architecture
+    \item \textbf{Gram Matrix Extraction Module}: Extracts style-specific correlations from intermediate visual features of the ResNet-50 backbone to capture stylistic patterns at different resolution scales. The resulting matrices represent channel correlations that encode texture information, brushstrokes, and artistic characteristics independent of semantic content.
+    
+    \item \textbf{Style Feature Projection Layers}: Perform dimensionality reduction of high-dimensional Gram matrix representations. They use a Multi-Layer Perceptron (MLP) to project concatenated Gram matrices (after extracting the upper triangular part for computational efficiency) from a high-dimensional space to a compact 256-dimensional space, preserving the most relevant stylistic information for artist classification.
+    
+    \item \textbf{Fusion Adapter}: Integrates CLIP semantic features and stylistic features through a bottleneck architecture. The module concatenates CLIP visual features (512 dimensions) with projected stylistic features (256 dimensions) and uses a bottleneck MLP adapter that reduces dimensionality (768 → bottleneck dimension hyperparameter → 512) to effectively fuse semantic and stylistic information into a unified representation optimized for few-shot artist classification.
 \end{itemize}
 
 \subsubsection{Training Strategy}
@@ -263,20 +285,20 @@ The following tables present detailed performance metrics for all tested model-b
 \toprule
 \textbf{Model} & \textbf{Backbone} & \textbf{ACC} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
 \midrule
-APE & StyCLIP_FSL1 & 2.05 & 0.93 & 2.05 & 0.87 \\
-APE & StyCLIP_FSL4 & 2.48 & 0.81 & 2.44 & 0.84 \\
+APE & StyCLIP\_FSL1 & 2.05 & 0.93 & 2.05 & 0.87 \\
+APE & StyCLIP\_FSL4 & 2.48 & 0.81 & 2.44 & 0.84 \\
 APE & RN50 & 44.31 & 44.42 & 43.94 & 39.76 \\
-GDA\_CLIP & StyCLIP_FSL1 & 13.49 & 13.88 & 13.23 & 11.98 \\
-GDA\_CLIP & StyCLIP_FSL4 & 16.33 & 17.48 & 16.08 & 14.62 \\
+GDA\_CLIP & StyCLIP\_FSL1 & 13.49 & 13.88 & 13.23 & 11.98 \\
+GDA\_CLIP & StyCLIP\_FSL4 & 16.33 & 17.48 & 16.08 & 14.62 \\
 GDA\_CLIP & RN50 & 41.41 & 38.86 & 40.76 & 35.33 \\
-TIMO & StyCLIP_FSL1 & 6.97 & 6.88 & 6.81 & 6.13 \\
-TIMO & StyCLIP_FSL4 & 7.37 & 7.57 & 7.17 & 6.69 \\
+TIMO & StyCLIP\_FSL1 & 6.97 & 6.88 & 6.81 & 6.13 \\
+TIMO & StyCLIP\_FSL4 & 7.37 & 7.57 & 7.17 & 6.69 \\
 TIMO & RN50 & 43.88 & 44.32 & 43.52 & 40.29 \\
-TIMO\_S & StyCLIP_FSL1 & 7.28 & 7.27 & 7.11 & 6.38 \\
-TIMO\_S & StyCLIP_FSL4 & 7.31 & 7.56 & 7.13 & 6.63 \\
+TIMO\_S & StyCLIP\_FSL1 & 7.28 & 7.27 & 7.11 & 6.38 \\
+TIMO\_S & StyCLIP\_FSL4 & 7.31 & 7.56 & 7.13 & 6.63 \\
 TIMO\_S & RN50 & \textbf{45.96} & \textbf{44.47} & \textbf{45.54} & \textbf{41.07} \\
-Tip\_Adapter & StyCLIP_FSL1 & 1.31 & 0.03 & 1.34 & 0.06 \\
-Tip\_Adapter & StyCLIP_FSL4 & 1.13 & 0.01 & 1.02 & 0.03 \\
+Tip\_Adapter & StyCLIP\_FSL1 & 1.31 & 0.03 & 1.34 & 0.06 \\
+Tip\_Adapter & StyCLIP\_FSL4 & 1.13 & 0.01 & 1.02 & 0.03 \\
 Tip\_Adapter & RN50 & 38.65 & 30.85 & 38.38 & 30.92 \\
 \bottomrule
 \end{tabular}
@@ -293,20 +315,20 @@ Tip\_Adapter & RN50 & 38.65 & 30.85 & 38.38 & 30.92 \\
 \toprule
 \textbf{Model} & \textbf{Backbone} & \textbf{ACC} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
 \midrule
-APE & StyCLIP_FSL1 & 3.55 & 1.51 & 3.51 & 1.51 \\
-APE & StyCLIP_FSL4 & 3.39 & 2.03 & 3.38 & 1.71 \\
+APE & StyCLIP\_FSL1 & 3.55 & 1.51 & 3.51 & 1.51 \\
+APE & StyCLIP\_FSL4 & 3.39 & 2.03 & 3.38 & 1.71 \\
 APE & RN50 & 47.09 & 47.77 & 46.65 & 42.37 \\
-GDA\_CLIP & StyCLIP_FSL1 & 20.95 & 21.79 & 20.59 & 19.40 \\
-GDA\_CLIP & StyCLIP_FSL4 & 25.96 & 27.35 & 25.48 & 24.22 \\
+GDA\_CLIP & StyCLIP\_FSL1 & 20.95 & 21.79 & 20.59 & 19.40 \\
+GDA\_CLIP & StyCLIP\_FSL4 & 25.96 & 27.35 & 25.48 & 24.22 \\
 GDA\_CLIP & RN50 & 47.22 & 47.90 & 46.41 & 42.47 \\
-TIMO & StyCLIP_FSL1 & 12.14 & 11.82 & 11.87 & 10.78 \\
-TIMO & StyCLIP_FSL4 & 13.55 & 13.67 & 13.21 & 12.16 \\
+TIMO & StyCLIP\_FSL1 & 12.14 & 11.82 & 11.87 & 10.78 \\
+TIMO & StyCLIP\_FSL4 & 13.55 & 13.67 & 13.21 & 12.16 \\
 TIMO & RN50 & 47.89 & 48.43 & 47.32 & 43.72 \\
-TIMO\_S & StyCLIP_FSL1 & 13.76 & 13.84 & 13.45 & 12.44 \\
-TIMO\_S & StyCLIP_FSL4 & 15.38 & 15.69 & 15.02 & 13.92 \\
+TIMO\_S & StyCLIP\_FSL1 & 13.76 & 13.84 & 13.45 & 12.44 \\
+TIMO\_S & StyCLIP\_FSL4 & 15.38 & 15.69 & 15.02 & 13.92 \\
 TIMO\_S & RN50 & \textbf{48.65} & \textbf{48.78} & \textbf{47.95} & \textbf{43.98} \\
-Tip\_Adapter & StyCLIP_FSL1 & 1.19 & 0.02 & 1.19 & 0.04 \\
-Tip\_Adapter & StyCLIP_FSL4 & 1.19 & 0.02 & 1.08 & 0.03 \\
+Tip\_Adapter & StyCLIP\_FSL1 & 1.19 & 0.02 & 1.19 & 0.04 \\
+Tip\_Adapter & StyCLIP\_FSL4 & 1.19 & 0.02 & 1.08 & 0.03 \\
 Tip\_Adapter & RN50 & 40.73 & 32.99 & 40.33 & 32.58 \\
 \bottomrule
 \end{tabular}
@@ -323,20 +345,20 @@ Tip\_Adapter & RN50 & 40.73 & 32.99 & 40.33 & 32.58 \\
 \toprule
 \textbf{Model} & \textbf{Backbone} & \textbf{ACC} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
 \midrule
-APE & StyCLIP_FSL1 & 4.62 & 2.09 & 4.42 & 2.17 \\
-APE & StyCLIP_FSL4 & 5.29 & 2.75 & 5.12 & 2.62 \\
+APE & StyCLIP\_FSL1 & 4.62 & 2.09 & 4.42 & 2.17 \\
+APE & StyCLIP\_FSL4 & 5.29 & 2.75 & 5.12 & 2.62 \\
 APE & RN50 & 53.88 & 54.93 & 53.72 & 49.73 \\
-GDA\_CLIP & StyCLIP_FSL1 & 27.16 & 28.56 & 26.84 & 25.48 \\
-GDA\_CLIP & StyCLIP_FSL4 & 35.17 & 38.35 & 34.79 & 33.74 \\
+GDA\_CLIP & StyCLIP\_FSL1 & 27.16 & 28.56 & 26.84 & 25.48 \\
+GDA\_CLIP & StyCLIP\_FSL4 & 35.17 & 38.35 & 34.79 & 33.74 \\
 GDA\_CLIP & RN50 & 55.54 & 58.24 & 54.97 & 52.66 \\
-TIMO & StyCLIP_FSL1 & 21.77 & 21.38 & 21.35 & 19.75 \\
-TIMO & StyCLIP_FSL4 & 23.43 & 25.00 & 23.06 & 22.13 \\
+TIMO & StyCLIP\_FSL1 & 21.77 & 21.38 & 21.35 & 19.75 \\
+TIMO & StyCLIP\_FSL4 & 23.43 & 25.00 & 23.06 & 22.13 \\
 TIMO & RN50 & 56.48 & 59.14 & 55.90 & 53.96 \\
-TIMO\_S & StyCLIP_FSL1 & 23.24 & 23.04 & 22.81 & 21.19 \\
-TIMO\_S & StyCLIP_FSL4 & 26.36 & 28.69 & 25.97 & 25.27 \\
+TIMO\_S & StyCLIP\_FSL1 & 23.24 & 23.04 & 22.81 & 21.19 \\
+TIMO\_S & StyCLIP\_FSL4 & 26.36 & 28.69 & 25.97 & 25.27 \\
 TIMO\_S & RN50 & \textbf{57.28} & \textbf{59.77} & \textbf{56.74} & \textbf{54.55} \\
-Tip\_Adapter & StyCLIP_FSL1 & 1.38 & 0.04 & 1.40 & 0.08 \\
-Tip\_Adapter & StyCLIP_FSL4 & 1.28 & 0.02 & 1.19 & 0.04 \\
+Tip\_Adapter & StyCLIP\_FSL1 & 1.38 & 0.04 & 1.40 & 0.08 \\
+Tip\_Adapter & StyCLIP\_FSL4 & 1.28 & 0.02 & 1.19 & 0.04 \\
 Tip\_Adapter & RN50 & 44.95 & 39.16 & 44.38 & 37.19 \\
 \bottomrule
 \end{tabular}
@@ -353,20 +375,20 @@ Tip\_Adapter & RN50 & 44.95 & 39.16 & 44.38 & 37.19 \\
 \toprule
 \textbf{Model} & \textbf{Backbone} & \textbf{ACC} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
 \midrule
-APE & StyCLIP_FSL1 & 5.35 & 2.57 & 5.27 & 2.57 \\
-APE & StyCLIP_FSL4 & 7.52 & 4.71 & 7.35 & 4.42 \\
+APE & StyCLIP\_FSL1 & 5.35 & 2.57 & 5.27 & 2.57 \\
+APE & StyCLIP\_FSL4 & 7.52 & 4.71 & 7.35 & 4.42 \\
 APE & RN50 & 58.10 & 58.94 & 57.97 & 54.03 \\
-GDA\_CLIP & StyCLIP_FSL1 & 34.25 & 35.76 & 33.93 & 32.55 \\
-GDA\_CLIP & StyCLIP_FSL4 & 46.97 & 50.15 & 46.42 & 45.55 \\
+GDA\_CLIP & StyCLIP\_FSL1 & 34.25 & 35.76 & 33.93 & 32.55 \\
+GDA\_CLIP & StyCLIP\_FSL4 & 46.97 & 50.15 & 46.42 & 45.55 \\
 GDA\_CLIP & RN50 & 63.61 & 67.18 & 63.19 & 61.57 \\
-TIMO & StyCLIP_FSL1 & 30.64 & 30.61 & 30.49 & 28.71 \\
-TIMO & StyCLIP_FSL4 & 38.38 & 40.46 & 37.90 & 36.52 \\
+TIMO & StyCLIP\_FSL1 & 30.64 & 30.61 & 30.49 & 28.71 \\
+TIMO & StyCLIP\_FSL4 & 38.38 & 40.46 & 37.90 & 36.52 \\
 TIMO & RN50 & \textbf{65.26} & \textbf{68.43} & \textbf{64.93} & \textbf{63.66} \\
-TIMO\_S & StyCLIP_FSL1 & 32.17 & 33.14 & 31.92 & 30.49 \\
-TIMO\_S & StyCLIP_FSL4 & 40.89 & 43.57 & 40.41 & 39.13 \\
+TIMO\_S & StyCLIP\_FSL1 & 32.17 & 33.14 & 31.92 & 30.49 \\
+TIMO\_S & StyCLIP\_FSL4 & 40.89 & 43.57 & 40.41 & 39.13 \\
 TIMO\_S & RN50 & 65.08 & 68.25 & 64.75 & 63.45 \\
-Tip\_Adapter & StyCLIP_FSL1 & 1.71 & 0.21 & 1.72 & 0.24 \\
-Tip\_Adapter & StyCLIP_FSL4 & 1.38 & 0.03 & 1.28 & 0.06 \\
+Tip\_Adapter & StyCLIP\_FSL1 & 1.71 & 0.21 & 1.72 & 0.24 \\
+Tip\_Adapter & StyCLIP\_FSL4 & 1.38 & 0.03 & 1.28 & 0.06 \\
 Tip\_Adapter & RN50 & 48.44 & 45.26 & 47.99 & 41.20 \\
 \bottomrule
 \end{tabular}
@@ -382,25 +404,26 @@ Tip\_Adapter & RN50 & 48.44 & 45.26 & 47.99 & 41.20 \\
 \toprule
 \textbf{Model} & \textbf{Backbone} & \textbf{ACC} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
 \midrule
-APE & StyCLIP_FSL1 & 6.73 & 3.35 & 6.55 & 3.37 \\
-APE & StyCLIP_FSL4 & 7.98 & 5.63 & 7.87 & 5.13 \\
+APE & StyCLIP\_FSL1 & 6.73 & 3.35 & 6.55 & 3.37 \\
+APE & StyCLIP\_FSL4 & 7.98 & 5.63 & 7.87 & 5.13 \\
 APE & RN50 & 62.17 & 63.65 & 61.95 & 58.36 \\
-GDA\_CLIP & StyCLIP_FSL1 & 41.19 & 42.45 & 41.00 & 39.13 \\
-GDA\_CLIP & StyCLIP_FSL4 & 53.36 & 55.25 & 52.86 & 51.64 \\
+GDA\_CLIP & StyCLIP\_FSL1 & 41.19 & 42.45 & 41.00 & 39.13 \\
+GDA\_CLIP & StyCLIP\_FSL4 & 53.36 & 55.25 & 52.86 & 51.64 \\
 GDA\_CLIP & RN50 & 73.06 & 76.12 & 72.58 & 71.63 \\
-TIMO & StyCLIP_FSL1 & 37.00 & 37.83 & 36.87 & 34.90 \\
-TIMO & StyCLIP_FSL4 & 43.27 & 45.16 & 42.80 & 41.36 \\
+TIMO & StyCLIP\_FSL1 & 37.00 & 37.83 & 36.87 & 34.90 \\
+TIMO & StyCLIP\_FSL4 & 43.27 & 45.16 & 42.80 & 41.36 \\
 TIMO & RN50 & 73.36 & 76.59 & 72.94 & 72.09 \\
-TIMO\_S & StyCLIP_FSL1 & 39.20 & 40.52 & 39.01 & 37.22 \\
-TIMO\_S & StyCLIP_FSL4 & 48.75 & 50.58 & 48.27 & 46.90 \\
+TIMO\_S & StyCLIP\_FSL1 & 39.20 & 40.52 & 39.01 & 37.22 \\
+TIMO\_S & StyCLIP\_FSL4 & 48.75 & 50.58 & 48.27 & 46.90 \\
 TIMO\_S & RN50 & \textbf{73.46} & \textbf{76.52} & \textbf{73.04} & \textbf{72.10} \\
-Tip\_Adapter & StyCLIP_FSL1 & 2.63 & 0.70 & 2.60 & 0.74 \\
-Tip\_Adapter & StyCLIP_FSL4 & 1.77 & 0.07 & 1.69 & 0.13 \\
+Tip\_Adapter & StyCLIP\_FSL1 & 2.63 & 0.70 & 2.60 & 0.74 \\
+Tip\_Adapter & StyCLIP\_FSL4 & 1.77 & 0.07 & 1.69 & 0.13 \\
 Tip\_Adapter & RN50 & 52.91 & 51.90 & 52.37 & 46.38 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
+\clearpage
 \subsection{Statistical Analysis}
 
 
@@ -461,7 +484,7 @@ TIMO\_FSL4 & 10.00* & 10.15* & -33.55* & -7.40* & -12.42* & -33.67* & 1.41 & 0.0
 TIMO\_RN50 & 44.34* & 44.50* & 0.80 & 26.94* & 21.93* & 0.67 & 35.75* & 34.34* & 0.00 & 34.13* & 32.51* & -0.76 & 46.70* & 46.70* & 7.16* \\
 TIMO\_S\_FSL1 & 10.21* & 10.37* & -33.33* & -7.19* & -12.20* & -33.46* & 1.62 & 0.21 & -34.13* & 0.00 & -1.62 & -34.89* & 12.57* & 12.57* & -26.97* \\
 TIMO\_S\_FSL4 & 11.83* & 11.99* & -31.71* & -5.57* & -10.58* & -31.83* & 3.24* & 1.83 & -32.51* & 1.62 & 0.00 & -33.27* & 14.19* & 14.19* & -25.35* \\
-TIMO\_S\_RN50 & 45.11* & 45.26* & 1.56* & 27.71* & 22.69* & 1.44 & 36.51* & 35.11* & 0.76 & 34.89* & 33.27* & 0.00 & 47.46* & 47.46* & 7.92* \\
+TIMO\_S\_RN50 & 45.11* & 45.26* & 1.56* & 27.71* & 22.69* & 4.56* & 38.99* & 38.59* & 2.08 & 38.69* & 38.65* & 0.00 & 44.65* & 44.83* & 7.31* \\
 Tip\_FSL1 & -2.35* & -2.20* & -45.90* & -19.76* & -24.77* & -46.02* & -10.95* & -12.35* & -46.70* & -12.57* & -14.19* & -47.46* & 0.00 & 0.00 & -39.54* \\
 Tip\_FSL4 & -2.35* & -2.20* & -45.90* & -19.76* & -24.77* & -46.02* & -10.95* & -12.35* & -46.70* & -12.57* & -14.19* & -47.46* & -0.00 & 0.00 & -39.54* \\
 Tip\_RN50 & 37.19* & 37.34* & -6.36* & 19.79* & 14.77* & -6.48* & 28.59* & 27.19* & -7.16* & 26.97* & 25.35* & -7.92* & 39.54* & 39.54* & 0.00 \\
@@ -496,9 +519,9 @@ TIMO\_FSL4 & 18.81* & 18.13* & -30.46* & -3.73* & -11.74* & -32.11* & 1.65 & 0.0
 TIMO\_RN50 & 51.87* & 51.19* & 2.60* & 29.33* & 21.31* & 0.95 & 34.71* & 33.06* & 0.00 & 33.24* & 30.12* & -0.80 & 55.11* & 55.20* & 11.53* \\
 TIMO\_S\_FSL1 & 18.62* & 17.95* & -30.64* & -3.91* & -11.93* & -32.29* & 1.47 & -0.18 & -34.13* & 0.00 & -3.12* & -34.04* & 21.87* & 21.96* & -21.71* \\
 TIMO\_S\_FSL4 & 21.74* & 21.07* & -27.52* & -0.80 & -8.81* & -29.17* & 4.59* & 2.94* & -30.12* & 3.12 & 0.00 & -30.92* & 24.98* & 25.08* & -18.59* \\
-TIMO\_S\_RN50 & 52.66* & 51.99* & 3.39* & 30.12* & 22.11* & 1.74 & 35.50* & 33.85* & 0.80 & 34.04* & 30.92* & 0.00 & 55.90* & 55.99* & 12.32* \\
-Tip\_FSL1 & -3.24* & -3.91* & -52.51* & -25.78* & -33.79* & -54.16* & -20.40* & -22.05* & -55.11* & -21.87* & -24.98* & -55.90* & 0.00 & 0.09 & -43.58* \\
-Tip\_FSL4 & -3.33* & -4.01* & -52.60* & -25.87* & -33.88* & -54.25* & -20.49* & -22.14* & -55.20* & -21.96* & -25.08* & -55.99* & -0.09 & 0.00 & -43.67* \\
+TIMO\_S\_RN50 & 52.66* & 51.99* & 3.39* & 30.12* & 22.11* & 1.74 & 35.50* & 33.85* & 0.76 & 34.04* & 30.92* & 0.00 & 55.90* & 55.99* & 12.32* \\
+Tip\_FSL1 & -3.24* & -3.91* & -52.51* & -25.78* & -33.79* & -54.16* & -10.95* & -12.35* & -55.11* & -21.87* & -24.98* & -55.90* & 0.00 & 0.09 & -43.58* \\
+Tip\_FSL4 & -3.33* & -4.01* & -52.60* & -25.87* & -33.88* & -54.25* & -10.49* & -12.14* & -55.20* & -21.96* & -25.08* & -55.99* & -0.09 & 0.00 & -43.67* \\
 Tip\_RN50 & 40.34* & 39.66* & -8.93* & 17.80* & 9.79* & -10.58* & 23.18* & 21.53* & -11.53* & 21.71* & 18.59* & -12.32* & 43.58* & 43.67* & 0.00 \\
 \bottomrule
 \end{tabular}%
@@ -590,9 +613,9 @@ Standard CLIP with RN50 backbone consistently outperforms both StyCLIP variants 
 Classification accuracy improves substantially with more support examples (TIMO\_S: 45.96\% to 73.46\% from 1-shot to 16-shot). However, both StyCLIP variants consistently underperform across all conditions, suggesting that explicit Gram matrix-based style modeling may interfere with pre-trained semantic representations rather than enhance them.
 
 The experimental results reveal several key insights across different shot configurations. In 1-shot scenarios with extremely limited data, CLIP-based models with RN50 backbone (particularly TIMO and TIMO\_S) achieve significantly superior results compared to StyCLIP variants and other methods. The performance of approaches that explicitly integrate stylistic components remains substantially lower, suggesting that adding these features does not aid generalization under minimal data conditions.
+\clearpage
 
 As the number of support examples increases to 2-shot and 4-shot, all models show performance improvements, but the gap between standard CLIP RN50 and StyCLIP versions remains pronounced. Standard models continue to dominate, while solutions with custom backbones struggle to exceed 25\% accuracy in lower-shot scenarios.
-\clearpage
 
 In higher-shot configurations (8-shot and 16-shot), while performance differences between models decrease slightly, CLIP RN50 and TIMO\_S remain the most effective, achieving over 73\% accuracy in 16-shot cases. StyCLIP versions fail to bridge this performance gap, confirming that explicit integration of style information through Gram matrices does not provide concrete benefits for few-shot artist classification.
 
