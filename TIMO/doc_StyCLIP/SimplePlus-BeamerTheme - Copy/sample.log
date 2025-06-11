@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.29)  7 JUN 2025 15:26
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.29)  11 JUN 2025 22:19
  system commands enabled.
  file:line:error style messages enabled.
 **"c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/SimplePlus-B
@@ -1356,77 +1356,73 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
 <../img/TIMO.png, id=95, 966.61125pt x 413.29407pt>
 File: ../img/TIMO.png Graphic file (type png)
 <use ../img/TIMO.png>
-Package luatex.def Info: ../img/TIMO.png  used on input line 109.
-(luatex.def)             Requested size: 329.1597pt x 85.2871pt.
-
-Overfull \vbox (13.28242pt too high) detected at line 109
- []
-
+Package luatex.def Info: ../img/TIMO.png  used on input line 113.
+(luatex.def)             Requested size: 329.1597pt x 121.8324pt.
 
 
 [4
 
 <../img/TIMO.png>]
-<../img/datasets.png, id=103, 1390.19376pt x 464.73625pt>
-File: ../img/datasets.png Graphic file (type png)
-<use ../img/datasets.png>
-Package luatex.def Info: ../img/datasets.png  used on input line 122.
-(luatex.def)             Requested size: 411.44pt x 182.74976pt.
-
-Overfull \vbox (11.62637pt too high) detected at line 122
- []
-
-
 
 [5
 
-<../img/datasets.png>]
-<../img/StyCLIP.png, id=110, 5292.77374pt x 2737.22626pt>
-File: ../img/StyCLIP.png Graphic file (type png)
-<use ../img/StyCLIP.png>
-Package luatex.def Info: ../img/StyCLIP.png  used on input line 133.
-(luatex.def)             Requested size: 411.39716pt x 212.75934pt.
+]
+<../img/datasets.png, id=108, 1390.19376pt x 464.73625pt>
+File: ../img/datasets.png Graphic file (type png)
+<use ../img/datasets.png>
+Package luatex.def Info: ../img/datasets.png  used on input line 137.
+(luatex.def)             Requested size: 411.44pt x 182.74976pt.
 
-Overfull \vbox (12.18195pt too high) detected at line 133
+Overfull \vbox (11.62637pt too high) detected at line 137
  []
 
 
 
 [6
 
-<../img/StyCLIP.png>]
+<../img/datasets.png>]
+<../img/episode_example.drawio.png, id=115, 3694.80376pt x 1566.85374pt>
+File: ../img/episode_example.drawio.png Graphic file (type png)
+<use ../img/episode_example.drawio.png>
+Package luatex.def Info: ../img/episode_example.drawio.png  used on input line 
+146.
+(luatex.def)             Requested size: 329.13531pt x 139.57625pt.
+
 
 [7
 
-]
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 173.
-LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 173.
-LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 173.
-LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <7> not available
-(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 173.
+<../img/episode_example.drawio.png>]
+<../img/StyCLIP.png, id=122, 5292.77374pt x 2737.22626pt>
+File: ../img/StyCLIP.png Graphic file (type png)
+<use ../img/StyCLIP.png>
+Package luatex.def Info: ../img/StyCLIP.png  used on input line 155.
+(luatex.def)             Requested size: 411.39716pt x 212.75934pt.
+
+Overfull \vbox (12.18195pt too high) detected at line 155
+ []
+
 
 
 [8
 
-]
+<../img/StyCLIP.png>]
 
 [9
 
 ]
-<../img/episode_example.drawio.png, id=137, 3694.80376pt x 1566.85374pt>
-File: ../img/episode_example.drawio.png Graphic file (type png)
-<use ../img/episode_example.drawio.png>
-Package luatex.def Info: ../img/episode_example.drawio.png  used on input line 
-208.
-(luatex.def)             Requested size: 329.13531pt x 139.57625pt.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 195.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 195.
+LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10> not available
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 195.
+LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <7> not available
+(Font)              Font shape `TU/lmss/m/sl' tried instead on input line 195.
 
 
 [10
 
-<../img/episode_example.drawio.png>]
+]
 
 [11
 
@@ -1450,20 +1446,19 @@ Package luatex.def Info: ../img/episode_example.drawio.png  used on input line
 
 [16
 
+]
+
+[17
+
 ] (./sample.bbl
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <9> not available
 (Font)              Font shape `TU/lmss/m/sl' tried instead on input line 6.
 )
 
-[17
+[18
 
 <C:/Users/fonta/AppData/Local/Programs/MiKTeX/tex/latex/beamer/beamericonarticle
 .pdf>]
-
-[18
-
-
-]
 
 [19
 
@@ -1471,6 +1466,11 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <9> not available
 ]
 
 [20
+
+
+]
+
+[21
 
 ]
 \tf@nav=\write6
@@ -1492,13 +1492,13 @@ Package rerunfilecheck Info: File `sample.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 35269 strings out of 475506
+ 35273 strings out of 475506
  100000,1373583 words of node,token memory allocated
  929 words of node memory still in use:
    12 hlist, 6 vlist, 2 rule, 13 glue, 5 kern, 7 penalty, 7 glyph, 47 attribute,
  65 glue_spec, 25 attribute_list, 4 write, 4 pdf_colorstack nodes
    avail lists: 2:1782,3:591,4:274,5:236,6:58,7:4731,8:56,9:550,10:29,11:330
- 57331 multiletter control sequences out of 65536+600000
+ 57333 multiletter control sequences out of 65536+600000
  78 fonts using 47511967 bytes
  128i,11n,116p,493b,933s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/users/fonta/appdata/local/programs/miktex/fonts/opentype/public/lm/lmsans9-o
@@ -1520,9 +1520,9 @@ ms/MiKTeX/fonts/type1/public/lm/lmss10.pfb><C:/Users/fonta/AppData/Local/Program
 s/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/fonta/AppData/Local/Programs
 /MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/fonta/AppData/Local/Programs/M
 iKTeX/fonts/type1/public/lm/lmsy8.pfb>
-Output written on sample.pdf (20 pages, 3635260 bytes).
+Output written on sample.pdf (21 pages, 3636322 bytes).
 
-PDF statistics: 295 PDF objects out of 1000 (max. 8388607)
- 61 named destinations out of 1000 (max. 131072)
+PDF statistics: 301 PDF objects out of 1000 (max. 8388607)
+ 63 named destinations out of 1000 (max. 131072)
  114 words of extra memory for PDF output out of 10000 (max. 100000000)
 

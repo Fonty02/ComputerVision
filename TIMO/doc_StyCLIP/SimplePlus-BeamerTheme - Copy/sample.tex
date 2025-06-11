@@ -78,6 +78,9 @@
     \end{itemize}
   \end{block}
 
+
+
+  
   \begin{block}{Contrastive Language-Image Pretraining (CLIP)}
     \begin{itemize}
         \item CLIP \cite{CLIP}: Shared embedding space for images and text.
@@ -92,8 +95,24 @@
   \nocite{StyleTransfer,ProtoNet,CLIP,TipAdapter,APE,GDA_CLIP,TIMO} % Cite them so they appear
 \end{frame}
 
+
+
+
+
+
+
 % --- Background: TIMO ---
 \section{Background: TIMO}
+\begin{frame}
+\frametitle{Background: TIMO (Text-Image Mutual Guidance Optimization)}
+ \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.8\textwidth ,height=0.5\textheight]{../img/TIMO.png}
+      \caption{TIMO Architecture Overview}
+    \end{figure}
+\end{frame}
+
+
 \begin{frame}
   \frametitle{Background: TIMO (Text-Image Mutual Guidance Optimization)}
   \begin{block}{Two Main Branches}
@@ -101,11 +120,7 @@
       
       \textbf{Image-Guided Text (IGT):} Finds optimal weights for textual prompts using support visual features, dynamically adapting textual descriptions to image
   \end{block}
-   \begin{figure}[H]
-      \centering
-      \includegraphics[width=0.8\textwidth ,height=0.35\textheight]{../img/TIMO.png}
-      \caption{TIMO Architecture Overview}
-    \end{figure}
+  
 \end{frame}
 
 
@@ -122,6 +137,13 @@
 \end{frame}
 
 
+\begin{frame}
+  \frametitle{Episode Example for FSL}
+  \begin{figure}
+    \includegraphics[width=0.8\linewidth,height=0.7\textheight,keepaspectratio]{../img/episode_example.drawio.png} % Adjusted path
+    \caption{Example episode: 5-Way, 4-Shots ,10 query examples}
+  \end{figure}
+\end{frame}
 
 % --- Proposed Method: StyCLIP ---
 \section{Our Approach: StyCLIP}
@@ -187,8 +209,7 @@
     \begin{itemize}
       \item \textbf{Method:} Using every CLIP-based method (e.g., TIMO, TIP-Adapter) with every backbone.
       \item N-way classification (all available artists in the test subset).
-      \item Tested across K $\in \{1, 2, 4, 8, 16\}$ shots for support set.
-      \item \textbf{Statistical Robustness:} 10 different random seeds.
+      \item Tested several times across K $\in \{1, 2, 4, 8, 16\}$ shots for support set.
       \item \textbf{Metrics:} Accuracy, Macro-Precision, Macro-Recall, Macro-F1.
     \end{itemize}
   \end{block}
@@ -199,13 +220,7 @@
 % --- Results ---
 \section{Results}
 
-\begin{frame}
-  \frametitle{Episode Example for FSL}
-  \begin{figure}
-    \includegraphics[width=0.8\linewidth,height=0.7\textheight,keepaspectratio]{../img/episode_example.drawio.png} % Adjusted path
-    \caption{Example episode: 5-Way, 4-Shots ,10 query examples}
-  \end{figure}
-\end{frame}
+
 
 \begin{frame}
   \frametitle{Key Evaluation Results}
@@ -240,7 +255,7 @@
 \begin{frame}
     \frametitle{Statistical Analysis Summary}
     \begin{itemize}
-        \item Paired t-tests confirmed the significance of performance differences.
+        \item T-tests confirmed the significance of performance differences.
         \item \textbf{Key Observation:} Standard CLIP (RN50) significantly outperforms StyCLIP-trained backbones across nearly all configurations and few-shot methods.
         \item Example: For 16-shot with TIMO\_S:
         \begin{itemize}
