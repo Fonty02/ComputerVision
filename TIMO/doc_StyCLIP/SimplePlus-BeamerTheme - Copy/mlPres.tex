@@ -107,6 +107,15 @@
 
 
 
+
+\begin{frame}
+  \frametitle{Episode Example for FSL}
+  \begin{figure}
+    \includegraphics[width=0.8\linewidth,height=0.7\textheight,keepaspectratio]{../img/episode_example.drawio.png} % Adjusted path
+    \caption{Example episode: 5-Way, 4-Shots ,10 query examples}
+  \end{figure}
+\end{frame}
+
 % --- Proposed Method: StyCLIP ---
 \section{Our Approach: StyCLIP}
 \begin{frame}
@@ -123,7 +132,7 @@
       \begin{enumerate}
  \item \textbf{Gram Matrix Extraction:} Extract style correlations from ResNet-50 intermediate layers
         \begin{equation*}
-          G_{i,j}^{(l)} = \frac{1}{H \times W} \sum_{k=1}^{H \times W} F_{i,k}^{(l)} \cdot F_{j,k}^{(l)}
+          G_{i,j}^{(l)} = \frac{1}{H \times W} \sum_{k=1}^{H \times W} F_{i,k}^{(l)} \cdot F_{k,j}^{(l)}
         \end{equation*}
         \footnotesize{
         \begin{itemize}
@@ -193,8 +202,7 @@
     \begin{itemize}
       \item \textbf{Method:} Using every CLIP-based method (e.g., TIMO, TIP-Adapter) with every backbone.
       \item N-way classification (all available artists in the test subset).
-      \item Tested across K $\in \{1, 2, 4, 8, 16\}$ shots for support set.
-      \item \textbf{Statistical Robustness:} 10 different random seeds.
+      \item Tested several times across K $\in \{1, 2, 4, 8, 16\}$ shots for support set.
       \item \textbf{Metrics:} Accuracy, Macro-Precision, Macro-Recall, Macro-F1.
     \end{itemize}
   \end{block}
@@ -205,13 +213,6 @@
 % --- Results ---
 \section{Results}
 
-\begin{frame}
-  \frametitle{Episode Example for FSL}
-  \begin{figure}
-    \includegraphics[width=0.8\linewidth,height=0.7\textheight,keepaspectratio]{../img/episode_example.drawio.png} % Adjusted path
-    \caption{Example episode: 5-Way, 4-Shots ,10 query examples}
-  \end{figure}
-\end{frame}
 
 \begin{frame}
   \frametitle{Key Evaluation Results}
@@ -271,16 +272,25 @@
 
 % --- Acknowledgments & Code ---
 \section{Acknowledgments \& Code}
+% --- Conclusion ---
+\section{Conclusion \& Discussion}
 \begin{frame}
-  \frametitle{Acknowledgments}
+  \frametitle{Conclusion \& Discussion}
   \begin{itemize}
-    \item This work was proposed by PhD student \textbf{Nicola Fanelli} and \textbf{Prof. Giovanna Castellano} at the University of Bari.
+    \item \textbf{Main Finding:} Integrating explicit style-aware features via Gram matrices (StyCLIP) did \textbf{not improve} few-shot artist classification performance.
+    \item \textbf{Performance:} Standard CLIP (RN50 backbone) consistently outperformed StyCLIP variants.
+    \item \textbf{Implication:} Explicit Gram matrix-based style modeling might interfere with CLIP's pre-trained semantic representations rather than enhance them for this task.
+    \item \textbf{Future Directions:} Alternative approaches like attention-based style integration or domain-specific fine-tuning (without architectural changes) might be more fruitful.
   \end{itemize}
 \end{frame}
 
+% --- Acknowledgments & Code ---
+\section{Acknowledgments \& Code}
 \begin{frame}
-  \frametitle{Code Availability}
-  The code for this project is available on GitHub:
+  \frametitle{Acknowledgments and Code}
+  \begin{itemize}
+    \item This work was proposed by PhD student \textbf{Nicola Fanelli} and \textbf{Prof. Giovanna Castellano} at the University of Bari
+  \item The code for this project is available on GitHub:
   \begin{center}
     \url{https://github.com/Fonty02/ComputerVision/tree/main/TIMO}
   \end{center}
@@ -288,6 +298,7 @@
   \begin{center}
     \Large Thank You! \emoji{rocket}
   \end{center}
+    \end{itemize}
 \end{frame}
 
 %-------------------------------------------------

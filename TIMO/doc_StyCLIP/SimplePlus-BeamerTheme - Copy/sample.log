@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.29)  11 JUN 2025 22:19
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.29)  12 JUN 2025 09:19
  system commands enabled.
  file:line:error style messages enabled.
 **"c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/SimplePlus-B
@@ -1446,19 +1446,20 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <7> not available
 
 [16
 
-]
-
-[17
-
 ] (./sample.bbl
 LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <9> not available
 (Font)              Font shape `TU/lmss/m/sl' tried instead on input line 6.
 )
 
-[18
+[17
 
 <C:/Users/fonta/AppData/Local/Programs/MiKTeX/tex/latex/beamer/beamericonarticle
 .pdf>]
+
+[18
+
+
+]
 
 [19
 
@@ -1466,11 +1467,6 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <9> not available
 ]
 
 [20
-
-
-]
-
-[21
 
 ]
 \tf@nav=\write6
@@ -1492,13 +1488,13 @@ Package rerunfilecheck Info: File `sample.out' has not changed.
 )
 
 Here is how much of LuaTeX's memory you used:
- 35273 strings out of 475506
+ 35269 strings out of 475506
  100000,1373583 words of node,token memory allocated
  929 words of node memory still in use:
    12 hlist, 6 vlist, 2 rule, 13 glue, 5 kern, 7 penalty, 7 glyph, 47 attribute,
  65 glue_spec, 25 attribute_list, 4 write, 4 pdf_colorstack nodes
    avail lists: 2:1782,3:591,4:274,5:236,6:58,7:4731,8:56,9:550,10:29,11:330
- 57333 multiletter control sequences out of 65536+600000
+ 57331 multiletter control sequences out of 65536+600000
  78 fonts using 47511967 bytes
  128i,11n,116p,493b,933s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/users/fonta/appdata/local/programs/miktex/fonts/opentype/public/lm/lmsans9-o
@@ -1520,9 +1516,9 @@ ms/MiKTeX/fonts/type1/public/lm/lmss10.pfb><C:/Users/fonta/AppData/Local/Program
 s/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/fonta/AppData/Local/Programs
 /MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:/Users/fonta/AppData/Local/Programs/M
 iKTeX/fonts/type1/public/lm/lmsy8.pfb>
-Output written on sample.pdf (21 pages, 3636322 bytes).
+Output written on sample.pdf (20 pages, 3635287 bytes).
 
-PDF statistics: 301 PDF objects out of 1000 (max. 8388607)
- 63 named destinations out of 1000 (max. 131072)
+PDF statistics: 295 PDF objects out of 1000 (max. 8388607)
+ 61 named destinations out of 1000 (max. 131072)
  114 words of extra memory for PDF output out of 10000 (max. 100000000)
 
