@@ -6,7 +6,7 @@ Reallocating 'name_of_file' (item size: 1) to 6 items.
 The style file: plain.bst
 Database file #1: bibo.bib
 Warning--entry type for "ArtGraph" isn't style-file defined
---line 58 of file bibo.bib
+--line 115 of file bibo.bib
 Warning--can't use both volume and number fields in TIMO
 You've used 9 entries,
             2118 wiz_defined-function locations,

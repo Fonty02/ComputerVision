@@ -56,9 +56,13 @@
     
     \item \textbf{Challenge:} Few-shot visual artist classification -- identifying artist by their style with limited labeled examples per artist.
     
-    \item \textbf{Problem:}  Current image classifiers are based on semantic features, not style (e.g., CLIP).
-    \item \textbf{Hypothesis:} Explicitly integrating style representations (Gram matrices) into CLIP could enhance artist-specific pattern recognition.
-    \item \textbf{Contribution:} StyCLIP -- a CLIP extension incorporating dedicated style-aware features for improved few-shot artist classification.
+    \item \textbf{Two Main Goals:}
+      \begin{enumerate}
+        \item \textbf{Comparative Analysis:} Test different CLIP-based strategies to identify the best approach for few-shot artist classification.
+        \item \textbf{Style Enhancement Hypothesis:} Investigate whether explicitly integrating style representations (Gram matrices) into CLIP improves artist-specific pattern recognition.
+      \end{enumerate}
+    
+    \item \textbf{Contribution:} StyCLIP -- a CLIP extension incorporating dedicated style-aware features, evaluated against standard CLIP-based methods.
   \end{itemize}
 \end{frame}
 
