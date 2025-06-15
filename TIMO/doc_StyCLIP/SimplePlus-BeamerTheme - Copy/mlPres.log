@@ -1,4 +1,4 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  14 JUN 2025 17:16
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  15 JUN 2025 10:24
  system commands enabled.
  file:line:error style messages enabled.
 **"c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/Simpl
@@ -1353,7 +1353,7 @@ LaTeX Font Info:    Font shape `TU/lmss/m/it' in size <10.95> not available
 [3
 
 ]
-<../img/datasets.png, id=99, 1390.19376pt x 464.73625pt>
+<../img/datasets.png, id=95, 1390.19376pt x 464.73625pt>
 File: ../img/datasets.png Graphic file (type png)
 <use ../img/datasets.png>
 Package luatex.def Info: ../img/datasets.png  used on input line 110.
@@ -1367,7 +1367,7 @@ Overfull \vbox (11.62637pt too high) detected at line 110
 [4
 
 <../img/datasets.png>]
-<../img/episode_example.drawio.png, id=107, 3694.80376pt x 1566.85374pt>
+<../img/episode_example.drawio.png, id=103, 3694.80376pt x 1566.85374pt>
 File: ../img/episode_example.drawio.png Graphic file (type png)
 <use ../img/episode_example.drawio.png>
 Package luatex.def Info: ../img/episode_example.drawio.png  used on input line 
@@ -1378,7 +1378,7 @@ Package luatex.def Info: ../img/episode_example.drawio.png  used on input line
 [5
 
 <../img/episode_example.drawio.png>]
-<../img/StyCLIP.png, id=114, 5292.77374pt x 2737.22626pt>
+<../img/StyCLIP.png, id=110, 5292.77374pt x 2737.22626pt>
 File: ../img/StyCLIP.png Graphic file (type png)
 <use ../img/StyCLIP.png>
 Package luatex.def Info: ../img/StyCLIP.png  used on input line 130.
@@ -1490,17 +1490,17 @@ LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `mlPres.out' has not changed.
-(rerunfilecheck)             Checksum: FFD1880CB8D1BCC6161E8A6CCD7C82B9;1490.
+(rerunfilecheck)             Checksum: D774F4841314EC00879FC09607D811F7;1321.
 )
 
 Here is how much of LuaTeX's memory you used:
- 35264 strings out of 475506
+ 35259 strings out of 475506
  100000,1373583 words of node,token memory allocated
  947 words of node memory still in use:
    12 hlist, 6 vlist, 2 rule, 13 glue, 5 kern, 7 penalty, 7 glyph, 53 attribute,
  65 glue_spec, 28 attribute_list, 4 write, 4 pdf_colorstack nodes
-   avail lists: 2:1782,3:591,4:274,5:311,6:58,7:4731,8:56,9:550,10:29,11:330
- 57330 multiletter control sequences out of 65536+600000
+   avail lists: 2:1782,3:591,4:274,5:310,6:58,7:4731,8:56,9:550,10:29,11:330
+ 57326 multiletter control sequences out of 65536+600000
  87 fonts using 48373207 bytes
  128i,11n,116p,500b,933s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {C:/Users/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}<
@@ -1534,9 +1534,9 @@ C:/Users/fonta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy7.pfb><C:
 sers/fonta/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy9.pfb><C:/Use
 rs/fonta/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm1
 0.pfb>
-Output written on mlPres.pdf (19 pages, 3556523 bytes).
+Output written on mlPres.pdf (19 pages, 3556054 bytes).
 
-PDF statistics: 337 PDF objects out of 1000 (max. 8388607)
- 60 named destinations out of 1000 (max. 131072)
- 122 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 333 PDF objects out of 1000 (max. 8388607)
+ 59 named destinations out of 1000 (max. 131072)
+ 114 words of extra memory for PDF output out of 10000 (max. 100000000)
 

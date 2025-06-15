@@ -1,11 +1,11 @@
-This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.29)  10 JUN 2025 11:43
+This is LuaHBTeX, Version 1.21.0 (MiKTeX 25.3) (format=lualatex 2025.3.19)  15 JUN 2025 10:16
  system commands enabled.
  file:line:error style messages enabled.
-**c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/Report
-ML
+**c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/report
+/ReportML
 
-(c:/Users/fonta/Desktop/Uni/Repo/ComputerVision/TIMO/doc_StyCLIP/report/ReportM
-L.tex
+(c:/Users/fonta/Desktop/Magistrale/Repo/ComputerVision/TIMO/doc_StyCLIP/report/
+ReportML.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 Lua module: luaotfload 2024-12-03 v3.29 Lua based OpenType font support
@@ -169,7 +169,7 @@ LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
 (Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
 )
 (C:/Users/fonta/AppData/Local/Programs/MiKTeX/tex/generic/babel/babel.sty
-Package: babel 2025/03/10 v25.5 The multilingual framework for pdfLaTeX, LuaLaT
+Package: babel 2025/02/14 v25.4 The multilingual framework for pdfLaTeX, LuaLaT
 eX and XeLaTeX
 
 (C:/Users/fonta/AppData/Local/Programs/MiKTeX/tex/generic/babel/luababel.def
@@ -412,7 +412,7 @@ File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 Package graphics Info: Driver file: luatex.def on input line 106.
 
 (C:/Users/fonta/AppData/Local/Programs/MiKTeX/tex/latex/graphics-def/luatex.def
-File: luatex.def 2024/04/13 v1.2e Graphics/color driver for luatex
+File: luatex.def 2022/09/22 v1.2d Graphics/color driver for luatex
 ))
 \Gin@req@height=\dimen184
 \Gin@req@width=\dimen185
@@ -788,7 +788,7 @@ File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
 (C:/Users/fonta/AppData/Local/Programs/MiKTeX/tex/latex/l3backend/l3backend-lua
 tex.def
-File: l3backend-luatex.def 2024-05-08 L3 backend support: PDF output (LuaTeX)
+File: l3backend-luatex.def 2024-01-04 L3 backend support: PDF output (LuaTeX)
 \l__color_backend_stack_int=\count346
 Inserting `l3color' in `luaotfload.parse_color'.
 \l__pdf_internal_box=\box80
@@ -918,14 +918,14 @@ ftex.map}
 
 
 ]
-<../img/StyCLIP.png, id=163, 5292.77374pt x 2737.22626pt>
+<../img/StyCLIP.png, id=171, 5292.77374pt x 2737.22626pt>
 File: ../img/StyCLIP.png Graphic file (type png)
 <use ../img/StyCLIP.png>
 Package luatex.def Info: ../img/StyCLIP.png  used on input line 145.
 (luatex.def)             Requested size: 309.55737pt x 100.78293pt.
 
 
-<../img/episode_example.drawio.png, id=166, 3694.80376pt x 1566.85374pt>
+<../img/episode_example.drawio.png, id=174, 3694.80376pt x 1566.85374pt>
 File: ../img/episode_example.drawio.png Graphic file (type png)
 <use ../img/episode_example.drawio.png>
 Package luatex.def Info: ../img/episode_example.drawio.png  used on input line 
@@ -1001,8 +1001,17 @@ Overfull \hbox (264.0524pt too wide) in paragraph at lines 577--600
 
 
 Missing character: There is no — (U+2014) in font ec-lmr8!
+Missing character: There is no — (U+2014) in font ec-lmr8!
+Missing character: There is no → (U+2192) in font ec-lmr8!
+Missing character: There is no → (U+2192) in font ec-lmr8!
+Missing character: There is no → (U+2192) in font ec-lmr8!
+Missing character: There is no → (U+2192) in font ec-lmr8!
+Missing character: There is no → (U+2192) in font ec-lmr8!
+Missing character: There is no → (U+2192) in font ec-lmr8!
+Missing character: There is no — (U+2014) in font ec-lmr8!
+] (./ReportML.bbl
 
-] (./ReportML.bbl)
+)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -1016,44 +1025,18 @@ Before submitting the final camera ready copy, remember to:
 
 
 
-
-
-[leftcolumn badness]: 1000000 on 17.56633pt
-[rightcolumn badness]: 1000000 on 17.56633pt
-[leftcolumn badness]: 1000000 on 17.56633pt
-[rightcolumn badness]: 1000000 on 17.56633pt
-[leftcolumn badness]: 1000000 on 17.56633pt
-[rightcolumn badness]: 1000000 on 17.56633pt
-[leftcolumn badness]: 1000000 on 17.56633pt
-[rightcolumn badness]: 1000000 on 17.56633pt
-[leftcolumn badness]: 1000000 on 17.56633pt
-[rightcolumn badness]: 1000000 on 17.56633pt
-[leftcolumn badness]: 1000000 on 17.56633pt
-[rightcolumn badness]: 1000000 on 17.56633pt
-[leftcolumn badness]: 1000000 on 17.56633pt
-[rightcolumn badness]: 1000000 on 17.56633pt
-[leftcolumn badness]: 1000000 on 17.56633pt
-[rightcolumn badness]: 1000000 on 17.56633pt
-[leftcolumn badness]: 1000000 on 17.56633pt
-[rightcolumn badness]: 1000000 on 17.56633pt
-[leftcolumn badness]: 1000000 on 17.56633pt
-[rightcolumn badness]: 1000000 on 17.56633pt
-[leftcolumn badness]: 1000000 on 17.56633pt
-[rightcolumn badness]: 1000000 on 17.56633pt
-[leftcolumn badness]: 1000000 on 17.56633pt
-[rightcolumn badness]: 1000000 on 17.56633pt
 - LAST -
-Extra skip:0.0pt
-Left:298.43367pt/2.0pt
-Right:318.0pt/0.0pt
-Split: 318.71683pt
-Output:318.71683pt
-Pageshrink: 0.0pt
-Pagestretch: 0.0pt
+Extra skip:4.83315pt
+Left:437.13344pt/0.0pt
+Right:432.3003pt/0.0pt
+Split: 388.43909pt
+Output:388.43909pt
+Pageshrink: 1.0pt
+Pagestretch: 3.5pt
 @colht:672.0pt
-FLUSHEND [output]: 318.71683pt
-FLUSHEND [leftcolumn badness]: 25
-FUSHEND [rightcolumn badness]: 1
+FLUSHEND [output]: 432.43909pt
+FLUSHEND [leftcolumn badness]: 97
+FUSHEND [rightcolumn badness]: 0
 [7
 
 ] (./ReportML.aux)
@@ -1066,20 +1049,20 @@ L3 programming layer <2025-01-18>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `ReportML.out' has not changed.
-(rerunfilecheck)             Checksum: AD1D92C46EA970ADDF139C26DAB485C9;4920.
+(rerunfilecheck)             Checksum: 3B42534D4F24B70A3300926FE71EAA96;5447.
 )
 
 Here is how much of LuaTeX's memory you used:
- 21405 strings out of 475506
+ 21411 strings out of 475506
  244177,953878 words of node,token memory allocated
- 597 words of node memory still in use:
-   6 hlist, 2 vlist, 2 rule, 3 glue, 4 kern, 1 penalty, 1 glyph, 24 attribute, 5
-9 glue_spec, 13 attribute_list, 1 write, 3 pdf_action nodes
-   avail lists: 2:6185,3:725,4:120,5:1278,6:112,7:22517,8:101,9:2225,10:20,11:21
+ 596 words of node memory still in use:
+   6 hlist, 2 vlist, 2 rule, 3 glue, 4 kern, 1 penalty, 1 glyph, 22 attribute, 6
+0 glue_spec, 12 attribute_list, 1 write, 3 pdf_action nodes
+   avail lists: 2:6188,3:754,4:120,5:1279,6:112,7:23259,8:101,9:2225,10:20,11:21
 90
- 43991 multiletter control sequences out of 65536+600000
+ 43995 multiletter control sequences out of 65536+600000
  89 fonts using 6938151 bytes
- 72i,11n,75p,950b,1057s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 72i,11n,75p,957b,1057s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {C:/Users/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C:/U
 sers/fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/
 fonta/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}{C:/Users/f
@@ -1106,9 +1089,9 @@ X/fonts/type1/public/lm/lmri10.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX
 onts/type1/public/lm/lmsy6.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/fon
 ts/type1/public/lm/lmsy8.pfb><C:/Users/fonta/AppData/Local/Programs/MiKTeX/fonts
 /type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on ReportML.pdf (7 pages, 3735990 bytes).
+Output written on ReportML.pdf (7 pages, 3741292 bytes).
 
-PDF statistics: 302 PDF objects out of 1000 (max. 8388607)
- 59 named destinations out of 1000 (max. 131072)
- 241 words of extra memory for PDF output out of 10000 (max. 100000000)
+PDF statistics: 310 PDF objects out of 1000 (max. 8388607)
+ 61 named destinations out of 1000 (max. 131072)
+ 257 words of extra memory for PDF output out of 10000 (max. 100000000)
 

@@ -5,8 +5,7 @@
 \beamer@sectionintoc {4}{Our Approach: StyCLIP}{6}{0}{4}
 \beamer@sectionintoc {5}{Experimental Setup}{9}{0}{5}
 \beamer@sectionintoc {6}{Results}{10}{0}{6}
-\beamer@sectionintoc {7}{Conclusion \& Discussion}{12}{0}{7}
-\beamer@sectionintoc {8}{Acknowledgments \& Code}{13}{0}{8}
-\beamer@sectionintoc {9}{Conclusion \& Discussion}{13}{0}{9}
-\beamer@sectionintoc {10}{Acknowledgments \& Code}{14}{0}{10}
-\beamer@sectionintoc {11}{Appendix}{15}{1}{11}
+\beamer@sectionintoc {7}{Conclusion \& Discussion}{13}{0}{7}
+\beamer@sectionintoc {8}{Acknowledgments \& Code}{14}{0}{8}
+\beamer@sectionintoc {9}{Acknowledgments \& Code}{14}{0}{9}
+\beamer@sectionintoc {10}{Appendix}{15}{1}{10}

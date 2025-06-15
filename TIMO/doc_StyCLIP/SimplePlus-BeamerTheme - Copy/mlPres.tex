@@ -217,48 +217,83 @@
 % --- Results ---
 \section{Results}
 
-
 \begin{frame}
-  \frametitle{Key Evaluation Results}
-  \textbf{Main Finding:} Integrating explicit style-aware features (StyCLIP) \textit{consistently underperforms} standard CLIP variants.
+  \frametitle{Goal 1: Comparative Analysis of CLIP-based Methods}
+  \textbf{Best performing combinations for few-shot artist classification:}
 
   \begin{itemize}
-    \item Standard CLIP with RN50 backbone is the best performing backbone.
-    \item StyCLIP backbones (StyCLIP\_FSL1, StyCLIP\_FSL4) significantly degrade performance for all FSL methods.
-    \item TIMO and TIMO-S are the best FSL methods when using the standard RN50 backbone.
+    \item \textbf{TIMO and TIMO-S} emerge as the most effective few-shot learning methods
   \end{itemize}
 
-  \begin{block}{Example: 16-Shot Classification Accuracy (\%)}
+  \begin{block}{Top Performers: 16-Shot Classification Accuracy (\%)}
     \centering
     \tiny
     \begin{tabular}{@{}lcc@{}}
       \toprule
-      \textbf{Model} & \textbf{Backbone} & \textbf{ACC (\%)} \\
+      \textbf{Method} & \textbf{Backbone} & \textbf{Accuracy (\%)} \\
       \midrule
-      TIMO           & StyCLIP\_FSL1 & 37.00 \\
-      TIMO           & StyCLIP\_FSL4 & 43.27 \\
-      \textbf{TIMO}  & \textbf{RN50}      & \textbf{73.36} \\
-      \midrule
-      TIMO\_S  & StyCLIP\_FSL1 & 39.20 \\
-      TIMO\_S  & StyCLIP\_FSL4 & 48.75 \\
-      \textbf{TIMO\_S } & \textbf{RN50}      & \textbf{73.46} \\
+      \textbf{TIMO-S}    & \textbf{RN50} & \textbf{73.46} \\
+      \textbf{TIMO}      & \textbf{RN50} & \textbf{73.36} \\
+      GDA-CLIP  & RN50 & 73.06 \\
+      APE       & RN50 & 62.17 \\
+      TIP-Adapter & RN50 & 52.91 \\
       \bottomrule
     \end{tabular}
     \normalsize
   \end{block}
+  
+  \textbf{Key Finding:} TIMO-based methods with RN50 backbone achieve optimal performance for few-shot artist classification.
 \end{frame}
 
 \begin{frame}
-    \frametitle{Statistical Analysis Summary}
+  \frametitle{Goal 2: Style Enhancement Hypothesis - Results}
+  \textbf{Hypothesis:} Explicit style representations (Gram matrices) improve artist classification.
+  
+  \textbf{Result:} Hypothesis \textbf{rejected} - StyCLIP consistently underperforms standard CLIP variants.
+
+  \begin{block}{StyCLIP vs Standard CLIP: 16-Shot Accuracy (\%)}
+    \centering
+    \tiny
+    \begin{tabular}{@{}lccc@{}}
+      \toprule
+      \textbf{Method} & \textbf{RN50} & \textbf{StyCLIP\_FSL1} & \textbf{StyCLIP\_FSL4} \\
+      \midrule
+      TIMO-S    & \textbf{73.46} & 39.20 & 48.75 \\
+      TIMO      & \textbf{73.36} & 37.00 & 43.27 \\
+      GDA-CLIP  & \textbf{73.06} & 41.19 & 53.36 \\
+      APE       & \textbf{62.17} & 6.73  & 7.98  \\
+      \bottomrule
+    \end{tabular}
+    \normalsize
+  \end{block}
+  \begin{itemize}
+    \item \textbf{Performance Gap:} Standard RN50 outperforms best StyCLIP variant by $\sim$25 percentage points
+    \item \textbf{Statistical Significance:} T-tests confirm significant differences (p < 0.05)
+    \item \textbf{Consistency:} Pattern holds across all shot configurations (1, 2, 4, 8, 16)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Performance Analysis Across Shot Configurations}
+  \begin{figure}[H]
+    \centering
+    \tiny
+    \begin{tabular}{@{}lcc@{}}
+      \toprule
+      \textbf{Shot Config} & \textbf{TIMO-S + RN50} & \textbf{TIMO-S + StyCLIP\_FSL4} \\
+      \midrule
+      1-shot  & 45.96\% & 7.31\%  \\
+      2-shot  & 48.65\% & 15.38\% \\
+      4-shot  & 57.28\% & 26.36\% \\
+      8-shot  & 65.08\% & 40.89\% \\
+      16-shot & 73.46\% & 48.75\% \\
+      \bottomrule
+    \end{tabular}
+  \end{figure}
     \begin{itemize}
-        \item T-tests confirmed the significance of performance differences.
-        \item \textbf{Key Observation:} Standard CLIP (RN50) significantly outperforms StyCLIP-trained backbones across nearly all configurations and few-shot methods.
-        \item Example: For 16-shot with TIMO\_S:
-        \begin{itemize}
-            \item RN50 (73.46\%) vs StyCLIP\_FSL4 (48.75\%) $\rightarrow$ $\approx$ 25 percentage point difference, statistically significant.
-        \end{itemize}
-    \end{itemize}
-    $\implies$ The architectural changes in StyCLIP for explicit style modeling did not yield benefits and often hindered performance.
+    \item Both approaches improve with more support examples
+    \item \textbf{Performance gap persists} across all configurations
+  \end{itemize}
 \end{frame}
 
 
@@ -268,7 +303,6 @@
   \frametitle{Conclusion \& Discussion}
   \begin{itemize}
     \item \textbf{Main Finding:} Integrating explicit style-aware features via Gram matrices (StyCLIP) did \textbf{not improve} few-shot artist classification performance.
-    \item \textbf{Performance:} Standard CLIP (RN50 backbone) consistently outperformed StyCLIP variants.
     \item \textbf{Implication:} Explicit Gram matrix-based style modeling might interfere with CLIP's pre-trained semantic representations rather than enhance them for this task.
     \item \textbf{Future Directions:} Alternative approaches like attention-based style integration or domain-specific fine-tuning (without architectural changes) might be more fruitful.
   \end{itemize}
@@ -276,17 +310,6 @@
 
 % --- Acknowledgments & Code ---
 \section{Acknowledgments \& Code}
-% --- Conclusion ---
-\section{Conclusion \& Discussion}
-\begin{frame}
-  \frametitle{Conclusion \& Discussion}
-  \begin{itemize}
-    \item \textbf{Main Finding:} Integrating explicit style-aware features via Gram matrices (StyCLIP) did \textbf{not improve} few-shot artist classification performance.
-    \item \textbf{Performance:} Standard CLIP (RN50 backbone) consistently outperformed StyCLIP variants.
-    \item \textbf{Implication:} Explicit Gram matrix-based style modeling might interfere with CLIP's pre-trained semantic representations rather than enhance them for this task.
-    \item \textbf{Future Directions:} Alternative approaches like attention-based style integration or domain-specific fine-tuning (without architectural changes) might be more fruitful.
-  \end{itemize}
-\end{frame}
 
 % --- Acknowledgments & Code ---
 \section{Acknowledgments \& Code}
